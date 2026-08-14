@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-08-08T16:38:51.017Z",
+        "reason": "Grille de mesure de la section Format : surface de metre reelle, exception prevue par la regle. Confirme par l'utilisateur."
+      }
+    ]
+  }
+}

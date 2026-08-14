@@ -1,0 +1,16 @@
+# Jeton Mapbox — le seul fichier volontairement hors dépôt.
+# GitHub bloque le push si un jeton est détecté dans le code versionné.
+# Voir config.example.js.
+config.js
+
+node_modules/
+*.log
+Thumbs.db
+.DS_Store
+
+# Vercel build output
+dist/
+.vercel/
+
+# Video masters - 81 Mo, never served. Kept local / shared out of band.
+masters/

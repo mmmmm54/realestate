@@ -1,0 +1,7 @@
+# Never used by the live site — only exists for re-encoding later.
+masters/
+
+.claude/
+.impeccable/
+node_modules/
+*.log
