@@ -419,10 +419,14 @@ ul{list-style:none}
 /* --- 8. RAIL D'ALTITUDE ------------------------------------------------- */
 /* Sur mobile le relevé se loge dans la barre de navigation, dont la droite est
    libre : posé sous elle, il passait par-dessus les titres de section. */
+/* Masqué sur mobile : il se logeait dans la barre de navigation, à droite —
+   exactement là où vit le sélecteur de langue. Sur un écran étroit les deux ne
+   tiennent pas, et choisir sa langue prime sur un relevé d'altitude. */
 .alt{
+  display:none;
   position:fixed;z-index:75;pointer-events:none;
   right:14px;top:calc((var(--nav-h) - 27px) / 2);
-  display:flex;align-items:center;gap:8px;
+  align-items:center;gap:8px;
   padding:6px 11px;border-radius:1000px;
   background:rgba(18,18,20,.94);border:1px solid var(--w-08);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
@@ -434,6 +438,7 @@ ul{list-style:none}
 .alt__track{display:none}
 @media (min-width:900px){
   .alt{
+    display:flex;
     right:16px;top:50%;transform:translateY(-50%);
     flex-direction:column;gap:14px;
     padding:14px 8px;border-radius:1000px;
@@ -750,7 +755,7 @@ ul{list-style:none}
 .reel:has(.reel__soon){opacity:.72}
 
 /* lecture en ligne dans la vignette centrée du rail */
-.reel__vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;filter:var(--grade);z-index:1}
+.reel__vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;z-index:1}
 .reel__meta,.reel__play{z-index:2}
 
 /* index projets — desktop */
@@ -784,7 +789,9 @@ ul{list-style:none}
   box-shadow:0 30px 90px rgba(0,0,0,.7);
 }
 .stage.is-open .frame{transform:scale(1);opacity:1;pointer-events:auto}
-.frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;filter:var(--grade)}
+/* Aucun étalonnage sur les films projets : ce sont eux le produit, ils
+   doivent sortir exactement comme vous les avez livrés. */
+.frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
 .frame .terrain{position:absolute;inset:0;width:100%;height:100%}
 .frame__scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,12,.55) 0%,transparent 26%,transparent 62%,rgba(10,10,12,.9) 100%);pointer-events:none}
 .frame__top{position:absolute;top:0;left:0;right:0;padding:14px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
@@ -1055,6 +1062,24 @@ body.is-map-open .gl__back{opacity:0;pointer-events:none}
 .layer__w{white-space:nowrap}
 /* le label du hero est posé sur la vidéo : selon le plan, le fond passe clair */
 .hero__left .eyebrow{text-shadow:0 1px 14px rgba(10,10,12,.75)}
+
+/* --- Petits téléphones -----------------------------------------------------
+   Sous 380 px, la troisième colonne du bloc hero force un retour à la ligne :
+   la ligne passe de 38 à 65 px et tout le contenu déborde par le haut, sous la
+   barre de navigation. On supprime le descripteur, qui est le moins utile. */
+@media (max-width:379px){
+  .layer__d{display:none}
+  .layer{padding:7px 0}
+  .display{font-size:clamp(2.15rem,9.4vw,7.5rem)}
+  .lede{font-size:.94rem}
+  .hero__cta{gap:10px;margin-top:18px}
+  .pill{padding:12px 24px}
+}
+/* Écrans courts : même problème par la hauteur plutôt que par la largeur. */
+@media (max-height:680px) and (max-width:899px){
+  .hero__index{display:none}
+  .hero__in{padding-bottom:38px}
+}
 
 /* --- 18. MOUVEMENT RÉDUIT ----------------------------------------------- */
 @media (prefers-reduced-motion:reduce){
