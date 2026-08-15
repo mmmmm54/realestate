@@ -628,9 +628,16 @@ ul{list-style:none}
 }
 #gl.is-ready ~ .gl__tint{opacity:1}
 .stage.is-gl .plane,.stage.is-gl .plane__veil{opacity:0;pointer-events:none}
-/* les commandes natives de Mapbox n'ont pas leur place ici */
-.gl .mapboxgl-ctrl-bottom-left,.gl .mapboxgl-ctrl-bottom-right{opacity:.5;font-size:9px}
-.gl .mapboxgl-ctrl-logo{transform:scale(.72);transform-origin:left bottom}
+/* L'attribution Mapbox / OpenStreetMap est une obligation de licence, pas un
+   ornement : elle doit rester lisible. Elle était à opacity .5 sur 9 px, soit
+   un contraste de 1,06 — invisible. Discrète, mais lisible. */
+#gl .mapboxgl-ctrl-bottom-left,#gl .mapboxgl-ctrl-bottom-right{opacity:1}
+#gl .mapboxgl-ctrl-attrib{background:rgba(12,12,14,.72);border-radius:6px 0 0 0}
+#gl .mapboxgl-ctrl-attrib,#gl .mapboxgl-ctrl-attrib a{
+  color:rgba(255,255,255,.78);font-size:10px;text-shadow:none;
+}
+#gl .mapboxgl-ctrl-attrib a:hover{color:#fff;text-decoration:underline}
+#gl .mapboxgl-ctrl-logo{transform:scale(.8);transform-origin:left bottom;opacity:.9}
 
 .gl__back{
   position:absolute;z-index:9;left:var(--pad);bottom:calc(110px + env(safe-area-inset-bottom));
@@ -762,7 +769,10 @@ ul{list-style:none}
 @media (min-width:900px){
   /* Le rail reste sur desktop : les films sont verticaux, la vignette 9:16
      est la meilleure présentation aux deux tailles d'écran. */
-  .reels{bottom:40px;gap:14px}
+  /* Le rail garde ses distances avec le relevé d'altitude, qui vit sur le bord :
+     à 1024 px, la dernière vignette n'en était qu'à 6 px une fois le rail poussé
+     à fond. Padding des deux côtés — en arabe l'altitude passe à gauche. */
+  .reels{bottom:40px;gap:14px;padding-inline:84px}
   .reel{width:200px;border-radius:16px}
   .reel__meta{padding:22px 13px 13px}
   .reel__meta b{font-size:.82rem}
