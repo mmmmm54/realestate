@@ -223,7 +223,7 @@ ul{list-style:none}
 /* Chiffres, unités et coordonnées restent en lecture gauche-droite, y compris
    en arabe : sans isolation, l'algorithme bidirectionnel rend « 48 h » en
    « h 48 », « 2 371 m² » en « m² 371 2 » et casse les relevés GPS. */
-.num,.stat__n,.alt__val,#mapCoord,.plan__p,.fact b,.hcard b,
+.num,.stat__n,.alt__val,.plan__p,.fact b,.hcard b,
 .layer__w,.step__n,.reel__meta span,.city b,.marquee__t span{
   direction:ltr;
   unicode-bidi:isolate;
@@ -396,7 +396,6 @@ ul{list-style:none}
 :root.is-ar .pill,:root.is-ar .lang button{letter-spacing:.04em}
 
 [dir="rtl"] .hero__scroll{left:auto;right:50%;transform:translateX(50%)}
-[dir="rtl"] .stage__hud{left:auto;right:var(--pad)}
 [dir="rtl"] .gl__back{left:auto;right:var(--pad)}
 [dir="rtl"] .alt{right:auto;left:14px}
 [dir="rtl"] .sound{right:auto;left:var(--pad)}
@@ -710,13 +709,6 @@ ul{list-style:none}
 .pin__lbl span{font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
 .pin:hover .pin__hit,.pin.is-active .pin__hit{transform:scale(1.45)}
 
-/* HUD de carte */
-.stage__hud{
-  position:absolute;left:var(--pad);top:calc(var(--nav-h) + 18px);z-index:6;
-  display:flex;flex-direction:column;gap:5px;pointer-events:none;
-}
-.stage__hud b{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
-.stage__hud span{font-size:.58rem;letter-spacing:.1em;color:var(--w-44);font-variant-numeric:tabular-nums}
 
 .stage__title{
   position:absolute;left:var(--pad);right:var(--pad);bottom:auto;top:34%;
@@ -1050,14 +1042,14 @@ body.is-map-open .gl__back{opacity:0;pointer-events:none}
 .plan__n,.plan__p span,.plan__tag,.reel__meta span,.reel__meta em,.reel__soon,
 .fact span,.hcard span,.chip,.foot__l a,.alt-contact span,.field label,
 .frame__badge span,.pin__lbl span,.city span,.gl__back,.proof__who span,
-.stage__hud b,.hero__scroll,.frame__empty,.note,.foot__tag{
+.hero__scroll,.frame__empty,.note,.foot__tag{
   font-family:var(--font-brand);
   font-weight:300;
   letter-spacing:.005em;
   text-transform:none;
 }
 /* relevés machine : coordonnées, altitude, cotes, chiffres tabulaires */
-.alt__unit,.alt__val,.stage__hud span,#mapCoord,.num,.stat__n,.fact b,.hcard b{
+.alt__unit,.alt__val,.num,.stat__n,.fact b,.hcard b{
   font-family:var(--font-mono);
   letter-spacing:0;
   text-transform:none;
@@ -1277,11 +1269,6 @@ html{scroll-behavior:smooth}
       </span>
       <span data-i18n="map.retour">Revenir en orbite</span>
     </button>
-
-    <div class="stage__hud">
-      <b data-i18n="map.hud">Travaux — 06 parcelles</b>
-      <span id="mapCoord">31.6374° N · 8.0034° O</span>
-    </div>
 
     <div class="stage__title" data-reveal>
       <div class="fade" style="--i:0"><span class="eyebrow" data-n="02" data-i18n="map.sur">Travaux</span></div>
@@ -1641,7 +1628,7 @@ en:{
  'man.corps':'Buyers are not buying square metres on a PDF. They buy a position, a commute, a neighbourhood, a view. We film all of it before the building exists — from orbit down to the doorstep.',
  'man.s1':'Average delivery','man.s2':'Plots handled','man.s3':'Master resolution',
  'clients.titre':'Trusted by',
- 'map.sur':'Work','map.retour':'Back to orbit','map.hud':'Work — 06 plots',
+ 'map.sur':'Work','map.retour':'Back to orbit',
  'map.t1':'Every pin','map.t2':'is a project.','map.sous':'Tap a pin to descend',
  'frame.vide':'Film coming — demonstration visual',
  'frame.surface':'Area','frame.lots':'Units','frame.annee':'Year',
@@ -1690,7 +1677,7 @@ ar:{
  'man.corps':'المشتري لا يشتري أمتاراً مربّعة في ملف PDF، بل يشتري موقعاً ومسافة وجواراً وإطلالة. نحن نصوّر كل ذلك قبل أن يوجد المبنى — من المدار إلى عتبة الباب.',
  'man.s1':'مدّة التسليم','man.s2':'قطعة أرض','man.s3':'دقة النسخة الأصلية',
  'clients.titre':'يثقون بنا',
- 'map.sur':'أعمالنا','map.retour':'العودة إلى المدار','map.hud':'أعمالنا — ٠٦ قطع',
+ 'map.sur':'أعمالنا','map.retour':'العودة إلى المدار',
  'map.t1':'كل علامة','map.t2':'هي مشروع.','map.sous':'اضغط على علامة للنزول',
  'frame.vide':'الفيلم قادم — صورة توضيحية',
  'frame.surface':'المساحة','frame.lots':'الوحدات','frame.annee':'السنة',
@@ -2396,17 +2383,6 @@ function glInit(){
     GL.map.resize();          /* la feuille Mapbox arrive après : on recale */
     GL.map.setPadding(glPadding());
     glVilles();
-    var c = GL.map.getCenter();
-    $('#mapCoord').textContent =
-      Math.abs(c.lat).toFixed(4) + '° N · ' + Math.abs(c.lng).toFixed(4) + '° O';
-  });
-
-  GL.map.on('move', function(){
-    if(!GL.ready) return;
-    var c = GL.map.getCenter();
-    $('#mapCoord').textContent =
-      Math.abs(c.lat).toFixed(4) + '° ' + (c.lat >= 0 ? 'N' : 'S') + ' · ' +
-      Math.abs(c.lng).toFixed(4) + '° ' + (c.lng >= 0 ? 'E' : 'O');
   });
 
   /* un jeton invalide se manifeste ici, avant tout rendu */
@@ -2431,7 +2407,9 @@ function glVilles(){
     b.className = 'city';
     b.style.setProperty('--d', (52 + n * 8) + 'px');
     b.setAttribute('aria-label', 'Voir les projets à ' + v.nom);
-    b.innerHTML = '<b>' + String(n).padStart(2,'0') + '</b><span>' + v.nom + '</span>';
+    /* Pas de chiffre dans la pastille : la taille du cercle dit déjà combien
+       de projets s'y trouvent, et le nom de la ville est en dessous. */
+    b.innerHTML = '<span>' + v.nom + '</span>';
     b.addEventListener('click', function(){ glVersVille(v); });
     GL.markers.push(new mapboxgl.Marker({ element:b }).setLngLat([v.lon, v.lat]).addTo(GL.map));
   });
@@ -2454,7 +2432,7 @@ function glProjets(v){
     b.className = 'city';
     b.style.setProperty('--d','34px');
     b.setAttribute('aria-label','Ouvrir ' + p.nom);
-    b.innerHTML = '<b>' + String(i + 1).padStart(2,'0') + '</b><span>' + p.nom + '</span>';
+    b.innerHTML = '<span>' + p.nom + '</span>';
     b.addEventListener('click', function(){ open(i); });
     GL.markers.push(new mapboxgl.Marker({ element:b }).setLngLat([p.lon, p.lat]).addTo(GL.map));
   });
@@ -2814,7 +2792,6 @@ function frameLoop(){
         pins.forEach(function(n,i){
           n.classList.toggle('is-shown', wp > 0.10 + i * 0.035);
         });
-        $('#mapCoord').textContent = (31.6374 - wp * 0.004).toFixed(4) + '° N · ' + (8.0034 + wp * 0.003).toFixed(4) + '° O';
       }
     }
     /* l'aperçu ne tourne que pendant que la carte est à l'écran */
