@@ -1562,7 +1562,7 @@ var PROJETS = [
      n'obtient PAS d'épingle sur la carte satellite — il reste seulement dans
      le rail, marqué « Bientôt ». Poser une fausse épingle sur une vraie image
      satellite se repère au premier zoom. Ajoutez lat/lon et l'épingle apparaît. */
-  { id:'p1', nom:'Résidence Al Bahia',  ville:'Marrakech — Médina',    surface:'2 371 m²', lots:'48',  annee:'2026', x:26, y:34, seed:11, geo:'p1', villeId:'marrakech', lat:31.637358, lon:-8.003442, video:'medias/p1-16x9.mp4', reel:'medias/p1-reel.mp4', poster:'medias/poster-p1.jpg' },
+  { id:'p1', nom:'Neo Square',          ville:'Marrakech — Médina',    surface:'2 371 m²', lots:'48',  annee:'2026', x:26, y:34, seed:11, geo:'p1', villeId:'marrakech', lat:31.637358, lon:-8.003442, video:'medias/p1-16x9.mp4', reel:'medias/p1-reel.mp4', poster:'medias/poster-p1.jpg' },
   { id:'p2', nom:'Plateau Saïss',       ville:'Fès — Saïss',           surface:'4 120 m²', lots:'86',  annee:'2026', x:58, y:24, seed:23, geo:'p2', villeId:'fes',       lat:34.050444, lon:-5.018917, video:'', reel:'', poster:'' },
   { id:'p3', nom:'Domaine Targa',       ville:'Marrakech — Targa',     surface:'9 640 m²', lots:'132', annee:'2025', x:74, y:47, seed:31, villeId:'marrakech', video:'', reel:'', poster:'' },
   { id:'p4', nom:'Les Terrasses Agdal', ville:'Marrakech — Agdal',     surface:'3 008 m²', lots:'54',  annee:'2025', x:38, y:62, seed:47, villeId:'marrakech', video:'', reel:'', poster:'' },
@@ -1579,6 +1579,13 @@ var PROJETS = [
    manquante retombe sur le français au lieu d'afficher une clé.
    ========================================================================== */
 var DICO = {
+/* Le français vient du HTML via data-i18n. Ces clés-ci n'existent qu'en
+   JavaScript — aucun élément à relever — il leur faut donc une entrée fr,
+   sinon elles s'affichent en clair : « ui.bientot » au lieu de « Bientôt ». */
+fr:{
+ 'ui.bientot':'Bientôt','ui.ouvrir':'Ouvrir','ui.voir':'Voir les projets à',
+ 'ch.1':'Zoom','ch.2':'Accès','ch.3':'Dimensions','ch.4':'POI','ch.5':'Extrusion'
+},
 en:{
  'nav.travaux':'Work','nav.format':'Format','nav.process':'Process','nav.tarifs':'Pricing',
  'alt.unite':'Altitude','wa.titre':'Quote in 2 h','wa.sous':'Send a GPS pin',
