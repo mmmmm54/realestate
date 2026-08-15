@@ -1454,7 +1454,7 @@ html{scroll-behavior:smooth}
         </div>
         <div class="alt-contact">
           <a href="mailto:contact@maalem.online"><b>contact@maalem.online</b><span data-i18n="ct.mail">E-mail</span></a>
-          <a href="tel:+212600000000"><b class="num">+212 600 000 000</b><span data-i18n="ct.tel">Téléphone</span></a>
+          <a href="tel:+212691865970"><b class="num">+212 691 865 970</b><span data-i18n="ct.tel">Téléphone</span></a>
           <a href="#travaux"><b data-i18n="ct.villeStudio">Casablanca — Maroc</b><span data-i18n="ct.studio">Studio</span></a>
         </div>
       </div>
@@ -1485,8 +1485,8 @@ html{scroll-behavior:smooth}
           <label for="f-msg" data-i18n="f.msg">Le projet en deux lignes</label>
           <textarea id="f-msg" name="message" data-i18n-ph="f.msg.ph" placeholder="48 lots, R+6, livraison prévue 2027…"></textarea>
         </div>
-        <button class="pill" type="submit" data-i18n="f.envoyer">Envoyer sur WhatsApp</button>
-        <p class="form__ok" id="formOk" data-i18n="f.ok">Merci — WhatsApp s'ouvre avec votre demande pré-remplie.</p>
+        <button class="pill" type="submit" data-i18n="f.envoyer">Envoyer la demande</button>
+        <p class="form__ok" id="formOk" data-i18n="f.ok">Merci — votre demande est envoyée. Nous répondons sous 2 h.</p>
       </form>
     </div>
   </div>
@@ -1519,7 +1519,11 @@ html{scroll-behavior:smooth}
    ========================================================================== */
 
 /* Numéro WhatsApp au format international, sans "+" ni espaces. */
-var WHATSAPP = '212600000000';
+var WHATSAPP = '212691865970';
+
+/* Adresse qui reçoit le formulaire. Elle doit vraiment exister et recevoir —
+   voir la note sur la redirection d'e-mail dans le README. */
+var CONTACT_EMAIL = 'contact@maalem.online';
 var WA_TEXT  = "Bonjour MAALEM, je souhaite un film GeoSignature 3D pour un terrain.";
 
 /* ---------------------------------------------------------------------------
@@ -1609,7 +1613,8 @@ var DICO = {
    sinon elles s'affichent en clair : « ui.bientot » au lieu de « Bientôt ». */
 fr:{
  'ui.bientot':'Bientôt','ui.ouvrir':'Ouvrir','ui.voir':'Voir les projets à',
- 'ch.1':'Zoom','ch.2':'Accès','ch.3':'Dimensions','ch.4':'POI','ch.5':'Extrusion'
+ 'ch.1':'Zoom','ch.2':'Accès','ch.3':'Dimensions','ch.4':'POI','ch.5':'Extrusion',
+ 'f.envoi':'Envoi…','f.echec':'Envoi impossible — on bascule sur WhatsApp.'
 },
 en:{
  'nav.travaux':'Work','nav.format':'Format','nav.process':'Process','nav.tarifs':'Pricing',
@@ -1654,7 +1659,7 @@ en:{
  'f.format':'Scope','f.opt1':'One plot','f.opt2':'Several plots','f.opt4':'Not sure yet',
  'f.gps':'GPS position or address of the land','f.msg':'The project in two lines',
  'f.msg.ph':'48 units, G+6, delivery 2027…',
- 'f.envoyer':'Send on WhatsApp','f.ok':'Thank you — WhatsApp opens with your request pre-filled.',
+ 'f.envoyer':'Send request','f.ok':'Thank you — your request has been sent. We reply within 2 hours.','f.envoi':'Sending…','f.echec':'Could not send — opening WhatsApp instead.',
  'marque.tagline':'Your cinematic signature in real estate',
  'pied.carto':'Map data © contributors',
  'ui.bientot':'Soon','ui.ouvrir':'Open','ui.voir':'See projects in',
@@ -1703,7 +1708,7 @@ ar:{
  'f.format':'حجم المشروع','f.opt1':'قطعة واحدة','f.opt2':'عدّة قطع','f.opt4':'لم أقرّر بعد',
  'f.gps':'موقع GPS أو عنوان الأرض','f.msg':'المشروع في سطرين',
  'f.msg.ph':'48 وحدة، أرضي+6، التسليم 2027…',
- 'f.envoyer':'أرسل عبر واتساب','f.ok':'شكراً — سيفتح واتساب بطلبك جاهزاً.',
+ 'f.envoyer':'إرسال الطلب','f.ok':'شكراً — تم إرسال طلبك. نردّ خلال ساعتين.','f.envoi':'جارٍ الإرسال…','f.echec':'تعذّر الإرسال — سنفتح واتساب.',
  'marque.tagline':'بصمتك السينمائية للعقار',
  'pied.carto':'بيانات الخرائط © المساهمون في',
  'ui.bientot':'قريباً','ui.ouvrir':'افتح','ui.voir':'شاهد مشاريع',
@@ -2849,18 +2854,53 @@ if(RM){
 $('#form').addEventListener('submit', function(e){
   e.preventDefault();
   var f = e.target;
+  var bouton = f.querySelector('button[type="submit"]');
+  var ok = $('#formOk');
+
   var lignes = [
-    'Demande Expérience GeoSignature 3D',
-    '',
     'Nom / Société : ' + (f.nom.value || '—'),
-    'E-mail : '       + (f.email.value || '—'),
-    'Format : '       + f.format.value,
-    'Terrain : '      + (f.gps.value || '—')
+    'E-mail : '        + (f.email.value || '—'),
+    'Périmètre : '     + f.format.value,
+    'Terrain : '       + (f.gps.value || '—')
   ];
   if(f.message.value) lignes.push('', f.message.value);
-  $('#formOk').classList.add('is-on');
-  window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(lignes.join('\n')),
-              '_blank', 'noopener');
+  var corps = lignes.join('\n');
+
+  bouton.disabled = true;
+  var libelle = bouton.textContent;
+  bouton.textContent = t('f.envoi');
+
+  /* FormSubmit : gratuit, sans compte ni clé d'API, et le visiteur reste sur
+     la page. Si l'envoi échoue — réseau coupé, service indisponible — on
+     bascule sur WhatsApp plutôt que de perdre la demande. */
+  fetch('https://formsubmit.co/ajax/' + CONTACT_EMAIL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _subject: 'MAALEM — nouvelle demande : ' + (f.nom.value || 'sans nom'),
+      _captcha: 'false',
+      _template: 'table',
+      Nom: f.nom.value, Email: f.email.value,
+      Perimetre: f.format.value, Terrain: f.gps.value,
+      Message: f.message.value
+    })
+  })
+  .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(function(){
+    ok.textContent = t('f.ok');
+    ok.classList.add('is-on');
+    f.reset();
+  })
+  .catch(function(){
+    ok.textContent = t('f.echec');
+    ok.classList.add('is-on');
+    window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(corps),
+                '_blank', 'noopener');
+  })
+  .then(function(){
+    bouton.disabled = false;
+    bouton.textContent = libelle;
+  });
 });
 
 /* ==========================================================================
