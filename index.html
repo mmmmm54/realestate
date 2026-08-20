@@ -2402,7 +2402,18 @@ function glInit(){
     GL.map = new mapboxgl.Map({
       container:'gl', style:MAPBOX_STYLE, projection:'globe',
       center:GL_ORBITE.center, zoom:GL_ORBITE.zoom,
-      pitch:0, bearing:0, dragRotate:false, attributionControl:true
+      pitch:0, bearing:0, dragRotate:false, attributionControl:true,
+
+      /* La carte ne doit jamais capturer le défilement : arrivé sur le globe,
+         on veut continuer à descendre dans la page, pas zoomer.
+         La navigation se fait par les pastilles, pas à la molette. */
+      scrollZoom:false,
+      /* Sur mobile, un glissement vertical ferait pivoter le globe au lieu de
+         faire défiler la page — même piège, en pire. Le tactile ne déplace
+         donc pas la carte ; les pastilles restent cliquables. */
+      dragPan:DESK(),
+      touchZoomRotate:false,
+      doubleClickZoom:false
     });
   } catch(e){ return glFallback(); }
 
