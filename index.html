@@ -615,6 +615,8 @@ ul{list-style:none}
    le conteneur retomberait en hauteur nulle et la carte ne s'afficherait pas. */
 #gl{position:absolute;inset:0;z-index:3;opacity:0;transition:opacity 1.1s var(--ease)}
 #gl.is-ready{opacity:1}
+/* le curseur annonce la zone où la molette zoome au lieu de faire défiler */
+#gl.peut-zoomer{cursor:zoom-in}
 /* L'imagerie satellite arrive bleue et saturée : on la ramène dans la palette,
    comme pour les vidéos. */
 #gl canvas{filter:saturate(.42) contrast(1.06) brightness(.82) sepia(.16)}
@@ -2404,9 +2406,9 @@ function glInit(){
       center:GL_ORBITE.center, zoom:GL_ORBITE.zoom,
       pitch:0, bearing:0, dragRotate:false, attributionControl:true,
 
-      /* La carte ne doit jamais capturer le défilement : arrivé sur le globe,
-         on veut continuer à descendre dans la page, pas zoomer.
-         La navigation se fait par les pastilles, pas à la molette. */
+      /* Désactivé au départ : la molette n'est rendue à la carte que lorsque
+         le curseur est réellement sur le globe (voir zoneZoom plus bas).
+         Partout ailleurs, la page continue de défiler normalement. */
       scrollZoom:false,
       /* Sur mobile, un glissement vertical ferait pivoter le globe au lieu de
          faire défiler la page — même piège, en pire. Le tactile ne déplace
@@ -2434,8 +2436,41 @@ function glInit(){
     glVilles();
   });
 
+  zoneZoom();
+
   /* un jeton invalide se manifeste ici, avant tout rendu */
   GL.map.on('error', function(){ if(!GL.ready) glFallback(); });
+}
+
+/* La molette zoome quand le curseur est sur le globe, et fait défiler la page
+   partout ailleurs. Sans ça, arriver sur la carte piège le défilement.
+   Le globe n'est pas au centre du cadre : setPadding le remonte au-dessus du
+   rail de vignettes, il faut donc viser son centre optique, pas celui du bloc. */
+function zoneZoom(){
+  var gl = $('#gl');
+  if(!gl || !GL.map) return;
+
+  function centreOptique(){
+    var r = gl.getBoundingClientRect(), p = glPadding();
+    return { x:r.left + r.width / 2,
+             y:r.top + p.top + (r.height - p.top - p.bottom) / 2,
+             rayon:Math.min(r.width, r.height - p.bottom) * 0.42 };
+  }
+
+  function evalue(e){
+    if(!DESK()) return;                 /* tactile : jamais de capture */
+    var c = centreOptique();
+    var dedans = Math.hypot(e.clientX - c.x, e.clientY - c.y) < c.rayon;
+    gl.classList.toggle('peut-zoomer', dedans);
+    if(dedans) GL.map.scrollZoom.enable();
+    else       GL.map.scrollZoom.disable();
+  }
+
+  gl.addEventListener('mousemove', evalue, { passive:true });
+  gl.addEventListener('mouseleave', function(){
+    gl.classList.remove('peut-zoomer');
+    GL.map.scrollZoom.disable();
+  }, { passive:true });
 }
 
 function glClear(){
