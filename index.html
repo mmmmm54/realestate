@@ -737,6 +737,8 @@ ul{list-style:none}
 }
 .reel.is-active{border-color:var(--gold)}
 .reel .terrain{position:absolute;inset:0;width:100%;height:100%}
+/* image d'attente du film : la vidéo vient se poser par-dessus au survol */
+.reel__poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 /* voile appuyé : la vignette peut lire une vidéo claire derrière le titre */
 .reel__meta{position:absolute;inset:auto 0 0 0;padding:14px 9px 10px;text-align:left;
   background:linear-gradient(180deg,transparent,rgba(10,10,12,.72) 38%,rgba(10,10,12,.96))}
@@ -2169,8 +2171,13 @@ PROJETS.forEach(function(p, i){
   b.className = 'reel';
   b.setAttribute('aria-label','Ouvrir ' + p.nom);
   b.innerHTML =
-    '<span class="terrain" data-terrain="reel" data-seed="' + p.seed + '"' +
-      (p.geo ? ' data-geo="' + p.geo + '"' : '') + '></span>' +
+    /* Une vignette montre son propre film. La carte générée n'est là que
+       pour un projet sans poster — sinon le rail affiche des fonds abstraits
+       identiques au lieu du travail qu'il est censé vendre. */
+    (p.poster
+      ? '<img class="reel__poster" src="' + p.poster + '" alt="" loading="lazy" decoding="async">'
+      : '<span class="terrain" data-terrain="reel" data-seed="' + p.seed + '"' +
+        (p.geo ? ' data-geo="' + p.geo + '"' : '') + '></span>') +
     /* une vignette sans film le dit : rien de pire que toucher une carte
        qui promet une vidéo et tomber sur un placeholder */
     ((p.reel || p.video)
