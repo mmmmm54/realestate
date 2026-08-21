@@ -557,7 +557,10 @@ ul{list-style:none}
 .stat__l{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--w-44);margin-top:8px}
 @media (min-width:900px){.manifesto__meta{grid-template-columns:repeat(4,1fr);gap:30px}}
 
-/* Bandeau de segments — statique : rien n'y change, rien n'a donc à bouger. */
+/* Bandeau de preuve client — défilement continu. Le mouvement a ici une
+   raison d'être : la bande contient plus de logos qu'un écran de téléphone
+   n'en montre, et le défilement est ce qui rend les derniers atteignables
+   sans geste. Il s'arrête au survol pour qu'on puisse lire un logo. */
 .marquee{
   position:relative;z-index:2;background:var(--ink);
   padding-block:20px;border-block:1px solid var(--w-08);
@@ -566,17 +569,58 @@ ul{list-style:none}
   text-align:center;margin-bottom:16px;
   font-size:.58rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--w-44);
 }
+/* Pleine largeur : une bande qui défile et s'arrête net sur une marge donne
+   l'impression d'un bug. Les bords sont dégradés au masque, pas coupés. */
 .marquee__t{
-  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
-  gap:12px 40px;max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);
+  display:flex;flex-wrap:nowrap;align-items:center;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
 }
+/* Deux groupes identiques côte à côte : quand le premier a fini de sortir,
+   le second occupe exactement sa position de départ — la boucle ne se voit
+   pas. La durée est calculée en JS d'après la largeur réelle, pour que la
+   vitesse reste la même quel que soit le nombre de logos. */
+.marquee__g{
+  display:flex;align-items:center;flex:0 0 auto;
+  gap:clamp(38px,7vw,86px);padding-inline:clamp(19px,3.5vw,43px);
+  animation:defile var(--duree,44s) linear infinite;
+  will-change:transform;
+}
+@keyframes defile{ from{transform:translateX(0)} to{transform:translateX(-100%)} }
+/* En arabe la page se lit de droite à gauche : la bande suit. */
+[dir="rtl"] .marquee__g{animation-name:defile-rtl}
+@keyframes defile-rtl{ from{transform:translateX(0)} to{transform:translateX(100%)} }
+.marquee:hover .marquee__g,
+.marquee:focus-within .marquee__g{animation-play-state:paused}
+
 .marquee__t span{
-  display:inline-flex;align-items:center;gap:22px;
+  display:inline-flex;align-items:center;
   font-size:.64rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--w-44);
   white-space:nowrap;
 }
-/* Pas de séparateur : sur une liste qui passe à la ligne, il atterrit en début
-   de rangée — et l'ordre s'inverse encore en arabe. L'espacement suffit. */
+/* Les logos clients arrivent en marine, brun, doré et blanc. Les poser tels
+   quels sur l'anthracite ferait disparaître les foncés et ferait six palettes
+   au lieu d'une. On les ramène tous au blanc, à opacité réduite : c'est le
+   traitement habituel d'un bandeau de confiance, et il rend la bande lisible.
+   Corollaire : les fichiers doivent être transparents (SVG ou PNG alpha) —
+   un fond blanc opaque deviendrait un rectangle plein. */
+.marquee__t img{
+  display:block;height:clamp(21px,4.2vw,29px);width:auto;max-width:160px;
+  object-fit:contain;
+  filter:grayscale(1) brightness(0) invert(1);
+  opacity:.5;transition:opacity .35s var(--ease);
+}
+.marquee__t img:hover{opacity:.92}
+
+/* Mouvement désactivé au niveau du système : la bande redevient une liste
+   statique qui passe à la ligne, et le doublon est retiré du flux. */
+@media (prefers-reduced-motion:reduce){
+  .marquee__t{flex-wrap:wrap;justify-content:center;overflow:visible;
+    -webkit-mask-image:none;mask-image:none;
+    max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
+  .marquee__g{animation:none;flex-wrap:wrap;justify-content:center;gap:12px 40px}
+  .marquee__g[aria-hidden="true"]{display:none}
+}
 
 /* --- 12. TRAVAUX / LA CARTE --------------------------------------------- */
 .work{position:relative;z-index:2;background:var(--ink);height:220vh}
@@ -1548,14 +1592,31 @@ var VILLES = [
 
 /* ---------------------------------------------------------------------------
    PREUVE CLIENT — le levier de conversion le plus fort de la page.
-   Les entrées ci-dessous sont des EMPLACEMENTS VIDES, volontairement reconnus
-   comme tels. Remplacez le texte, rien d'autre à toucher.
+
+   Deux écritures possibles par entrée :
+     'Texte'                        → le nom s'affiche en toutes lettres
+     { nom:'…', logo:'medias/…' }   → le logo s'affiche, `nom` devient l'alt
+
+   Pour brancher un logo : déposez le fichier dans medias/clients/ et
+   renseignez `logo`. Rien d'autre à toucher — le bandeau se remesure seul.
+
+   Format : SVG de préférence, sinon PNG à FOND TRANSPARENT. Le bandeau
+   reblanchit tous les logos pour tenir une seule palette ; un fond blanc
+   opaque ressortirait en rectangle plein.
+
    N'inventez pas de nom ni de citation : un faux témoignage repéré coûte plus
    cher que pas de témoignage du tout.
    --------------------------------------------------------------------------- */
 var CLIENTS = [
-  'Promoteur 01', 'Promoteur 02', 'Promoteur 03',
-  'Agence 01',    'Agence 02',    'Foncier 01'
+  /* Les deux premiers sont confirmés par les films eux-mêmes : leurs logos
+     sont incrustés en fin de Sirius (p3) et de Tejan (p4). */
+  { nom:'Real Estate Unit',      logo:'' },   /* الوحدة العقارية */
+  { nom:'Alzamiliah Investment', logo:'' },   /* الزاملية للاستثمار */
+  { nom:'Neo Square',            logo:'' },
+  /* Ces deux logos ne portent pas de ligne latine : romanisation à confirmer. */
+  { nom:'Diyar Al Sakina',       logo:'' },   /* ديار السكينة للتطوير العقاري */
+  { nom:'Ofoq Al Ezz',           logo:'' },   /* أفق العز للاستثمار والتطوير العقاري */
+  'Promoteur 06'
 ];
 
 var TEMOIGNAGE = {
@@ -2126,15 +2187,80 @@ bindSound(heroSoundBtn, function(){ return heroVideo; });
    5 · MARQUEE
    ========================================================================== */
 (function(){
-  var esc = function(s){ return String(s).replace(/[&<>]/g, function(c){
-    return { '&':'&amp;', '<':'&lt;', '>':'&gt;' }[c]; }); };
+  /* Les guillemets comptent ici : `nom` finit en attribut alt. */
+  var esc = function(s){ return String(s).replace(/[&<>"']/g, function(c){
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); };
+
+  var piste = $('#marquee');
+  if(!piste) return;
+
   var list = (CLIENTS && CLIENTS.length) ? CLIENTS
            : ['Promoteurs','Agences','Foncier','Off-plan'];
-  /* Séparateur en CSS entre deux éléments plutôt qu'à l'intérieur : il se place
-     alors correctement en arabe, où l'ordre visuel s'inverse. */
-  $('#marquee').innerHTML = list.map(function(w){
-    return '<span>' + esc(w) + '</span>';
-  }).join('');
+
+  /* Une entrée est soit une chaîne, soit { nom, logo }. Tant que `logo` est
+     vide, le nom s'affiche en toutes lettres : la bande reste lisible avant
+     que les fichiers n'arrivent, et le jour où ils arrivent rien d'autre ne
+     bouge.
+     Pas de loading="lazy" ici : le groupe doublé est hors écran par
+     construction, un chargement paresseux ne s'y déclencherait jamais et la
+     couture resterait vide. Ce sont six vignettes de 29 px, le gain serait
+     nul de toute façon. */
+  function cellule(c){
+    if(typeof c === 'string') c = { nom:c };
+    if(!c || !c.nom) return '';
+    return c.logo
+      ? '<img src="' + esc(c.logo) + '" alt="' + esc(c.nom) + '" decoding="async">'
+      : '<span>' + esc(c.nom) + '</span>';
+  }
+
+  var unTour = list.map(cellule).join('');
+  var VITESSE = 46;                   /* px/s — assez lent pour être lu */
+
+  /* Un logo pèse zéro pixel tant qu'il n'est pas chargé, et un nom écrit avec
+     la police de secours n'a pas la largeur qu'il aura une fois Alexandria
+     arrivée. Mesurer avant l'un ou l'autre, c'est une bande trop rapide et un
+     remplissage insuffisant. On attend donc les deux. */
+  function chargees(){
+    var polices = (document.fonts && document.fonts.ready) || Promise.resolve();
+    return polices.then(function(){
+      return Promise.all([].map.call(piste.querySelectorAll('img'), function(i){
+        if(i.complete) return null;
+        return new Promise(function(ok){
+          i.addEventListener('load',  ok, { once:true });
+          i.addEventListener('error', ok, { once:true });
+        });
+      }));
+    });
+  }
+
+  function monter(){
+    piste.innerHTML = '<div class="marquee__g">' + unTour + '</div>';
+    var g = piste.firstElementChild;
+
+    return chargees().then(function(){
+      /* Six logos ne remplissent pas un écran large : on répète le motif
+         jusqu'à dépasser la piste, sinon la boucle laisse un trou. */
+      var garde = 1;
+      while(g.scrollWidth < piste.clientWidth && garde < 12){
+        g.insertAdjacentHTML('beforeend', unTour); garde++;
+      }
+      /* Le doublon n'est là que pour la boucle : il ne doit pas être relu. */
+      var copie = g.cloneNode(true);
+      copie.setAttribute('aria-hidden','true');
+      piste.appendChild(copie);
+      return chargees();            /* les copies ont leurs propres images */
+    }).then(function(){
+      /* Durée déduite de la largeur : ajouter un logo allonge le cycle au
+         lieu d'accélérer la bande. */
+      piste.style.setProperty('--duree', (g.offsetWidth / VITESSE).toFixed(1) + 's');
+    });
+  }
+
+  monter();
+
+  /* Passer du téléphone au bureau change le nombre de répétitions utiles. */
+  var t;
+  addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(monter, 200); });
 })();
 
 /* ==========================================================================

@@ -1,0 +1,15 @@
+Logos clients du bandeau « Ils nous font confiance ».
+
+Déposez les fichiers ici, puis renseignez `logo` dans la constante CLIENTS,
+en haut du <script> de index.html :
+
+  { nom:'Real Estate Unit', logo:'medias/clients/real-estate-unit.svg' },
+
+Format
+  SVG de préférence. Sinon PNG à FOND TRANSPARENT.
+  Le bandeau reblanchit tous les logos pour tenir une seule palette sur
+  l'anthracite ; un PNG à fond blanc opaque deviendrait un rectangle plein.
+
+Taille
+  Hauteur d'affichage : 21 à 29 px. Un PNG de 120 px de haut suffit
+  largement — inutile d'y mettre du 2000 px.
