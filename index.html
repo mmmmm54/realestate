@@ -398,7 +398,6 @@ ul{list-style:none}
 [dir="rtl"] .hero__scroll{left:auto;right:50%;transform:translateX(50%)}
 [dir="rtl"] .gl__back{left:auto;right:var(--pad)}
 [dir="rtl"] .alt{right:auto;left:14px}
-[dir="rtl"] .sound{right:auto;left:var(--pad)}
 [dir="rtl"] .skip{left:auto;right:8px}
 [dir="rtl"] .rule,[dir="rtl"] .mask > *{transform-origin:right center}
 [dir="rtl"] .slide{transform:translateX(-58px)}
@@ -522,20 +521,6 @@ ul{list-style:none}
 @keyframes drop-x{0%{transform:scaleX(0);transform-origin:left}45%{transform:scaleX(1);transform-origin:left}46%{transform:scaleX(1);transform-origin:right}100%{transform:scaleX(0);transform-origin:right}}
 @keyframes drop{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}46%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-.sound{
-  position:absolute;right:var(--pad);top:calc(var(--nav-h) + 46px);z-index:4;
-  width:42px;height:42px;border-radius:50%;
-  border:1px solid var(--glass-line);
-  display:grid;place-items:center;background:var(--glass-bg);
-  backdrop-filter:var(--glass-fx);-webkit-backdrop-filter:var(--glass-fx);
-  transition:border-color .4s,background .4s;
-}
-.sound:hover{border-color:var(--glass-line-hi);background:linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.09))}
-.sound svg{width:16px;height:16px}
-.sound .on{display:none}
-.sound[data-on="1"] .on{display:block}
-.sound[data-on="1"] .off{display:none}
-
 @media (min-width:900px){
   .hero-wrap{height:210vh}
   .hero__grid{flex-direction:row;align-items:flex-end;justify-content:space-between;gap:60px}
@@ -618,7 +603,10 @@ ul{list-style:none}
    La ligne exacte est dans medias/clients/LISEZ-MOI.txt.
    Le fond doit rester transparent : un fond opaque deviendrait un rectangle. */
 .marquee__t img{
-  display:block;height:clamp(46px,9vw,70px);width:auto;max-width:300px;
+  /* Le plancher compte plus que le plafond ici : à 9vw un téléphone de
+     375 px retombait sur le minimum et ne profitait d'aucun agrandissement.
+     Le plancher monte, la pente aussi. */
+  display:block;height:clamp(62px,15vw,74px);width:auto;max-width:320px;
   object-fit:contain;
   /* Le doré est sombre comparé au blanc : à .5 il s'éteignait. */
   opacity:.82;transition:opacity .35s var(--ease);
@@ -1249,11 +1237,6 @@ html{scroll-behavior:smooth}
       <div class="terrain" data-terrain="hero" data-seed="7" aria-hidden="true"></div>
     </div>
     <div class="hero__scrim"></div>
-
-    <button class="sound" id="heroSound" data-on="0" aria-label="Activer le son">
-      <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m17 9 4 6M21 9l-4 6"/></svg>
-      <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 8.5a5 5 0 0 1 0 7M19 6a9 9 0 0 1 0 12"/></svg>
-    </button>
 
     <div class="hero__in wrap">
       <div class="hero__grid">
@@ -2150,7 +2133,6 @@ function bindSound(btn, getVideo){
 /* Hero */
 var heroVideo   = $('#heroVideo');
 var heroTerrain = $('#hero').querySelector('.terrain');
-var heroSoundBtn = $('#heroSound');
 var heroDesk = DESK();
 
 /* Pas de source pour ce point de rupture → on retombe sur la carte générée.
@@ -2165,7 +2147,6 @@ function fadeInWhenReady(video, terrain){
 }
 function syncHero(){
   var ok = VM.arm(heroVideo);
-  heroSoundBtn.style.display = ok ? '' : 'none';
   if(ok){ fadeInWhenReady(heroVideo, heroTerrain); }
   else { heroTerrain.style.display = ''; heroTerrain.classList.remove('is-out'); }
   return ok;
@@ -2206,7 +2187,6 @@ new IntersectionObserver(function(es){
   });
 },{ threshold:0.25 }).observe($('#hero'));
 
-bindSound(heroSoundBtn, function(){ return heroVideo; });
 
 /* ==========================================================================
    5 · MARQUEE
