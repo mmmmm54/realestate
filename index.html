@@ -566,9 +566,13 @@ ul{list-style:none}
   padding-block:20px;border-block:1px solid var(--w-08);
 }
 .marquee__k{
-  text-align:center;margin-bottom:16px;
+  text-align:center;margin-bottom:22px;
   font-size:.58rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--w-44);
 }
+/* Ce libellé annonce la seule preuve tierce de la page : à 9,9 px il passait
+   pour une mention légale. Il monte d'un cran et s'éclaircit — sans devenir
+   un titre, les logos restent le sujet. */
+.marquee__k{font-size:clamp(.78rem,2.6vw,.92rem);color:var(--w-64)}
 /* Pleine largeur : une bande qui défile et s'arrête net sur une marge donne
    l'impression d'un bug. Les bords sont dégradés au masque, pas coupés. */
 .marquee__t{
@@ -605,7 +609,7 @@ ul{list-style:none}
    Corollaire : les fichiers doivent être transparents (SVG ou PNG alpha) —
    un fond blanc opaque deviendrait un rectangle plein. */
 .marquee__t img{
-  display:block;height:clamp(30px,6vw,44px);width:auto;max-width:200px;
+  display:block;height:clamp(40px,8vw,58px);width:auto;max-width:260px;
   object-fit:contain;
   filter:grayscale(1) brightness(0) invert(1);
   opacity:.5;transition:opacity .35s var(--ease);
@@ -758,7 +762,12 @@ ul{list-style:none}
 
 .stage__title{
   position:absolute;left:var(--pad);right:var(--pad);bottom:auto;top:34%;
-  transform:translateY(-50%);z-index:6;pointer-events:none;text-align:center;
+  transform:translateY(-50%);z-index:6;pointer-events:none;
+  /* Aligné sur le bord comme les autres têtes de section (01, 04, 05) : ce
+     bloc était le seul centré sur mobile, et la rupture se voyait au défilement.
+     `start` plutôt que `left` : le bord de lecture suit la langue tout seul,
+     comme pour les autres têtes de section. */
+  text-align:start;
   transition:opacity .6s var(--ease);
 }
 .stage__title .h2{max-width:none}
@@ -1105,7 +1114,7 @@ body.is-map-open .gl__back{opacity:0;pointer-events:none}
 /* le mono paraît plus petit à taille égale : on récupère un cran */
 .stat__l,.step__t,.reel__meta span,.fact span,.hcard span,
 .alt-contact span,.field label,.proof__who span{font-size:.66rem}
-.alt__unit,.marquee__k,.hero__scroll,.reel__soon,.city span{font-size:.62rem}
+.alt__unit,.hero__scroll,.reel__soon,.city span{font-size:.62rem}
 /* la colonne du hero est étroite : le mono y prend plus de place */
 .layer__n{font-size:.62rem;min-width:62px;color:var(--gold)}
 .layer__d{font-size:.6rem}
