@@ -605,7 +605,7 @@ ul{list-style:none}
    Corollaire : les fichiers doivent être transparents (SVG ou PNG alpha) —
    un fond blanc opaque deviendrait un rectangle plein. */
 .marquee__t img{
-  display:block;height:clamp(21px,4.2vw,29px);width:auto;max-width:160px;
+  display:block;height:clamp(30px,6vw,44px);width:auto;max-width:200px;
   object-fit:contain;
   filter:grayscale(1) brightness(0) invert(1);
   opacity:.5;transition:opacity .35s var(--ease);
@@ -1608,22 +1608,22 @@ var VILLES = [
    cher que pas de témoignage du tout.
    --------------------------------------------------------------------------- */
 var CLIENTS = [
-  /* Ces quatre logos ont été DÉTOURÉS DES FILMS, faute des fichiers de marque :
-     ils y sont incrustés en fin de plan sur fond uni ou peu chargé. C'est du
-     bitmap tiré d'une vidéo compressée — correct à 29 px de haut, mais un SVG
-     fourni par le client sera meilleur. Remplacez le chemin, rien d'autre. */
-  { nom:'الوحدة العقارية — Real Estate Unit',      logo:'medias/clients/real-estate-unit.png' },
-  { nom:'الزاملية للاستثمار — Alzamiliah Investment', logo:'medias/clients/alzamiliah.png' },
-  /* Tejan est un PROJET d'Alzamiliah, pas un client distinct : l'ajouter
-     gonflerait le compte. Le fichier est prêt dans medias/clients/ si vous
-     décidez que la marque doit figurer aussi. */
-  { nom:'Neo Square Majorelle',                   logo:'medias/clients/neosquare.png' }
-
-  /* En attente des fichiers — rien n'est affiché tant qu'ils manquent, plutôt
-     qu'un libellé gris au milieu de vrais logos :
-  , { nom:'ديار السكينة للتطوير العقاري', logo:'medias/clients/diyar-al-sakina.png' }
-  , { nom:'أفق العز للاستثمار والتطوير العقاري', logo:'medias/clients/ofoq-al-ezz.png' }
-  */
+  /* Fichiers de marque fournis par le client, sauf Neo Square (voir plus bas).
+     Les PNG servis sont normalisés à SURFACE optique égale sur une toile de
+     168 px : d'un lockup carré à un lockup très horizontal, une hauteur
+     commune ferait paraître le carré deux fois plus petit. Le CSS ne pose donc
+     qu'une hauteur unique — l'équilibre est cuit dans les fichiers. Refaire un
+     fichier sans repasser par cette normalisation le déséquilibrerait. */
+  { nom:'الوحدة العقارية — Real Estate Unit',        logo:'medias/clients/real-estate-unit.png' },
+  { nom:'الزاملية للاستثمار — Alzamiliah Investment',  logo:'medias/clients/alzamiliah.png' },
+  { nom:'أفق العز للاستثمار والتطوير العقاري',          logo:'medias/clients/ofoq-al-ezz.png' },
+  { nom:'ديار السكينة للتطوير العقاري',               logo:'medias/clients/diyar-al-sakina.png' },
+  { nom:'نبراس الخليج للاستثمار العقاري',              logo:'medias/clients/nibras-al-khaleej.png' },
+  { nom:'روابي الخليج للتطوير العقاري',               logo:'medias/clients/rawabi-al-khaleej.png' },
+  /* Seul logo encore détouré d'un film : celui-ci n'existe pas en fichier de
+     marque ici. Il est tiré du carton de fin de CINEMATIC, par seuillage de
+     luminance. Correct à cette taille ; remplacez-le si le fichier arrive. */
+  { nom:'Neo Square Majorelle',                    logo:'medias/clients/neosquare.png' }
 ];
 
 var TEMOIGNAGE = {

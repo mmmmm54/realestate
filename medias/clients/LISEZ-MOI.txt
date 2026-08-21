@@ -1,30 +1,37 @@
 Logos clients du bandeau « Ils nous font confiance ».
 
-ÉTAT ACTUEL
-  Les fichiers présents ici ont été DÉTOURÉS DES FILMS, faute des fichiers de
-  marque : les logos y sont incrustés en fin de plan, sur fond uni ou peu
-  chargé, et ont été extraits par seuillage de luminance puis recadrés.
+CONTENU
+  real-estate-unit.png    الوحدة العقارية — Real Estate Unit
+  alzamiliah.png          الزاملية للاستثمار — Alzamiliah Investment
+  ofoq-al-ezz.png         أفق العز للاستثمار والتطوير العقاري
+  diyar-al-sakina.png     ديار السكينة للتطوير العقاري
+  nibras-al-khaleej.png   نبراس الخليج للاستثمار العقاري
+  rawabi-al-khaleej.png   روابي الخليج للتطوير العقاري
+  neosquare.png           NEOSQUARE MAJORELLE
 
-    real-estate-unit.png   الوحدة العقارية   (fin de Kaleej.1)
-    alzamiliah.png         الزاملية للاستثمار (filigrane de Khaleej.2)
-    neosquare.png          NEOSQUARE MAJORELLE (fin de CINEMATIC)
-    tejan.png              تيجان — NON AFFICHÉ : c'est un projet d'Alzamiliah,
-                           pas un client distinct. Disponible si besoin.
+  Les six premiers viennent des fichiers de marque fournis. Le dernier est
+  détouré du carton de fin de CINEMATIC : remplacez-le si le fichier arrive.
 
-  C'est du bitmap tiré d'une vidéo compressée. Correct à 29 px de haut, mais
-  un fichier fourni par le client sera meilleur : remplacez-le simplement.
+NORMALISATION — à respecter si vous refaites un fichier
+  Ces logos vont du lockup carré (أفق العز, rapport 0,96) au très horizontal
+  (NEOSQUARE, 2,47). À hauteur égale, le carré paraîtrait deux fois plus petit.
+  Chaque PNG est donc mis à SURFACE optique comparable, puis posé au centre
+  d'une toile de 168 px de haut. Le CSS ne pose qu'une hauteur unique et
+  l'équilibre vient des fichiers.
 
-MANQUANTS
-    ديار السكينة للتطوير العقاري
-    أفق العز للاستثمار والتطوير العقاري
-  Leurs entrées sont écrites et commentées dans la constante CLIENTS, en haut
-  du <script> de index.html. Déposez les fichiers ici et décommentez.
+  Poser ici un PNG brut le déséquilibrera. La recette : recadrer au contenu
+  (alpha > 16), mettre à l'échelle avec h = 145,6 / rapport^0,4, centrer sur
+  168 px de haut avec 8 px de marge latérale.
+
+  Attention aux filets de bord d'export : le fichier d'origine de روابي الخليج
+  en portait un sur ses deux dernières lignes, ce qui faussait le recadrage et
+  affichait un trait sous le logo.
 
 FORMAT
-  SVG de préférence. Sinon PNG à FOND TRANSPARENT.
+  PNG à FOND TRANSPARENT, ou SVG.
   Le bandeau reblanchit tous les logos pour tenir une seule palette sur
-  l'anthracite ; un PNG à fond blanc opaque deviendrait un rectangle plein.
+  l'anthracite : peu importe qu'ils arrivent en doré, en marine ou en blanc.
+  Un fond blanc OPAQUE, lui, deviendrait un rectangle plein.
 
 TAILLE
-  Hauteur d'affichage : 21 à 29 px. Les fichiers ici font 124 px de haut,
-  soit environ 4x — inutile d'aller au-delà.
+  Hauteur d'affichage : 30 à 44 px. Les toiles font 168 px, soit environ 4x.
