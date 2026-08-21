@@ -609,18 +609,21 @@ ul{list-style:none}
   white-space:nowrap;
 }
 /* Les logos clients arrivent en marine, brun, doré et blanc. Les poser tels
-   quels sur l'anthracite ferait disparaître les foncés et ferait six palettes
-   au lieu d'une. On les ramène tous au blanc, à opacité réduite : c'est le
-   traitement habituel d'un bandeau de confiance, et il rend la bande lisible.
-   Corollaire : les fichiers doivent être transparents (SVG ou PNG alpha) —
-   un fond blanc opaque deviendrait un rectangle plein. */
+   quels sur l'anthracite ferait disparaître les foncés et six palettes au lieu
+   d'une. Ils sont donc tous ramenés au doré de la marque — #C9A227 — CUIT DANS
+   LES FICHIERS, pas posé par un filtre : aucune chaîne de filtres CSS n'atteint
+   un hexadécimal précis, elles l'approchent. L'alpha d'origine est conservé,
+   c'est lui qui porte l'anticrénelage.
+   Conséquence : un fichier déposé ici doit être recoloré de la même façon.
+   La ligne exacte est dans medias/clients/LISEZ-MOI.txt.
+   Le fond doit rester transparent : un fond opaque deviendrait un rectangle. */
 .marquee__t img{
-  display:block;height:clamp(40px,8vw,58px);width:auto;max-width:260px;
+  display:block;height:clamp(46px,9vw,70px);width:auto;max-width:300px;
   object-fit:contain;
-  filter:grayscale(1) brightness(0) invert(1);
-  opacity:.5;transition:opacity .35s var(--ease);
+  /* Le doré est sombre comparé au blanc : à .5 il s'éteignait. */
+  opacity:.82;transition:opacity .35s var(--ease);
 }
-.marquee__t img:hover{opacity:.92}
+.marquee__t img:hover{opacity:1}
 
 /* Mouvement désactivé au niveau du système : la bande redevient une liste
    statique qui passe à la ligne, et le doublon est retiré du flux. */
