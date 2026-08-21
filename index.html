@@ -1608,15 +1608,22 @@ var VILLES = [
    cher que pas de témoignage du tout.
    --------------------------------------------------------------------------- */
 var CLIENTS = [
-  /* Les deux premiers sont confirmés par les films eux-mêmes : leurs logos
-     sont incrustés en fin de Sirius (p3) et de Tejan (p4). */
-  { nom:'Real Estate Unit',      logo:'' },   /* الوحدة العقارية */
-  { nom:'Alzamiliah Investment', logo:'' },   /* الزاملية للاستثمار */
-  { nom:'Neo Square',            logo:'' },
-  /* Ces deux logos ne portent pas de ligne latine : romanisation à confirmer. */
-  { nom:'Diyar Al Sakina',       logo:'' },   /* ديار السكينة للتطوير العقاري */
-  { nom:'Ofoq Al Ezz',           logo:'' },   /* أفق العز للاستثمار والتطوير العقاري */
-  'Promoteur 06'
+  /* Ces quatre logos ont été DÉTOURÉS DES FILMS, faute des fichiers de marque :
+     ils y sont incrustés en fin de plan sur fond uni ou peu chargé. C'est du
+     bitmap tiré d'une vidéo compressée — correct à 29 px de haut, mais un SVG
+     fourni par le client sera meilleur. Remplacez le chemin, rien d'autre. */
+  { nom:'الوحدة العقارية — Real Estate Unit',      logo:'medias/clients/real-estate-unit.png' },
+  { nom:'الزاملية للاستثمار — Alzamiliah Investment', logo:'medias/clients/alzamiliah.png' },
+  /* Tejan est un PROJET d'Alzamiliah, pas un client distinct : l'ajouter
+     gonflerait le compte. Le fichier est prêt dans medias/clients/ si vous
+     décidez que la marque doit figurer aussi. */
+  { nom:'Neo Square Majorelle',                   logo:'medias/clients/neosquare.png' }
+
+  /* En attente des fichiers — rien n'est affiché tant qu'ils manquent, plutôt
+     qu'un libellé gris au milieu de vrais logos :
+  , { nom:'ديار السكينة للتطوير العقاري', logo:'medias/clients/diyar-al-sakina.png' }
+  , { nom:'أفق العز للاستثمار والتطوير العقاري', logo:'medias/clients/ofoq-al-ezz.png' }
+  */
 ];
 
 var TEMOIGNAGE = {
@@ -2233,11 +2240,36 @@ bindSound(heroSoundBtn, function(){ return heroVideo; });
     });
   }
 
+  /* Un redimensionnement — ou une rotation de téléphone — relance monter().
+     Deux passes peuvent alors se chevaucher et la plus ancienne écrirait une
+     durée périmée. Chaque passe porte son numéro et abandonne si une plus
+     récente a démarré. */
+  var passe = 0;
+
+  /* La hauteur des logos vient d'un clamp en vw : juste après un
+     redimensionnement, la mise en page n'a pas encore suivi et on mesurerait
+     l'ancienne taille. On laisse passer deux trames.
+     Le minuteur double la trame : dans un onglet d'arrière-plan
+     requestAnimationFrame ne se déclenche jamais, et la bande resterait sans
+     durée ni remplissage jusqu'au retour de l'utilisateur. */
+  function apresMiseEnPage(){
+    return new Promise(function(ok){
+      var fait = false;
+      var fini = function(){ if(!fait){ fait = true; ok(); } };
+      requestAnimationFrame(function(){ requestAnimationFrame(fini); });
+      setTimeout(fini, 60);
+    });
+  }
+
   function monter(){
+    var mien = ++passe;
+    var perimee = function(){ return mien !== passe; };
+
     piste.innerHTML = '<div class="marquee__g">' + unTour + '</div>';
     var g = piste.firstElementChild;
 
-    return chargees().then(function(){
+    return chargees().then(apresMiseEnPage).then(function(){
+      if(perimee()) return;
       /* Six logos ne remplissent pas un écran large : on répète le motif
          jusqu'à dépasser la piste, sinon la boucle laisse un trou. */
       var garde = 1;
@@ -2249,7 +2281,8 @@ bindSound(heroSoundBtn, function(){ return heroVideo; });
       copie.setAttribute('aria-hidden','true');
       piste.appendChild(copie);
       return chargees();            /* les copies ont leurs propres images */
-    }).then(function(){
+    }).then(apresMiseEnPage).then(function(){
+      if(perimee()) return;
       /* Durée déduite de la largeur : ajouter un logo allonge le cycle au
          lieu d'accélérer la bande. */
       piste.style.setProperty('--duree', (g.offsetWidth / VITESSE).toFixed(1) + 's');
@@ -2260,7 +2293,7 @@ bindSound(heroSoundBtn, function(){ return heroVideo; });
 
   /* Passer du téléphone au bureau change le nombre de répétitions utiles. */
   var t;
-  addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(monter, 200); });
+  addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(monter, 250); });
 })();
 
 /* ==========================================================================

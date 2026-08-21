@@ -1,15 +1,30 @@
 Logos clients du bandeau « Ils nous font confiance ».
 
-Déposez les fichiers ici, puis renseignez `logo` dans la constante CLIENTS,
-en haut du <script> de index.html :
+ÉTAT ACTUEL
+  Les fichiers présents ici ont été DÉTOURÉS DES FILMS, faute des fichiers de
+  marque : les logos y sont incrustés en fin de plan, sur fond uni ou peu
+  chargé, et ont été extraits par seuillage de luminance puis recadrés.
 
-  { nom:'Real Estate Unit', logo:'medias/clients/real-estate-unit.svg' },
+    real-estate-unit.png   الوحدة العقارية   (fin de Kaleej.1)
+    alzamiliah.png         الزاملية للاستثمار (filigrane de Khaleej.2)
+    neosquare.png          NEOSQUARE MAJORELLE (fin de CINEMATIC)
+    tejan.png              تيجان — NON AFFICHÉ : c'est un projet d'Alzamiliah,
+                           pas un client distinct. Disponible si besoin.
 
-Format
+  C'est du bitmap tiré d'une vidéo compressée. Correct à 29 px de haut, mais
+  un fichier fourni par le client sera meilleur : remplacez-le simplement.
+
+MANQUANTS
+    ديار السكينة للتطوير العقاري
+    أفق العز للاستثمار والتطوير العقاري
+  Leurs entrées sont écrites et commentées dans la constante CLIENTS, en haut
+  du <script> de index.html. Déposez les fichiers ici et décommentez.
+
+FORMAT
   SVG de préférence. Sinon PNG à FOND TRANSPARENT.
   Le bandeau reblanchit tous les logos pour tenir une seule palette sur
   l'anthracite ; un PNG à fond blanc opaque deviendrait un rectangle plein.
 
-Taille
-  Hauteur d'affichage : 21 à 29 px. Un PNG de 120 px de haut suffit
-  largement — inutile d'y mettre du 2000 px.
+TAILLE
+  Hauteur d'affichage : 21 à 29 px. Les fichiers ici font 124 px de haut,
+  soit environ 4x — inutile d'aller au-delà.
