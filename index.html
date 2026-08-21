@@ -590,10 +590,16 @@ ul{list-style:none}
   animation:defile var(--duree,44s) linear infinite;
   will-change:transform;
 }
-@keyframes defile{ from{transform:translateX(0)} to{transform:translateX(-100%)} }
-/* En arabe la page se lit de droite à gauche : la bande suit. */
+/* Sens de défilement demandé : latin vers la DROITE, arabe vers la GAUCHE.
+   Attention, inverser le signe ne suffit pas. L'ordre de placement des deux
+   groupes suit `direction` : en latin le doublon est à droite de l'original,
+   en arabe à sa gauche. Partir de 0 et aller vers +100 % en latin pousserait
+   donc les deux groupes hors champ et découvrirait le bord gauche.
+   On part du décalage et on revient à zéro : le doublon couvre le bord vers
+   lequel on avance, et la boucle reste sans couture dans les deux sens. */
+@keyframes defile{ from{transform:translateX(-100%)} to{transform:translateX(0)} }
 [dir="rtl"] .marquee__g{animation-name:defile-rtl}
-@keyframes defile-rtl{ from{transform:translateX(0)} to{transform:translateX(100%)} }
+@keyframes defile-rtl{ from{transform:translateX(100%)} to{transform:translateX(0)} }
 .marquee:hover .marquee__g,
 .marquee:focus-within .marquee__g{animation-play-state:paused}
 
