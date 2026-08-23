@@ -28,12 +28,12 @@ NORMALISATION — à respecter si vous refaites un fichier
   affichait un trait sous le logo.
 
 COULEUR — à appliquer si vous déposez un fichier
-  Tous les logos servis ici sont recolorés au doré de la marque, #C9A227,
+  Tous les logos servis ici sont recolorés au doré de la marque, #c49f58,
   DANS LE FICHIER. Ce n'est pas un filtre CSS : aucune chaîne de filtres
   n'atteint un hexadécimal précis, elle l'approche. L'alpha d'origine est
   conservé — c'est lui qui porte l'anticrénelage.
 
-    ffmpeg -i entree.png -vf "format=rgba,geq=r=201:g=162:b=39:a='alpha(X,Y)'" sortie.png
+    ffmpeg -i entree.png -vf "format=rgba,geq=r=196:g=159:b=88:a='alpha(X,Y)'" sortie.png
 
   Un fichier laissé dans ses couleurs d'origine jurera avec les six autres.
 

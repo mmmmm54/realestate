@@ -91,9 +91,9 @@
   --ink-2:#161618;
   --ink-3:#111113;
   --ink-4:#0C0C0E;
-  --gold:#C9A227;
-  --gold-lo:rgba(201,162,39,.14);
-  --gold-md:rgba(201,162,39,.34);
+  --gold:#c49f58;
+  --gold-lo:rgba(196,159,88,.14);
+  --gold-md:rgba(196,159,88,.34);
   --white:#fff;
   --w-90:rgba(255,255,255,.90);
   --w-64:rgba(255,255,255,.64);
@@ -595,7 +595,7 @@ ul{list-style:none}
 }
 /* Les logos clients arrivent en marine, brun, doré et blanc. Les poser tels
    quels sur l'anthracite ferait disparaître les foncés et six palettes au lieu
-   d'une. Ils sont donc tous ramenés au doré de la marque — #C9A227 — CUIT DANS
+   d'une. Ils sont donc tous ramenés au doré de la marque — #c49f58 — CUIT DANS
    LES FICHIERS, pas posé par un filtre : aucune chaîne de filtres CSS n'atteint
    un hexadécimal précis, elles l'approchent. L'alpha d'origine est conservé,
    c'est lui qui porte l'anticrénelage.
@@ -645,7 +645,7 @@ ul{list-style:none}
 .plane__veil{
   position:absolute;inset:0;
   background:
-    radial-gradient(58% 44% at 34% 30%,rgba(201,162,39,.09),transparent 62%),
+    radial-gradient(58% 44% at 34% 30%,rgba(196,159,88,.09),transparent 62%),
     radial-gradient(110% 78% at 50% 48%,transparent 34%,rgba(12,12,14,.86) 100%);
 }
 /* grain fin : casse l'aplat des surfaces vectorielles */
@@ -669,7 +669,7 @@ ul{list-style:none}
   position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;
   transition:opacity 1.1s var(--ease);
   background:
-    radial-gradient(60% 45% at 32% 28%,rgba(201,162,39,.10),transparent 62%),
+    radial-gradient(60% 45% at 32% 28%,rgba(196,159,88,.10),transparent 62%),
     radial-gradient(120% 82% at 50% 50%,transparent 40%,rgba(12,12,14,.72) 100%);
 }
 #gl.is-ready ~ .gl__tint{opacity:1}
@@ -705,11 +705,11 @@ ul{list-style:none}
 .city{
   position:relative;display:grid;place-items:center;cursor:pointer;
   width:var(--d,64px);height:var(--d,64px);border-radius:50%;
-  background:rgba(201,162,39,.22);border:1px solid rgba(201,162,39,.55);
+  background:rgba(196,159,88,.22);border:1px solid rgba(196,159,88,.55);
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
   transition:transform .45s var(--ease),background .45s var(--ease);
 }
-.city:hover{transform:scale(1.09);background:rgba(201,162,39,.34)}
+.city:hover{transform:scale(1.09);background:rgba(196,159,88,.34)}
 .city b{font-size:.68rem;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:.06em}
 .city span{position:absolute;top:calc(100% + 7px);white-space:nowrap;
   font-size:.55rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--w-64)}
@@ -732,7 +732,7 @@ ul{list-style:none}
 }
 .pin__hit::before{
   content:'';position:absolute;left:50%;top:50%;width:46px;height:32px;
-  margin:-16px 0 0 -23px;border:1px dashed rgba(201,162,39,.42);border-radius:2px;
+  margin:-16px 0 0 -23px;border:1px dashed rgba(196,159,88,.42);border-radius:2px;
   transform:rotate(-9deg) scale(.6);opacity:0;
   transition:transform .8s var(--ease),opacity .8s var(--ease);
 }
@@ -1019,7 +1019,7 @@ body.is-map-open .gl__back{opacity:0;pointer-events:none}
   transition:border-color .5s var(--ease),transform .5s var(--ease);
 }
 .plan:hover{border-color:var(--w-24);transform:translateY(-3px)}
-.plan--hi{border-color:var(--gold-md);background:linear-gradient(180deg,rgba(201,162,39,.07),transparent 60%),var(--ink-2)}
+.plan--hi{border-color:var(--gold-md);background:linear-gradient(180deg,rgba(196,159,88,.07),transparent 60%),var(--ink-2)}
 .plan__tag{position:absolute;top:-1px;right:20px;padding:5px 11px;border-radius:0 0 8px 8px;background:var(--gold);color:var(--ink);font-size:.52rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
 .plan__n{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
 .plan__p{display:flex;align-items:baseline;gap:6px;margin-top:14px}
@@ -1039,7 +1039,7 @@ body.is-map-open .gl__back{opacity:0;pointer-events:none}
 .wa-card{
   padding:26px 22px;border-radius:18px;
   border:1px solid var(--gold-md);
-  background:linear-gradient(180deg,rgba(201,162,39,.09),transparent 70%),var(--ink-2);
+  background:linear-gradient(180deg,rgba(196,159,88,.09),transparent 70%),var(--ink-2);
 }
 .wa-card h3{font-size:clamp(1.3rem,5vw,1.8rem);font-weight:400;letter-spacing:-.025em;margin-top:12px}
 .wa-card p{margin-top:10px;font-size:.9rem;line-height:1.55;color:var(--w-64)}
@@ -1167,26 +1167,21 @@ html{scroll-behavior:smooth}
     <path d="m70.27,124.82c-2.33-2.91-4.55-5.7-7.01-8.78,2.21-2.93,4.41-5.85,6.85-9.08,2.48,3.17,4.72,6.05,7.13,9.13-2.29,2.87-4.56,5.71-6.97,8.72Z"/>
   </symbol>
 
-  <!-- Logotype seul : معالم au-dessus, MAALEM en dessous.
-       Les tracés sont ramenés à l'origine : un viewBox décalé sur le <symbol>
-       déplace le viewport du <use> et le contenu sort du cadre. -->
-  <symbol id="wm" viewBox="0 0 211 64"><g transform="translate(-172.4,-56.8)">
-    <path d="m195.8,81.58c.58.58,1.42.98,2.35.98v4.83c-2.26,0-4.3-.89-5.81-2.39-.13-.13-.31-.31-.44-.49-1.82,1.82-4.25,2.88-7,2.88-1.33,0-2.61-.22-3.81-.75-.71-.27-1.37-.66-2.04-1.11-.8.66-1.73,1.2-2.79,1.51v8.82h-4.87v-13.3h2.44c.93,0,1.77-.4,2.35-.98.62-.58.98-1.37.98-2.26v-8.46l7.27-3.32h.49c2.75,0,5.23,1.11,7,2.92,1.82,1.82,2.92,4.3,2.92,7v1.77c0,.89.35,1.73.97,2.35Zm-10.41-9.13l-3.37,1.51v7.71c.31.18.62.35.93.49.58.27,1.24.4,1.95.4,1.37,0,2.66-.58,3.59-1.51.89-.89,1.46-2.17,1.46-3.59s-.58-2.66-1.46-3.55c-.84-.84-1.91-1.37-3.1-1.46Z"/>
-    <path d="m198.11,87.38v-4.83h4.7v4.83h-4.7Z"/><path d="m202.76,87.38v-4.83h4.7v4.83h-4.7Z"/>
-    <path d="m207.41,87.38v-4.83h4.7v4.83h-4.7Z"/><path d="m212.07,87.38v-4.83h4.7v4.83h-4.7Z"/>
-    <path d="m216.72,87.38v-4.83h4.7v4.83h-4.7Z"/><path d="m221.37,87.38v-4.83h4.7v4.83h-4.7Z"/>
-    <path d="m272.57,87.38h-48.84v-4.83h44.01v-23.31h4.83v28.14Z"/>
-    <path d="m287.14,81.16l3.41,1.6h1.74v4.83h-2.8l-7.22-3.32v-25.02h4.87v21.91Z"/>
-    <path d="m292.08,87.58v-4.83h41.72v4.83h-41.72Z"/>
-    <path d="m332.26,82.75h8.95l-4.87-8.46,1.15-2.7,15.16-4.08,4.43,3.86.22.75c.13.49.22,1.02.31,1.55.04.58.09,1.11.09,1.64,0,2.79-.93,5.36-2.48,7.45h6.25v4.83h-29.21v-4.83Zm18.39-2.22c1.37-1.33,2.22-3.19,2.22-5.23,0-.4-.04-.71-.09-.97,0-.09,0-.18-.04-.27l-1.33-1.2-8.91,2.39,4.25,7.36c1.51-.27,2.88-1.02,3.9-2.08Z"/>
-    <path d="m364.79,81.78c.58-.58.93-1.37.98-2.26v-8.46l7.22-3.32h.49c2.75,0,5.23,1.11,7.05,2.92,1.77,1.82,2.88,4.3,2.88,7s-1.11,5.23-2.88,7.05c-1.82,1.77-4.3,2.88-7.05,2.88-1.29,0-2.57-.22-3.77-.75-.75-.27-1.42-.66-2.04-1.11-1.42,1.15-3.28,1.86-5.23,1.86h-1.02v-4.83h1.02c.89,0,1.73-.4,2.35-.98Zm9.17-9.13l-3.37,1.51v7.71c.31.18.62.35.93.49.62.27,1.29.4,1.95.4,1.42,0,2.66-.58,3.59-1.51.93-.89,1.46-2.17,1.46-3.59s-.53-2.66-1.46-3.55c-.8-.84-1.91-1.37-3.1-1.46Z"/>
-    <path d="m173.79,104.54h2.2l6.07,11.73,6-11.73h2.23v15.91h-1.7l-.02-13.43-6,11.73h-1.04l-6.04-11.73v13.43h-1.68v-15.91Z"/>
-    <path d="m221.97,104.54h1.86l7.11,15.91h-1.96l-6.14-14.04-6.09,14.04h-1.91l7.11-15.91Zm-3.98,10.2h9.66v1.57h-9.66v-1.57Z"/>
-    <path d="m260.33,104.54h1.86l7.11,15.91h-1.96l-6.14-14.04-6.09,14.04h-1.91l7.11-15.91Zm-3.98,10.2h9.66v1.57h-9.66v-1.57Z"/>
-    <path d="m293.87,104.54h1.82v14.34h6.98v1.57h-8.79v-15.91Z"/>
-    <path d="m327.66,104.54h10.79v1.59h-8.98v5.45h8.02v1.57h-8.02v5.73h9.27v1.57h-11.09v-15.91Z"/>
-    <path d="m364.5,104.54h2.2l6.07,11.73,6-11.73h2.23v15.91h-1.7l-.02-13.43-6,11.73h-1.04l-6.04-11.73v13.43h-1.68v-15.91Z"/>
-  </g></symbol>
+  <!-- Logotype MAALEM : معالم au-dessus, MAALEM en dessous. Fourni comme un
+       lockup vertical ; les tracés partent de l'origine, donc aucun décalage
+       de viewBox à compenser, contrairement à la version précédente.
+       Les classes de couleur du fichier source sont retirées : la teinte vient
+       de fill:currentColor, lui-même piloté par --gold. -->
+  <symbol id="wm" viewBox="0 0 242.13 83.03">
+    <path d="m101.57,0v48.04c3.83,0,7.43,0,11.04,0,28.26.02,56.51.05,84.77.05.9,0,2.06,0,2.65-.52,2.03-1.79,3.85-3.81,6.18-6.18h-10.23c3.6-3.63,6.83-6.94,10.13-10.17.44-.43,1.25-.65,1.89-.66,5.02-.05,10.05-.05,15.07.01.61,0,1.51.28,1.79.72,2.02,3.24,3.91,6.55,6.09,10.25h-20.14c1.67,1.87,3.09,3.33,4.34,4.91,1.01,1.28,2.14,1.79,3.8,1.76,6.91-.09,13.81-.04,20.72-.05.73,0,1.45-.09,2.48-.16-4.6-8-8.98-15.69-13.48-23.31-.35-.58-1.56-.91-2.37-.92-6.28-.07-12.56-.02-18.84-.02-2.31,0-4.2.77-5.87,2.47-4.61,4.72-9.3,9.35-14.05,13.92-.7.67-1.86,1.2-2.82,1.21-6.51.1-13.03.07-19.54.03-.67,0-1.56-.04-1.97-.45-3.1-3.07-6.1-6.23-9.13-9.37l.21-.91c8.75-.39,17.54.05,26.32-.28v-6.64c-7.47,0-14.75-.48-22.03-.12-6.71.33-10.06,3.7-15.29,7.35,3.92,3.35,7.5,6.41,11.08,9.46-.23.24-.46.49-.69.73h-45.69c0-1.01,0-1.78,0-2.55,0-10.05,0-22.01-.02-32.06"/>
+    <path d="m79.94,7.2c.1,9.65.05,21.27.05,30.92,0,.9-.07,1.8-.11,2.64h-24.91v-16.87c-5.4,0-10.57-.13-15.72.08-1.44.06-3.07.85-4.23,1.79C23.8,34.86,12.68,44.05,1.54,53.23c-.3.25-.52.6-1.08,1.24,2.64,0,4.84-.1,7.02.03,2,.12,3.54-.48,5.1-1.78,8.45-7.01,16.99-13.91,25.52-20.83.65-.53,1.42-1.22,2.16-1.26,2.63-.15,5.28-.06,8-.06v10.67c-6.69-1.84-11.32,1.21-15.3,6.24h53.45V0"/>
+    <path d="m174.68,75.97h23.43v-2.56h-23.35v-3.89h23.37v-2.6h-26.39v15.87h26.51c-.05-.94-.09-1.69-.15-2.68h-23.41v-4.14Z"/>
+    <path d="m241.76,66.19c-1.46.82-2.64,1.16-3.36,1.94-3.42,3.66-6.71,7.44-10.2,11.34-3.52-3.94-6.82-7.72-10.23-11.38-.71-.76-1.86-1.1-3.21-1.85v16.55h2.82v-10.84c3.15,3.51,5.98,6.54,8.66,9.7,1.46,1.72,2.52,1.62,3.93-.03,2.68-3.13,5.5-6.13,8.7-9.68v10.86h2.89v-16.61Z"/>
+    <path d="m2.87,82.85v-10.8c3.05,3.41,5.76,6.45,8.49,9.47,1.84,2.03,2.24,2.01,4.04.01,2.75-3.04,5.5-6.08,8.25-9.12.17.07.35.14.52.2v10.21h2.64v-16.8c-1.5,1.01-2.59,1.49-3.33,2.29-3.39,3.63-6.68,7.35-10.13,11.18-3.49-3.97-6.69-7.73-10.04-11.34-.73-.79-1.99-1.08-3.31-1.76v16.47h2.87Z"/>
+    <path d="m114.03,82.71c-4.05-5.16-7.93-10.17-11.87-15.12-1.11-1.39-2.92-1.21-4.16.32-2.17,2.68-4.3,5.39-6.44,8.11-1.72,2.19-3.43,4.4-5.21,6.68,2.37.71,3.77,0,5.06-1.75,2.77-3.75,5.76-7.33,8.78-11.13,2.99,3.81,5.85,7.33,8.57,10.96,1.3,1.74,2.73,2.74,5.27,1.93Z"/>
+    <path d="m70.4,82.75c-.51-.71-.93-1.34-1.4-1.92-3.38-4.22-6.77-8.43-10.16-12.64-1.68-2.09-3.17-2.09-4.87.05-3.51,4.41-7.01,8.84-10.5,13.27-.3.38-.48.85-.71,1.27,2.42.74,3.81-.31,5.11-2.04,2.75-3.67,5.65-7.22,8.61-10.97,3.14,3.96,6.17,7.55,8.94,11.34,1.33,1.82,2.79,2.21,4.98,1.64Z"/>
+    <path d="m131.38,82.78h23.79c-.05-.95-.09-1.7-.15-2.72h-20.93v-13.27c-1.05.06-1.86.1-2.71.14v15.85Z"/>
+  </symbol>
 </svg>
 
 <!-- ====================== NAV ====================== -->
@@ -1194,7 +1189,7 @@ html{scroll-behavior:smooth}
   <div class="wrap nav__in">
     <a class="brand" href="#accueil" aria-label="MAALEM — accueil">
       <span class="brand__mk" aria-hidden="true"><svg viewBox="0 0 140.49 125.29"><use href="#mk"/></svg></span>
-      <span class="brand__wm" aria-hidden="true"><svg viewBox="0 0 211 64"><use href="#wm"/></svg></span>
+      <span class="brand__wm" aria-hidden="true"><svg viewBox="0 0 242.13 83.03"><use href="#wm"/></svg></span>
       <span class="brand__sr">MAALEM معالم</span>
     </a>
     <nav class="nav__links" aria-label="Navigation principale">
@@ -1373,8 +1368,8 @@ html{scroll-behavior:smooth}
       <svg id="demoSvg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
           <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#C9A227" stop-opacity=".30"/>
-            <stop offset="100%" stop-color="#C9A227" stop-opacity=".06"/>
+            <stop offset="0%" stop-color="#c49f58" stop-opacity=".30"/>
+            <stop offset="100%" stop-color="#c49f58" stop-opacity=".06"/>
           </linearGradient>
         </defs>
         <g id="gAccess" opacity="0"></g>
@@ -1545,7 +1540,7 @@ html{scroll-behavior:smooth}
   <div class="wrap foot__in">
     <a class="brand" href="#accueil">
       <span class="brand__mk" aria-hidden="true"><svg viewBox="0 0 140.49 125.29"><use href="#mk"/></svg></span>
-      <span class="brand__wm" aria-hidden="true"><svg viewBox="0 0 211 64"><use href="#wm"/></svg></span>
+      <span class="brand__wm" aria-hidden="true"><svg viewBox="0 0 242.13 83.03"><use href="#wm"/></svg></span>
       <span class="brand__sr">MAALEM معالم</span>
     </a>
     <p class="foot__tag" data-i18n="marque.tagline">Votre signature cinématographique de l'immobilier</p>
@@ -1952,7 +1947,7 @@ function buildGeoTerrain(host, g){
      deux repères dorés au même endroit. */
   if(host.getAttribute('data-terrain') === 'reel'){
     svg.appendChild(el('rect',{x:-58,y:-40,width:116,height:80,
-      fill:'rgba(201,162,39,.08)',stroke:'rgba(201,162,39,.50)','stroke-width':2,'stroke-dasharray':'10 8'}));
+      fill:'rgba(196,159,88,.08)',stroke:'rgba(196,159,88,.50)','stroke-width':2,'stroke-dasharray':'10 8'}));
   }
 
   host.appendChild(svg);
@@ -2039,7 +2034,7 @@ function buildTerrain(host){
     var px = 200+r()*500, py = 200+r()*350;
     var pw = 200+r()*180, ph = 130+r()*120;
     svg.appendChild(el('rect',{x:px.toFixed(0),y:py.toFixed(0),width:pw.toFixed(0),height:ph.toFixed(0),
-      fill:'rgba(201,162,39,.07)',stroke:'rgba(201,162,39,.45)','stroke-width':1.5,'stroke-dasharray':'8 7'}));
+      fill:'rgba(196,159,88,.07)',stroke:'rgba(196,159,88,.45)','stroke-width':1.5,'stroke-dasharray':'8 7'}));
   }
 
   host.appendChild(svg);
@@ -2804,17 +2799,17 @@ var slides = $$('.demo__slide', $('#demoPanel'));
   var g = $('#gPlot');
   g.appendChild(el('polygon',{
     points: PLOT.map(function(p){ return p.join(','); }).join(' '),
-    fill:'rgba(201,162,39,.10)', stroke:'#C9A227','stroke-width':2
+    fill:'rgba(196,159,88,.10)', stroke:'#c49f58','stroke-width':2
   }));
   PLOT.forEach(function(p){
-    g.appendChild(el('circle',{cx:p[0],cy:p[1],r:4,fill:'#C9A227'}));
+    g.appendChild(el('circle',{cx:p[0],cy:p[1],r:4,fill:'#c49f58'}));
   });
   /* réticule */
   var cx = 0, cy = 0;
   PLOT.forEach(function(p){ cx += p[0]/4; cy += p[1]/4; });
-  g.appendChild(el('circle',{cx:cx,cy:cy,r:26,fill:'none',stroke:'rgba(201,162,39,.5)','stroke-width':1,'stroke-dasharray':'4 5'}));
+  g.appendChild(el('circle',{cx:cx,cy:cy,r:26,fill:'none',stroke:'rgba(196,159,88,.5)','stroke-width':1,'stroke-dasharray':'4 5'}));
   g.appendChild(el('path',{d:'M '+(cx-38)+' '+cy+' H '+(cx-12)+' M '+(cx+12)+' '+cy+' H '+(cx+38)+' M '+cx+' '+(cy-38)+' V '+(cy-12)+' M '+cx+' '+(cy+12)+' V '+(cy+38),
-    stroke:'rgba(201,162,39,.7)','stroke-width':1.2}));
+    stroke:'rgba(196,159,88,.7)','stroke-width':1.2}));
 })();
 
 /* -- accès -- */
@@ -2843,8 +2838,8 @@ var slides = $$('.demo__slide', $('#demoPanel'));
   ];
   dims.forEach(function(d){
     var mx = (d.a[0]+d.b[0])/2, my = (d.a[1]+d.b[1])/2;
-    g.appendChild(el('line',{x1:d.a[0],y1:d.a[1],x2:d.b[0],y2:d.b[1],stroke:'#C9A227','stroke-width':1,'stroke-dasharray':'5 4'}));
-    var r = el('rect',{x:mx-33,y:my-11,width:66,height:22,rx:5,fill:'rgba(12,12,14,.78)',stroke:'rgba(201,162,39,.4)','stroke-width':1});
+    g.appendChild(el('line',{x1:d.a[0],y1:d.a[1],x2:d.b[0],y2:d.b[1],stroke:'#c49f58','stroke-width':1,'stroke-dasharray':'5 4'}));
+    var r = el('rect',{x:mx-33,y:my-11,width:66,height:22,rx:5,fill:'rgba(12,12,14,.78)',stroke:'rgba(196,159,88,.4)','stroke-width':1});
     var tx = el('text',{x:mx,y:my+4,'text-anchor':'middle',fill:'#fff','font-size':11,'font-family':'inherit','font-weight':700,'letter-spacing':'.5'});
     tx.textContent = d.t;
     g.appendChild(r); g.appendChild(tx);
@@ -2872,14 +2867,14 @@ var gBuild = $('#gBuild');
 var faces = [], topPoly, levels = [];
 (function(){
   for(var i=0;i<PLOT.length;i++){
-    var f = el('polygon',{fill:'url(#wall)', stroke:'rgba(201,162,39,.55)','stroke-width':1});
+    var f = el('polygon',{fill:'url(#wall)', stroke:'rgba(196,159,88,.55)','stroke-width':1});
     faces.push(f); gBuild.appendChild(f);
   }
   for(var l=0;l<2;l++){
-    var lv = el('polygon',{fill:'none', stroke:'rgba(201,162,39,.28)','stroke-width':1});
+    var lv = el('polygon',{fill:'none', stroke:'rgba(196,159,88,.28)','stroke-width':1});
     levels.push(lv); gBuild.appendChild(lv);
   }
-  topPoly = el('polygon',{fill:'rgba(201,162,39,.24)', stroke:'#C9A227','stroke-width':2});
+  topPoly = el('polygon',{fill:'rgba(196,159,88,.24)', stroke:'#c49f58','stroke-width':2});
   gBuild.appendChild(topPoly);
 })();
 function drawBuild(h){
