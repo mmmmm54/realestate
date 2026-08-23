@@ -130,11 +130,11 @@
 
   --pad:22px;
   --rail:0px;
-  --nav-h:74px;
+  --nav-h:64px;
   --maxw:1440px;
 }
 @media (min-width:900px){
-  :root{ --pad:56px; --rail:88px; --nav-h:92px; }
+  :root{ --pad:56px; --rail:88px; --nav-h:76px; }
 }
 
 /* --- 2. RESET ----------------------------------------------------------- */
@@ -341,20 +341,19 @@ ul{list-style:none}
 /* Le logotype porte seul la marque : معالم au-dessus, MAALEM en dessous.
    Il tient les deux écritures, donc aucune variante RTL n'est nécessaire.
 
-   La hauteur est contrainte par la ligne latine, pas par le bloc : « MAALEM »
-   n'occupe que 20 % du lockup. À 36 px il tombait à 7 px — présent mais
-   illisible, exactement le défaut qui avait justifié l'ancien lockup en deux
-   pièces. À 56 px la ligne latine atteint 11 px, à 74 px elle atteint 15 px.
-   C'est pour la loger que --nav-h a été relevé ; réduire l'un sans l'autre
-   ramène le problème. */
+   La hauteur se règle sur la ligne latine, pas sur le bloc : « MAALEM »
+   n'occupe que 20 % du lockup, donc un logo de 38 px n'en donne que 8 px.
+   Trop petit, la ligne devient une trace ; trop grand, le logo écrase la
+   barre. 38/44 px tient les deux bouts, et --nav-h suit pour garder une
+   marge d'air constante au-dessus et en dessous. */
 .brand__wm{display:block;color:var(--gold);flex:none}
-.brand__wm svg{height:56px;width:auto;display:block;fill:currentColor}
+.brand__wm svg{height:38px;width:auto;display:block;fill:currentColor}
 /* le nom reste lisible par les lecteurs d'écran et les moteurs */
 .brand__sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media (min-width:900px){
-  .brand__wm svg{height:74px}
+  .brand__wm svg{height:44px}
 }
-.foot .brand__wm svg{height:78px}
+.foot .brand__wm svg{height:52px}
 /* La signature accompagne le logo dans le pied de page, pas dans la barre de
    navigation : le lockup s'y suffit, et le texte y passait à trois lignes. */
 .foot__tag{font-family:var(--font-mono);font-size:.66rem;color:var(--w-64);max-width:34ch;line-height:1.5}
@@ -1155,7 +1154,10 @@ html{scroll-behavior:smooth}
 <a class="skip" href="#accueil">Aller au contenu</a>
 
 <!-- Logo MAALEM, défini une fois et réutilisé dans la barre de navigation
-     et le pied de page. -->
+     et le pied de page. Le conteneur <svg> est indispensable : sorti de lui,
+     <symbol> est analysé comme un élément HTML inconnu et <use> ne le trouve
+     plus — le logo occupe alors sa place sans rien peindre. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
 
   <!-- Logotype MAALEM : معالم au-dessus, MAALEM en dessous. Fourni comme un
        lockup vertical ; les tracés partent de l'origine, donc aucun décalage
