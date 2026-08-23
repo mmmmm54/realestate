@@ -337,25 +337,19 @@ ul{list-style:none}
 }
 .nav.is-stuck{background:rgba(18,18,20,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom-color:var(--w-08)}
 .nav__in{display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%}
-.brand{display:flex;align-items:center;gap:11px}
-/* Lockup MAALEM : symbole + logotype, dimensionnés séparément pour que
-   « MAALEM » reste lisible. En arabe l'ordre s'inverse — c'est exactement la
-   variante RTL du logo, obtenue sans second fichier. */
-.brand{gap:13px}
-.brand__mk,.brand__wm{display:block;color:var(--gold);flex:none}
-.brand__mk svg{height:34px;width:auto;display:block;fill:currentColor}
-.brand__wm svg{height:30px;width:auto;display:block;fill:currentColor}
-/* Aucune règle RTL ici : en direction droite-à-gauche, flex-direction:row place
-   déjà le symbole à droite du logotype — soit exactement la variante arabe du
-   lockup. Forcer row-reverse annulerait l'inversion. */
+.brand{display:flex;align-items:center}
+/* Le logotype porte seul la marque : معالم au-dessus, MAALEM en dessous.
+   Il tient les deux écritures, donc aucune variante RTL n'est nécessaire.
+   Il monte d'un cran par rapport au lockup à deux pièces, où le symbole
+   apportait la moitié de la présence. */
+.brand__wm{display:block;color:var(--gold);flex:none}
+.brand__wm svg{height:36px;width:auto;display:block;fill:currentColor}
 /* le nom reste lisible par les lecteurs d'écran et les moteurs */
 .brand__sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media (min-width:900px){
-  .brand__mk svg{height:40px}
-  .brand__wm svg{height:35px}
+  .brand__wm svg{height:42px}
 }
-.foot .brand__mk svg{height:52px}
-.foot .brand__wm svg{height:45px}
+.foot .brand__wm svg{height:56px}
 /* La signature accompagne le logo dans le pied de page, pas dans la barre de
    navigation : le lockup s'y suffit, et le texte y passait à trois lignes. */
 .foot__tag{font-family:var(--font-mono);font-size:.66rem;color:var(--w-64);max-width:34ch;line-height:1.5}
@@ -1155,17 +1149,8 @@ html{scroll-behavior:smooth}
 
 <a class="skip" href="#accueil">Aller au contenu</a>
 
-<!-- Tracés du logo MAALEM, définis une fois et réutilisés. Le symbole et le
-     logotype sont séparés : dans un lockup unique, « MAALEM » ne fait que 13 %
-     de la hauteur et tomberait sous 6 px dans la barre de navigation. -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <symbol id="mk" viewBox="0 0 140.49 125.29">
-    <path d="m139.55.62c-20.16,19.86-42.18,41.4-62.19,61.41,0,0-.02.02-.03.03v13.07h0c.04,3.85.07,8.86.07,15.43s2.29,11.33,7.25,15.58c2.87-2.57,5.64-5.05,8.72-7.8-4.79-3.29-4.13-8.13-4.08-12.82.05-4.84-.17-9.69.13-14.52.11-1.75.94-3.85,2.16-5.08,8.92-8.99,18.06-17.74,27.03-26.68,3.21-3.2,6.11-6.7,9.15-10.06.44.29.88.58,1.32.87v95.14h11.4V0c-.53.35-.76.45-.93.62Z"/>
-    <path d="m116.71,125.29h-11.14c0-3.87,0-7.55,0-11.23,0-14.26.07-28.52-.03-42.78-.02-2.56.6-4.47,2.6-6.15,2.82-2.36,5.43-4.98,8.57-7.9v68.05Z"/>
-    <path d="m.93.62c20.16,19.86,42.18,41.4,62.19,61.41,0,0,.02.02.03.03v13.07h0c-.04,3.85-.07,8.86-.07,15.43,0,6.78-2.29,11.33-7.25,15.58-2.87-2.57-5.64-5.05-8.72-7.8,4.79-3.29,4.13-8.13,4.08-12.82-.05-4.84.17-9.69-.13-14.52-.11-1.75-.94-3.85-2.16-5.08-8.92-8.99-18.06-17.74-27.03-26.68-3.21-3.2-6.11-6.7-9.15-10.06-.44.29-.88.58-1.32.87,0,31.66,0,63.32,0,95.14-4.12,0-7.76,0-11.4,0C0,83.36,0,41.79,0,0c.53.35.76.45.93.62Z"/>
-    <path d="m23.78,125.29h11.14c0-3.87,0-7.55,0-11.23,0-14.26-.07-28.52.03-42.78.02-2.56-.6-4.47-2.6-6.15-2.82-2.36-5.43-4.98-8.57-7.9,0,22.96,0,45.31,0,68.05Z"/>
-    <path d="m70.27,124.82c-2.33-2.91-4.55-5.7-7.01-8.78,2.21-2.93,4.41-5.85,6.85-9.08,2.48,3.17,4.72,6.05,7.13,9.13-2.29,2.87-4.56,5.71-6.97,8.72Z"/>
-  </symbol>
+<!-- Logo MAALEM, défini une fois et réutilisé dans la barre de navigation
+     et le pied de page. -->
 
   <!-- Logotype MAALEM : معالم au-dessus, MAALEM en dessous. Fourni comme un
        lockup vertical ; les tracés partent de l'origine, donc aucun décalage
@@ -1188,7 +1173,6 @@ html{scroll-behavior:smooth}
 <header class="nav" id="nav">
   <div class="wrap nav__in">
     <a class="brand" href="#accueil" aria-label="MAALEM — accueil">
-      <span class="brand__mk" aria-hidden="true"><svg viewBox="0 0 140.49 125.29"><use href="#mk"/></svg></span>
       <span class="brand__wm" aria-hidden="true"><svg viewBox="0 0 242.13 83.03"><use href="#wm"/></svg></span>
       <span class="brand__sr">MAALEM معالم</span>
     </a>
@@ -1539,7 +1523,6 @@ html{scroll-behavior:smooth}
 <footer class="foot">
   <div class="wrap foot__in">
     <a class="brand" href="#accueil">
-      <span class="brand__mk" aria-hidden="true"><svg viewBox="0 0 140.49 125.29"><use href="#mk"/></svg></span>
       <span class="brand__wm" aria-hidden="true"><svg viewBox="0 0 242.13 83.03"><use href="#wm"/></svg></span>
       <span class="brand__sr">MAALEM معالم</span>
     </a>
