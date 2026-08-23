@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:www.serviceplusaquatics.com)"
+      "WebFetch(domain:www.serviceplusaquatics.com)",
+      "Bash(node -e ' *)",
+      "Bash(curl -s -m 25 https://maalem.online)",
+      "Read(//tmp/**)"
     ]
   }
 }
