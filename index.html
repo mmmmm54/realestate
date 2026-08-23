@@ -130,11 +130,11 @@
 
   --pad:22px;
   --rail:0px;
-  --nav-h:62px;
+  --nav-h:74px;
   --maxw:1440px;
 }
 @media (min-width:900px){
-  :root{ --pad:56px; --rail:88px; --nav-h:76px; }
+  :root{ --pad:56px; --rail:88px; --nav-h:92px; }
 }
 
 /* --- 2. RESET ----------------------------------------------------------- */
@@ -340,16 +340,21 @@ ul{list-style:none}
 .brand{display:flex;align-items:center}
 /* Le logotype porte seul la marque : معالم au-dessus, MAALEM en dessous.
    Il tient les deux écritures, donc aucune variante RTL n'est nécessaire.
-   Il monte d'un cran par rapport au lockup à deux pièces, où le symbole
-   apportait la moitié de la présence. */
+
+   La hauteur est contrainte par la ligne latine, pas par le bloc : « MAALEM »
+   n'occupe que 20 % du lockup. À 36 px il tombait à 7 px — présent mais
+   illisible, exactement le défaut qui avait justifié l'ancien lockup en deux
+   pièces. À 56 px la ligne latine atteint 11 px, à 74 px elle atteint 15 px.
+   C'est pour la loger que --nav-h a été relevé ; réduire l'un sans l'autre
+   ramène le problème. */
 .brand__wm{display:block;color:var(--gold);flex:none}
-.brand__wm svg{height:36px;width:auto;display:block;fill:currentColor}
+.brand__wm svg{height:56px;width:auto;display:block;fill:currentColor}
 /* le nom reste lisible par les lecteurs d'écran et les moteurs */
 .brand__sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media (min-width:900px){
-  .brand__wm svg{height:42px}
+  .brand__wm svg{height:74px}
 }
-.foot .brand__wm svg{height:56px}
+.foot .brand__wm svg{height:78px}
 /* La signature accompagne le logo dans le pied de page, pas dans la barre de
    navigation : le lockup s'y suffit, et le texte y passait à trois lignes. */
 .foot__tag{font-family:var(--font-mono);font-size:.66rem;color:var(--w-64);max-width:34ch;line-height:1.5}
