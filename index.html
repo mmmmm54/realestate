@@ -175,6 +175,16 @@ ul{list-style:none}
   line-height:.94;
   letter-spacing:-.035em;
 }
+/* Le titre est borné par sa colonne, pas par la fenêtre. Entre 900 et
+   1200 px la colonne ne fait que 56 % de la largeur pendant que 10,2vw
+   continue de croître : à 920 px la colonne tombe à 428 px pour un corps de
+   94 px, et les lignes se coupaient au milieu. On mesure donc sur le
+   conteneur. La déclaration en vw reste au-dessus comme repli : sans
+   requêtes de conteneur, une valeur en cqw invaliderait toute la règle. */
+@supports (font-size:1cqw){
+  .hero__left{container-type:inline-size}
+  .display{font-size:clamp(2.5rem,13cqw,7.5rem)}
+}
 .display--sm{font-size:clamp(2rem,7.4vw,4.6rem);letter-spacing:-.03em;line-height:1.0}
 .h2{
   font-weight:400;
@@ -236,6 +246,7 @@ ul{list-style:none}
 
 /* --- 4. RÉVÉLATIONS (masques) ------------------------------------------- */
 .mask{display:block;overflow:hidden;padding-top:.08em;margin-top:-.08em}
+.mask[hidden]{display:none}
 .mask > *{
   display:block;
   transform:translateY(112%);
@@ -1771,7 +1782,7 @@ ar:{
  'nav.travaux':'أعمالنا','nav.format':'الصيغة','nav.process':'المراحل','nav.tarifs':'الأسعار',
  'alt.unite':'الارتفاع','wa.titre':'عرض سعر في ساعتين','wa.sous':'أرسل موقع GPS',
  'hero.sur':'MAALEM معالم — أفلام عقارية سينمائية',
- 'hero.t1':'نُصوّر','hero.t2':'ما لم يُبنَ','hero.t3':'بعد.',
+ 'hero.t1':'نُصوّر','hero.t2':'ما لم يُبنَ بعد','hero.t3':'',
  'hero.lede':'نبدأ من القمر الصناعي وننزل إلى قطعتك دون قطع: المنافذ، أزمنة التنقّل، الأبعاد على الأرض، ثم المجسّم بمقياسه الحقيقي بين المباني القائمة حوله.',
  'hero.cta1':'شاهد أعمالنا','hero.cta2':'تواصل عبر واتساب','hero.scroll':'انزل',
  'hx.1n':'ترسل','hx.1w':'موقع GPS','hx.1d':'+ صورتان أو ثلاث',
@@ -1859,7 +1870,14 @@ function setLang(code){
 
   /* innerHTML : certaines chaînes portent des entités (&nbsp;). Le contenu
      vient du dictionnaire, pas de l'utilisateur — aucune injection possible. */
-  $$('[data-i18n]').forEach(function(n){ n.innerHTML = t(n.getAttribute('data-i18n')); });
+  $$('[data-i18n]').forEach(function(n){
+    n.innerHTML = t(n.getAttribute('data-i18n'));
+    /* Une langue peut tenir en deux souffles là où une autre en demande
+       trois : le masque resté vide sort du flux au lieu d'ouvrir une
+       ligne blanche au milieu du titre. */
+    var m = n.closest('.mask');
+    if(m) m.hidden = !n.textContent.trim();
+  });
   $$('[data-i18n-ph]').forEach(function(n){ n.setAttribute('placeholder', t(n.getAttribute('data-i18n-ph'))); });
 
   majDynamique();
