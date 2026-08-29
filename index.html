@@ -532,6 +532,13 @@ ul{list-style:none}
 
 @media (min-width:900px){
   .hero-wrap{height:210vh}
+  /* Le bloc était accroché au bas du cadre : sur un écran large il restait
+     un demi-écran de ciel vide au-dessus, et l'accroche tombait sous la
+     ligne d'horizon de la vidéo. Il se centre maintenant dans la hauteur
+     restante, la barre de navigation déduite pour ne pas passer dessous.
+     Les deux colonnes gardent leur alignement bas l'une par rapport à
+     l'autre : c'est ce qui pose le titre et l'index sur la même ligne. */
+  .hero{align-items:center;padding-top:var(--nav-h)}
   .hero__grid{flex-direction:row;align-items:flex-end;justify-content:space-between;gap:60px}
   .hero__left{flex:1 1 56%;max-width:760px}
   .hero__index{flex:0 1 40%;max-width:440px;padding-bottom:6px}
@@ -3167,7 +3174,11 @@ $('#form').addEventListener('submit', function(e){
   });
   var enregistre = null;
   try { enregistre = localStorage.getItem('xh-lang'); } catch(e){}
-  setLang(enregistre || 'fr');
+  /* L'arabe est la langue d'accueil : le public visé est du Golfe et du
+     Maroc. Le français reste la source dans le DOM — c'est lui que servent
+     les moteurs et le partage — mais un visiteur sans préférence lit
+     l'arabe dès l'ouverture. */
+  setLang(enregistre || 'ar');
 })();
 
 /* Ancres : ne pas passer sous la nav fixe */
