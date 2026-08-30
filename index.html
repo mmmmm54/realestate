@@ -1090,6 +1090,17 @@ body.is-map-open .gl__back{opacity:0;pointer-events:none}
   padding-block:34px calc(104px + env(safe-area-inset-bottom))}
 .foot__in{display:flex;flex-direction:column;gap:22px}
 .foot__l{display:flex;gap:20px;flex-wrap:wrap}
+/* Rangée de marques sociales. Le pictogramme porte le lien, le nom reste
+   accessible aux lecteurs d'écran — une icône seule n'a pas de nom. */
+.foot__soc{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.foot__soc a{
+  width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;
+  border:1px solid var(--w-14);color:var(--w-44);
+  transition:color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease);
+}
+.foot__soc a:hover{color:var(--gold);border-color:var(--gold-md);transform:translateY(-2px)}
+.foot__soc svg{width:17px;height:17px;display:block;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .foot__l a{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--w-44);transition:color .4s}
 .foot__l a:hover{color:var(--gold)}
 /* était à 2,2:1 en 9,6 px — illisible. Remonté en taille et en contraste. */
@@ -1182,6 +1193,25 @@ html{scroll-behavior:smooth}
        de viewBox à compenser, contrairement à la version précédente.
        Les classes de couleur du fichier source sont retirées : la teinte vient
        de fill:currentColor, lui-même piloté par --gold. -->
+  <!-- Marques sociales. Au trait et sur une grille de 24, comme le reste
+       des pictogrammes ; currentColor pour suivre la couleur du lien. -->
+  <symbol id="ic-instagram" viewBox="0 0 24 24">
+    <rect x="3" y="3" width="18" height="18" rx="5.2"/>
+    <circle cx="12" cy="12" r="4.1"/>
+    <circle cx="17.4" cy="6.6" r="1.05" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24">
+    <path d="M4 4l16 16M20 4L4 20"/>
+  </symbol>
+  <symbol id="ic-facebook" viewBox="0 0 24 24">
+    <path d="M14.8 3.6h-1.9A3 3 0 0 0 9.9 6.6V21"/>
+    <path d="M7.2 11.4h6.4"/>
+  </symbol>
+  <symbol id="ic-whatsapp" viewBox="0 0 24 24">
+    <path d="M20.5 11.6a8.5 8.5 0 0 1-12.8 7.3L3 20.6l1.7-4.7A8.5 8.5 0 1 1 20.5 11.6Z"/>
+    <path d="M8.9 8.7c0 3.3 2.7 6 6 6 .45 0 .84-.3.94-.74l.26-1.15-2.2-.9-.8 1a4.6 4.6 0 0 1-2.4-2.4l1-.8-.9-2.2-1.15.26c-.44.1-.75.49-.75.93Z"/>
+  </symbol>
+
   <symbol id="wm" viewBox="0 0 242.13 83.03">
     <path d="m101.57,0v48.04c3.83,0,7.43,0,11.04,0,28.26.02,56.51.05,84.77.05.9,0,2.06,0,2.65-.52,2.03-1.79,3.85-3.81,6.18-6.18h-10.23c3.6-3.63,6.83-6.94,10.13-10.17.44-.43,1.25-.65,1.89-.66,5.02-.05,10.05-.05,15.07.01.61,0,1.51.28,1.79.72,2.02,3.24,3.91,6.55,6.09,10.25h-20.14c1.67,1.87,3.09,3.33,4.34,4.91,1.01,1.28,2.14,1.79,3.8,1.76,6.91-.09,13.81-.04,20.72-.05.73,0,1.45-.09,2.48-.16-4.6-8-8.98-15.69-13.48-23.31-.35-.58-1.56-.91-2.37-.92-6.28-.07-12.56-.02-18.84-.02-2.31,0-4.2.77-5.87,2.47-4.61,4.72-9.3,9.35-14.05,13.92-.7.67-1.86,1.2-2.82,1.21-6.51.1-13.03.07-19.54.03-.67,0-1.56-.04-1.97-.45-3.1-3.07-6.1-6.23-9.13-9.37l.21-.91c8.75-.39,17.54.05,26.32-.28v-6.64c-7.47,0-14.75-.48-22.03-.12-6.71.33-10.06,3.7-15.29,7.35,3.92,3.35,7.5,6.41,11.08,9.46-.23.24-.46.49-.69.73h-45.69c0-1.01,0-1.78,0-2.55,0-10.05,0-22.01-.02-32.06"/>
     <path d="m79.94,7.2c.1,9.65.05,21.27.05,30.92,0,.9-.07,1.8-.11,2.64h-24.91v-16.87c-5.4,0-10.57-.13-15.72.08-1.44.06-3.07.85-4.23,1.79C23.8,34.86,12.68,44.05,1.54,53.23c-.3.25-.52.6-1.08,1.24,2.64,0,4.84-.1,7.02.03,2,.12,3.54-.48,5.1-1.78,8.45-7.01,16.99-13.91,25.52-20.83.65-.53,1.42-1.22,2.16-1.26,2.63-.15,5.28-.06,8-.06v10.67c-6.69-1.84-11.32,1.21-15.3,6.24h53.45V0"/>
@@ -1553,8 +1583,9 @@ html{scroll-behavior:smooth}
     </a>
     <p class="foot__tag" data-i18n="marque.tagline">Films immobiliers à partir d'un point GPS — Casablanca</p>
     <nav class="foot__l" aria-label="Pied de page">
-      <a href="#travaux" data-i18n="nav.travaux">Travaux</a><a href="#format" data-i18n="nav.format">Format</a><a href="#process" data-i18n="nav.process">Process</a><a data-wa href="#contact">WhatsApp</a>
+      <a href="#travaux" data-i18n="nav.travaux">Travaux</a><a href="#format" data-i18n="nav.format">Format</a><a href="#process" data-i18n="nav.process">Process</a>
     </nav>
+    <div class="foot__soc" id="footSoc"></div>
     <span class="foot__c num">© 2026 MAALEM — <span data-i18n="pied.carto">Fonds cartographiques © contributeurs</span> <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></span>
   </div>
 </footer>
@@ -1583,10 +1614,11 @@ var WA_TEXT  = "Bonjour MAALEM, je souhaite un film GeoSignature 3D pour un terr
    `compte` est ce qui s'affiche ; laissez-le court, c'est une poignée.
    --------------------------------------------------------------------------- */
 var RESEAUX = [
-  { nom:'Instagram', compte:'@maalem.studio', url:'https://www.instagram.com/maalem.studio/reels/' }
+  { nom:'WhatsApp',  icone:'ic-whatsapp',  compte:'',                url:'wa' }
+  , { nom:'Instagram', icone:'ic-instagram', compte:'@maalem.studio', url:'https://www.instagram.com/maalem.studio/reels/' }
   /* En attente des adresses :
-  , { nom:'X',        compte:'@',  url:'' }
-  , { nom:'Facebook', compte:'',   url:'' }
+  , { nom:'X',        icone:'ic-x',        compte:'@', url:'' }
+  , { nom:'Facebook', icone:'ic-facebook', compte:'',  url:'' }
   */
 ];
 
@@ -1606,7 +1638,12 @@ var MAPBOX_STYLE = 'mapbox://styles/mapbox/satellite-v9';
 
 var VILLES = [
   { id:'marrakech', nom:'Marrakech', lat:31.637358, lon:-8.003442, zoom:13.6 },
-  { id:'fes',       nom:'Fès',       lat:34.050444, lon:-5.018917, zoom:13.6 }
+  { id:'fes',       nom:'Fès',       lat:34.050444, lon:-5.018917, zoom:13.6 },
+  /* Djeddah : c'est là que se trouvent Tejan et Sirius. Les épingles des
+     deux projets sont posées au centre de leur quartier — الروضة et
+     الأندلس, relevés dans les films — et non sur la parcelle exacte,
+     faute des coordonnées. Précision d'environ un kilomètre. */
+  { id:'jeddah',    nom:'جدة',       lat:21.5433,  lon:39.1728,  zoom:12.4 }
 ];
 
 /* ---------------------------------------------------------------------------
@@ -1684,52 +1721,77 @@ var GEO = {"p1":{"nom":"Marrakech","lat":31.637358,"lon":-8.003442,"half":450,"r
    satellite — il reste dans le rail. Une fausse épingle se repère au premier
    zoom, donc seuls les projets réellement situés en portent une. */
 var PROJETS = [
-  { id:'p1', nom:'Neo Square',      ville:'Morocco',      surface:'2 371 m²', lots:'48', annee:'2026',
+  /* Ordre voulu : les deux chantiers saoudiens ouvrent, Neo Square suit, puis
+     Fès. Le reste ferme la marche.
+
+     `nom` et `ville` acceptent une chaîne — identique dans les trois langues,
+     ce qui vaut pour un nom propre — ou un objet { fr, en, ar }. La résolution
+     se fait à l'affichage, et les vignettes se redessinent au changement de
+     langue (voir majDynamique). */
+
+  /* Relevé dans le film : filigranes « تيجان / TEJAN » et « الزاملية
+     للاستثمار », repérage sur حي الروضة et شارع الأمير سعود الفيصل. */
+  { id:'p4', nom:{ fr:'Tejan', en:'Tejan', ar:'تيجان' },
+    ville:{ fr:'Arabie saoudite', en:'Saudi Arabia', ar:'السعودية' },
+    surface:'—', lots:'—', annee:'—',
+    x:38, y:62, seed:47, villeId:'jeddah', lat:21.5760, lon:39.1580,
+    video:'', reel:'medias/p-khaleej-2.mp4',     poster:'medias/poster-p-khaleej-2.jpg' },
+
+  /* Relevé dans le film : logo « الشعرى / SIRIUS » du promoteur الوحدة
+     العقارية, repérage sur شارع التحلية, طريق المدينة, كورنيش الحمراء. */
+  { id:'p3', nom:{ fr:'Sirius', en:'Sirius', ar:'الشعرى' },
+    ville:{ fr:'Arabie saoudite', en:'Saudi Arabia', ar:'السعودية' },
+    surface:'—', lots:'—', annee:'—',
+    x:74, y:47, seed:31, villeId:'jeddah', lat:21.5290, lon:39.1720,
+    video:'', reel:'medias/p-khaleej-1.mp4',     poster:'medias/poster-p-khaleej-1.jpg' },
+
+  { id:'p1', nom:{ fr:'Neo Square', en:'Neo Square', ar:'نيو سكوير' },
+    ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
+    surface:'2 371 m²', lots:'48', annee:'2026',
     x:26, y:34, seed:11, geo:'p1', villeId:'marrakech', lat:31.637358, lon:-8.003442,
     video:'', reel:'medias/p-neosquare.mp4',     poster:'medias/poster-p-neosquare.jpg' },
 
-  { id:'p2', nom:'Maarif Apartments', ville:'Morocco',    surface:'—', lots:'—', annee:'—',
+  { id:'p9', nom:{ fr:'Fès', en:'Fes', ar:'فاس' },
+    ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
+    surface:'—', lots:'—', annee:'—',
+    x:52, y:18, seed:97, villeId:'fes', lat:34.050444, lon:-5.018917,
+    video:'', reel:'medias/p-fes.mp4',           poster:'medias/poster-p-fes.jpg' },
+
+  { id:'p2', nom:{ fr:'Maarif Apartments', en:'Maarif Apartments', ar:'شقق المعاريف' },
+    ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
+    surface:'—', lots:'—', annee:'—',
     x:58, y:24, seed:23,
     video:'', reel:'medias/p-maarif.mp4',        poster:'medias/poster-p-maarif.jpg' },
 
-  /* Noms relevés dans les films eux-mêmes : le logo « الشعرى / SIRIUS » du
-     promoteur الوحدة العقارية apparaît en fin de plan, et le repérage cite
-     شارع التحلية, طريق المدينة et كورنيش الحمراء — Djeddah. */
-  { id:'p3', nom:'Sirius',           ville:'Saudi Arabia', surface:'—', lots:'—', annee:'—',
-    x:74, y:47, seed:31,
-    video:'', reel:'medias/p-khaleej-1.mp4',     poster:'medias/poster-p-khaleej-1.jpg' },
-
-  /* Idem : logos « تيجان / TEJAN » et « الزاملية للاستثمار / ALZAMILIAH
-     INVESTMENT » en filigrane, repérage sur حي الروضة et شارع الأمير سعود
-     الفيصل — Djeddah également. */
-  { id:'p4', nom:'Tejan',            ville:'Saudi Arabia', surface:'—', lots:'—', annee:'—',
-    x:38, y:62, seed:47,
-    video:'', reel:'medias/p-khaleej-2.mp4',     poster:'medias/poster-p-khaleej-2.jpg' },
-
   /* Le fichier s'appelait « CINEMATIC XPERIENCEHUB » mais c'est le carton
-     NEO SQUARE qui clôt le film : aucune trace de l'ancienne marque à
-     l'écran. Même projet que p1, registre lifestyle au lieu du repérage. */
-  { id:'p5', nom:'Neo Square — Lifestyle', ville:'Morocco', surface:'—', lots:'—', annee:'—',
+     NEO SQUARE qui clôt le film. Même projet que p1, registre lifestyle. */
+  { id:'p5', nom:{ fr:'Neo Square — Lifestyle', en:'Neo Square — Lifestyle', ar:'نيو سكوير — أسلوب حياة' },
+    ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
+    surface:'—', lots:'—', annee:'—',
     x:16, y:74, seed:59,
     video:'', reel:'medias/p-cinematic.mp4',     poster:'medias/poster-p-cinematic.jpg' },
 
-  /* ---- p6 à p8 : NOMS INVENTÉS ------------------------------------------
+  /* ---- NOMS INVENTÉS ----------------------------------------------------
      Ces trois films sont des démonstrations, pas des commandes client. Les
-     noms ci-dessous sont des étiquettes de remplissage choisies pour ne
-     recouper aucun promoteur existant. Remplacez-les dès qu'un vrai projet
-     prend la place, et corrigez le pays avec.
+     noms sont des étiquettes de remplissage choisies pour ne recouper aucun
+     promoteur existant. Remplacez-les dès qu'un vrai projet prend la place.
      ---------------------------------------------------------------------- */
-  { id:'p6', nom:'Yasmine Court',   ville:'Morocco',      surface:'—', lots:'—', annee:'—',
+  { id:'p6', nom:{ fr:'Yasmine Court', en:'Yasmine Court', ar:'ياسمين كورت' },
+    ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
+    surface:'—', lots:'—', annee:'—',
     x:66, y:78, seed:67,
     video:'', reel:'medias/p-initial-scene.mp4', poster:'medias/poster-p-initial-scene.jpg' },
 
-  { id:'p7', nom:'Amber Tower',     ville:'Morocco',      surface:'—', lots:'—', annee:'—',
+  { id:'p7', nom:{ fr:'Amber Tower', en:'Amber Tower', ar:'برج العنبر' },
+    ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
+    surface:'—', lots:'—', annee:'—',
     x:46, y:40, seed:73,
     video:'', reel:'medias/p-terrain-a.mp4',     poster:'medias/poster-p-terrain-a.jpg' },
 
-  /* Celui-ci n'a pas besoin d'un faux nom : le film montre littéralement le
-     filaire doré qui devient bâtiment, c'est-à-dire le procédé maison. */
-  { id:'p8', nom:'Signature 3D',    ville:'MAALEM',       surface:'—', lots:'—', annee:'—',
+  /* Celui-ci n'a pas besoin d'un faux nom : le film montre le filaire doré
+     qui devient bâtiment, c'est-à-dire le procédé maison. */
+  { id:'p8', nom:{ fr:'Signature 3D', en:'Signature 3D', ar:'توقيع ثلاثي الأبعاد' },
+    ville:'MAALEM', surface:'—', lots:'—', annee:'—',
     x:34, y:52, seed:83,
     video:'', reel:'medias/p-terrain-b.mp4',     poster:'medias/poster-p-terrain-b.jpg' }
 ];
@@ -1871,6 +1933,16 @@ var FR = {};                       /* français relevé une fois dans le HTML */
 $$('[data-i18n]').forEach(function(n){ FR[n.getAttribute('data-i18n')] = n.innerHTML; });
 $$('[data-i18n-ph]').forEach(function(n){ FR[n.getAttribute('data-i18n-ph')] = n.getAttribute('placeholder') || ''; });
 
+/* Un champ de PROJETS peut être une chaîne — un nom propre, identique dans
+   les trois langues — ou un objet { fr, en, ar }. La résolution se fait à
+   l'affichage : la langue change après le premier rendu, et les vignettes
+   sont redessinées par majDynamique. */
+function txt(v){
+  if(v == null) return '';
+  if(typeof v === 'string') return v;
+  return v[LANG] || v.fr || v.en || '';
+}
+
 function t(k){
   var d = DICO[LANG];
   if(d && d[k] != null) return d[k];
@@ -1911,33 +1983,53 @@ function setLang(code){
   });
 }
 
-/* Réseaux sociaux — rendus depuis RESEAUX, aux deux emplacements.
-   Une entrée sans URL est écartée : une ligne laissée à moitié remplie ne
-   doit pas produire un lien mort. target=_blank impose rel=noopener, sans
-   quoi la page ouverte garde une référence à la nôtre. */
+/* Réseaux sociaux — une seule liste, deux rendus.
+   Le pied reçoit la rangée de pictogrammes ; la section contact reçoit les
+   comptes qui ont une poignée à montrer (@…), puisque c'est une information,
+   pas seulement un lien.
+   Une entrée sans adresse est écartée : une ligne laissée à moitié remplie ne
+   doit pas produire de lien mort. target=_blank impose rel=noopener, sans quoi
+   la page ouverte garde une référence à la nôtre par window.opener. */
 (function(){
-  var actifs = (typeof RESEAUX !== 'undefined' ? RESEAUX : []).filter(function(r){
-    return r && r.url && r.url.trim();
-  });
+  var lienWa = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(WA_TEXT);
+  var actifs = (typeof RESEAUX !== 'undefined' ? RESEAUX : [])
+    .map(function(r){
+      if(!r) return null;
+      /* 'wa' est un raccourci : l'adresse se déduit du numéro déjà configuré,
+         pour ne pas répéter le lien WhatsApp à deux endroits. */
+      var url = r.url === 'wa' ? lienWa : r.url;
+      return url && url.trim() ? { nom:r.nom, icone:r.icone, compte:r.compte, url:url } : null;
+    })
+    .filter(Boolean);
   if(!actifs.length) return;
+
   var ech = function(x){ return String(x).replace(/[&<>"']/g, function(c){
     return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); };
 
-  var liste = $('.alt-contact');
-  if(liste) actifs.forEach(function(r){
+  /* Rangée de pictogrammes dans le pied. Le nom reste dans aria-label : une
+     icône sans texte n'a pas de nom accessible. */
+  var soc = $('#footSoc');
+  if(soc) actifs.forEach(function(r){
     var a = document.createElement('a');
-    a.href = r.url; a.target = '_blank'; a.rel = 'noopener';
-    a.innerHTML = '<b>' + ech(r.compte || r.nom) + '</b><span>' + ech(r.nom) + '</span>';
-    liste.appendChild(a);
+    a.href = r.url; a.rel = 'noopener';
+    if(!/^#/.test(r.url)) a.target = '_blank';
+    a.setAttribute('aria-label', r.nom);
+    a.innerHTML = r.icone
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#' + ech(r.icone) + '"/></svg>'
+      : ech(r.nom);
+    soc.appendChild(a);
   });
 
-  var pied = $('.foot__l');
-  if(pied) actifs.forEach(function(r){
-    var a = document.createElement('a');
-    a.href = r.url; a.target = '_blank'; a.rel = 'noopener';
-    a.textContent = r.nom;
-    pied.appendChild(a);
-  });
+  /* Section contact : seulement ceux qui affichent une poignée. WhatsApp a
+     déjà son bouton juste au-dessus, l'y répéter n'apprendrait rien. */
+  var liste = $('.alt-contact');
+  if(liste) actifs.filter(function(r){ return r.compte && r.compte.trim(); })
+    .forEach(function(r){
+      var a = document.createElement('a');
+      a.href = r.url; a.target = '_blank'; a.rel = 'noopener';
+      a.innerHTML = '<b>' + ech(r.compte) + '</b><span>' + ech(r.nom) + '</span>';
+      liste.appendChild(a);
+    });
 })();
 
 /* Textes construits en JS : ils ne portent pas d'attribut, on les repasse. */
@@ -1946,6 +2038,19 @@ function majDynamique(){
     c.innerHTML = '<i></i>' + String(i + 1).padStart(2, '0') + ' · ' + t('ch.' + (i + 1));
   });
   $$('.reel__soon').forEach(function(n){ n.textContent = t('ui.bientot'); });
+
+  /* Noms et pays des projets : ils viennent de PROJETS et non d'un attribut
+     data-i18n, donc la boucle générale ne les atteint pas. */
+  $$('#mapReels .reel__meta').forEach(function(m, i){
+    var pr = PROJETS[i]; if(!pr) return;
+    var b = m.querySelector('b'), e = m.querySelector('em');
+    if(b) b.textContent = txt(pr.nom);
+    if(e) e.textContent = txt(pr.ville);
+  });
+  $$('.pin__lbl').forEach(function(l, i){
+    var pr = PROJETS[i]; if(!pr) return;
+    var b = l.querySelector('b'); if(b) b.textContent = txt(pr.nom);
+  });
 }
 
 /* Liens WhatsApp -------------------------------------------------------- */
@@ -2381,9 +2486,9 @@ PROJETS.forEach(function(p, i){
   pin.className = 'pin';
   pin.style.setProperty('--x', p.x + '%');
   pin.style.setProperty('--y', p.y + '%');
-  pin.setAttribute('aria-label', 'Ouvrir ' + p.nom);
+  pin.setAttribute('aria-label', 'Ouvrir ' + txt(p.nom));
   pin.innerHTML =
-    '<span class="pin__lbl"><b>' + p.nom + '</b><span>' + p.surface + '</span></span>' +
+    '<span class="pin__lbl"><b>' + txt(p.nom) + '</b><span>' + p.surface + '</span></span>' +
     '<span class="pin__hit" style="--d:' + (i*0.42).toFixed(2) + 's"></span>';
   pin.addEventListener('click', function(){ open(i); });
   pin.addEventListener('mouseenter', function(){ highlight(i, true); });
@@ -2398,7 +2503,7 @@ var rows = [];   /* l'index texte a été retiré : les vignettes portent l'info
 PROJETS.forEach(function(p, i){
   var b = document.createElement('button');
   b.className = 'reel';
-  b.setAttribute('aria-label','Ouvrir ' + p.nom);
+  b.setAttribute('aria-label','Ouvrir ' + txt(p.nom));
   b.innerHTML =
     /* Une vignette montre son propre film. La carte générée n'est là que
        pour un projet sans poster — sinon le rail affiche des fonds abstraits
@@ -2412,7 +2517,7 @@ PROJETS.forEach(function(p, i){
     ((p.reel || p.video)
       ? '<span class="reel__play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>'
       : '<span class="reel__soon">' + t('ui.bientot') + '</span>') +
-    '<span class="reel__meta"><b>' + p.nom + '</b><em>' + p.ville + '</em><span>' + p.surface + '</span></span>';
+    '<span class="reel__meta"><b>' + txt(p.nom) + '</b><em>' + txt(p.ville) + '</em><span>' + p.surface + '</span></span>';
   b.addEventListener('click', function(){ open(i); });
   b.addEventListener('mouseenter', function(){ if(DESK()) highlight(i, true); });
   mapReels.appendChild(b);
@@ -2480,8 +2585,8 @@ function open(i){
   frame.style.setProperty('--ox', (p._X != null ? p._X : p.x) + '%');
   frame.style.setProperty('--oy', (p._Y != null ? p._Y : p.y) + '%');
 
-  $('#frameName').textContent = p.nom;
-  $('#frameCity').textContent = p.ville;
+  $('#frameName').textContent = txt(p.nom);
+  $('#frameCity').textContent = txt(p.ville);
   $('#frameSurf').textContent = p.surface;
   $('#frameLots').textContent = p.lots;
   $('#frameYear').textContent = p.annee;
@@ -2589,7 +2694,10 @@ applyPlane();
    chargement trop long → on garde la carte vectorielle, qui reste dessous.
    ========================================================================== */
 var GL = { map:null, ready:false, dead:false, loading:false, niveau:'orbite', markers:[] };
-var GL_ORBITE = { center:[-6.2, 31.9], zoom:1.75 };
+/* Le globe s'ouvre face à l'Arabie : c'est le marché visé, et les deux
+   chantiers saoudiens ouvrent la liste. Le Maroc reste dans l'hémisphère
+   visible, à 47° à l'ouest du centre. */
+var GL_ORBITE = { center:[39.17, 21.54], zoom:1.75 };
 
 /* Le rail de vignettes occupe le bas du cadre : sans ce décalage, le globe
    et les villes se centrent derrière lui. Mapbox décale la projection. */
@@ -2742,8 +2850,8 @@ function glProjets(v){
     var b = document.createElement('button');
     b.className = 'city';
     b.style.setProperty('--d','34px');
-    b.setAttribute('aria-label','Ouvrir ' + p.nom);
-    b.innerHTML = '<span>' + p.nom + '</span>';
+    b.setAttribute('aria-label','Ouvrir ' + txt(p.nom));
+    b.innerHTML = '<span>' + txt(p.nom) + '</span>';
     b.addEventListener('click', function(){ open(i); });
     GL.markers.push(new mapboxgl.Marker({ element:b }).setLngLat([p.lon, p.lat]).addTo(GL.map));
   });
