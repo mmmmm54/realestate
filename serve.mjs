@@ -8,7 +8,11 @@ import { extname, join, normalize } from 'node:path';
 import { networkInterfaces } from 'node:os';
 
 const ROOT = process.cwd();
-const PORT = Number(process.argv[2] || 5173);
+/* PORT d'abord : c'est par cette variable que l'outil d'aperçu attribue un
+   port libre. Sans elle, un serveur oublié d'une session précédente garde
+   5173 et le démarrage échoue. L'argument reste accepté pour lancer à la main
+   sur un port choisi — pratique pour tester depuis le téléphone. */
+const PORT = Number(process.env.PORT || process.argv[2] || 5173);
 
 const TYPES = {
   '.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8',
