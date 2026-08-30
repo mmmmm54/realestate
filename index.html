@@ -1576,6 +1576,21 @@ var CONTACT_EMAIL = 'contact@maalem.online';
 var WA_TEXT  = "Bonjour MAALEM, je souhaite un film GeoSignature 3D pour un terrain.";
 
 /* ---------------------------------------------------------------------------
+   RÉSEAUX — un seul endroit à modifier.
+   Les entrées se rendent à la fois dans le bloc « autres moyens » de la
+   section contact et dans la barre du pied de page. Pour en ajouter un :
+   décommentez la ligne et collez l'adresse. Rien d'autre à toucher.
+   `compte` est ce qui s'affiche ; laissez-le court, c'est une poignée.
+   --------------------------------------------------------------------------- */
+var RESEAUX = [
+  { nom:'Instagram', compte:'@maalem.studio', url:'https://www.instagram.com/maalem.studio/reels/' }
+  /* En attente des adresses :
+  , { nom:'X',        compte:'@',  url:'' }
+  , { nom:'Facebook', compte:'',   url:'' }
+  */
+];
+
+/* ---------------------------------------------------------------------------
    CARTE MAPBOX — globe → ville → projet
    Collez ici votre jeton PUBLIC (il commence par « pk. »).
    JAMAIS un jeton secret « sk. » : cette page est lisible par tout le monde.
@@ -1895,6 +1910,35 @@ function setLang(code){
     b.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
 }
+
+/* Réseaux sociaux — rendus depuis RESEAUX, aux deux emplacements.
+   Une entrée sans URL est écartée : une ligne laissée à moitié remplie ne
+   doit pas produire un lien mort. target=_blank impose rel=noopener, sans
+   quoi la page ouverte garde une référence à la nôtre. */
+(function(){
+  var actifs = (typeof RESEAUX !== 'undefined' ? RESEAUX : []).filter(function(r){
+    return r && r.url && r.url.trim();
+  });
+  if(!actifs.length) return;
+  var ech = function(x){ return String(x).replace(/[&<>"']/g, function(c){
+    return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); };
+
+  var liste = $('.alt-contact');
+  if(liste) actifs.forEach(function(r){
+    var a = document.createElement('a');
+    a.href = r.url; a.target = '_blank'; a.rel = 'noopener';
+    a.innerHTML = '<b>' + ech(r.compte || r.nom) + '</b><span>' + ech(r.nom) + '</span>';
+    liste.appendChild(a);
+  });
+
+  var pied = $('.foot__l');
+  if(pied) actifs.forEach(function(r){
+    var a = document.createElement('a');
+    a.href = r.url; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = r.nom;
+    pied.appendChild(a);
+  });
+})();
 
 /* Textes construits en JS : ils ne portent pas d'attribut, on les repasse. */
 function majDynamique(){
