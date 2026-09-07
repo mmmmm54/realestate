@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Site d'une seule page : une seule URL. Les sections (#travaux, #format,
+     #process, #contact) sont des ancres, pas des pages, et n'ont donc pas
+     leur entrée — un sitemap qui déclare des ancres est ignoré. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://maalem.online/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

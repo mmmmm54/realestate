@@ -44,6 +44,58 @@
      Remplacez l'URL absolue par votre domaine avant la mise en ligne —
      WhatsApp, Facebook et LinkedIn refusent les chemins relatifs. -->
 <link rel="canonical" href="https://maalem.online/">
+
+<!-- Données structurées. Chaque valeur est déjà visible sur la page : Google
+     pénalise le balisage qui décrit autre chose que ce que voit le visiteur.
+     Volontairement absents faute d'information : adresse postale, tarifs,
+     notes et avis. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://maalem.online/#studio",
+      "name": "MAALEM",
+      "alternateName": "معالم",
+      "url": "https://maalem.online/",
+      "logo": "https://maalem.online/medias/logo-lockup.svg",
+      "image": "https://maalem.online/medias/og-image.jpg",
+      "description": "Studio de films 3D pour l'immobilier : d'un point GPS et de deux photos à un film qui montre accès, temps de trajet, cotes au sol et volume à l'échelle réelle. Trois formats livrés en 48 h.",
+      "email": "contact@maalem.online",
+      "telephone": "+212691865970",
+      "address": { "@type": "PostalAddress", "addressLocality": "Casablanca", "addressCountry": "MA" },
+      "areaServed": [
+        { "@type": "Country", "name": "Maroc" },
+        { "@type": "Country", "name": "Arabie saoudite" }
+      ],
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "09:00", "closes": "20:00"
+      },
+      "sameAs": ["https://www.instagram.com/maalem.studio/"],
+      "knowsLanguage": ["ar","fr","en"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://maalem.online/#site",
+      "url": "https://maalem.online/",
+      "name": "MAALEM",
+      "inLanguage": ["ar","fr","en"],
+      "publisher": { "@id": "https://maalem.online/#studio" }
+    },
+    {
+      "@type": "Service",
+      "name": "Film 3D de projet immobilier",
+      "provider": { "@id": "https://maalem.online/#studio" },
+      "serviceType": "Film immobilier 3D à partir d'un point GPS",
+      "areaServed": ["MA","SA"],
+      "description": "Repérage satellite, accès et temps de trajet, cotes au sol, points d'intérêt et volume à l'échelle réelle. Livré en 16:9, 9:16 et 1:1."
+    }
+  ]
+}
+</script>
 <meta property="og:site_name" content="MAALEM">
 <meta property="og:locale" content="fr_MA">
 <meta property="og:locale:alternate" content="ar_AE">
@@ -1736,13 +1788,12 @@ var TEMOIGNAGE = {
 /* Un fond par couche, dans l'ordre des étapes. Les cinq sont LE MÊME PLAN,
    caméra fixe : seule la lumière change, de l'aube à la nuit. Un fichier
    manquant ne casse que son étape, qui reste vectorielle. */
-var TIMELAPSE = [
-  { desktop:'medias/tl-1-zoom-16x9.mp4',       mobile:'medias/tl-1-zoom-9x16.mp4' },
-  { desktop:'medias/tl-2-acces-16x9.mp4',      mobile:'medias/tl-2-acces-9x16.mp4' },
-  { desktop:'medias/tl-3-dimensions-16x9.mp4', mobile:'medias/tl-3-dimensions-9x16.mp4' },
-  { desktop:'medias/tl-4-poi-16x9.mp4',        mobile:'medias/tl-4-poi-9x16.mp4' },
-  { desktop:'medias/tl-5-extrusion-16x9.mp4',  mobile:'medias/tl-5-extrusion-9x16.mp4' }
-];
+/* Vide tant que les plans n'existent pas : cinq chemins morts, c'étaient cinq
+   404 dans la console à chaque visite, pour un fond optionnel. La démo reste
+   vectorielle, ce qui était déjà le comportement de repli.
+   Pour les rebrancher, une entrée par étape, dans l'ordre :
+     { desktop:'medias/tl-1-zoom-16x9.mp4', mobile:'medias/tl-1-zoom-9x16.mp4' } */
+var TIMELAPSE = [];
 
 /* Géométrie réelle des sites, extraite d'OpenStreetMap aux coordonnées GPS.
    Régénérer avec le script osm2svg.mjs si vous ajoutez des parcelles. */

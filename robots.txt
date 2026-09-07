@@ -1,0 +1,9 @@
+# https://maalem.online
+User-agent: *
+Allow: /
+
+# Les masters vidéo et les scripts d'outillage ne sont pas servis en ligne ;
+# rien à exclure ici. Le dossier medias/ doit rester explorable : les images
+# de partage et les affiches de projet en dépendent.
+
+Sitemap: https://maalem.online/sitemap.xml

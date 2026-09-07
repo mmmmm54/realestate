@@ -10,8 +10,10 @@ import { mkdirSync, rmSync, cpSync, copyFileSync, writeFileSync, existsSync } fr
 const OUT = 'dist';
 
 /* Only these are served. Everything else — the build scripts, the README,
-   the OSM tooling, the video masters — stays out of the deployment. */
-const FILES = ['index.html'];
+   the OSM tooling, the video masters — stays out of the deployment.
+   404.html is picked up by Vercel automatically for unmatched paths; it has
+   to be copied here or the platform default shows instead. */
+const FILES = ['index.html', '404.html', 'robots.txt', 'sitemap.xml', 'llms.txt'];
 const DIRS  = ['medias'];
 
 rmSync(OUT, { recursive: true, force: true });

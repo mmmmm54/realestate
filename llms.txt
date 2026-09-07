@@ -1,0 +1,33 @@
+# MAALEM
+
+> Studio de films 3D pour l'immobilier, basé à Casablanca. À partir d'un point
+> GPS et de deux photos, nous produisons un film qui montre les accès, les temps
+> de trajet, les cotes au sol et le volume du projet à l'échelle réelle, au
+> milieu des bâtiments existants. Livraison en 48 h, en 16:9, 9:16 et 1:1.
+
+## Ce que contient le film
+
+Cinq couches, en un seul mouvement continu :
+
+1. Zoom satellite — de l'orbite à la parcelle, sans coupure.
+2. Accès et temps de trajet — tracés sur le sol.
+3. Cotes au sol — façade, profondeur, surface, posées sur les limites réelles.
+4. Points d'intérêt — écoles, commerces, littoral, axes, avec leurs distances.
+5. Extrusion 3D — le volume sort de la parcelle à son échelle réelle.
+
+## Marchés
+
+Maroc et Arabie saoudite. Site trilingue : arabe (par défaut), français, anglais.
+
+## Contact
+
+- Site : https://maalem.online/
+- E-mail : contact@maalem.online
+- WhatsApp : +212 691 865 970
+- Instagram : https://www.instagram.com/maalem.studio/
+
+## Notes
+
+- Ce site est une page unique. Il n'y a pas d'autres URL à explorer.
+- Les noms de projets et de clients affichés sont réels sauf trois films de
+  démonstration, signalés comme tels dans le code source.
