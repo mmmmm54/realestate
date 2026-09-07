@@ -548,24 +548,6 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
   .alt__unit{writing-mode:vertical-rl;letter-spacing:.22em}
 }
 
-/* --- 9. BARRE WHATSAPP MOBILE ------------------------------------------- */
-.wa-bar{
-  display:none;   /* remplacée par .wa-flottant, voir plus haut */
-  position:fixed;z-index:65;left:12px;right:12px;
-  bottom:calc(12px + env(safe-area-inset-bottom));
-  display:flex;gap:10px;align-items:center;
-  padding:9px 9px 9px 18px;border-radius:1000px;
-  background:rgba(20,20,22,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  border:1px solid var(--w-14);
-  transform:translateY(140%);transition:transform .6s var(--ease);
-  box-shadow:0 14px 40px rgba(0,0,0,.5);
-}
-.wa-bar.is-on{transform:translateY(0)}
-.wa-bar__t{flex:1;min-width:0}
-.wa-bar__t b{display:block;font-size:.78rem;font-weight:700;letter-spacing:.01em}
-.wa-bar__t span{display:block;font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:var(--w-44)}
-.wa-bar .pill{padding:12px 20px;font-size:.68rem}
-@media (min-width:900px){.wa-bar{display:none}}
 .dot-live{width:6px;height:6px;border-radius:50%;background:var(--poi-green);display:inline-block;margin-right:7px;box-shadow:0 0 0 0 rgba(93,169,122,.6);animation:pulse 2.4s infinite}
 @keyframes pulse{70%{box-shadow:0 0 0 8px rgba(93,169,122,0)}100%{box-shadow:0 0 0 0 rgba(93,169,122,0)}}
 
@@ -999,7 +981,6 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
 /* état « projet ouvert » : on dégage tout ce qui n'est pas le film */
 body.is-map-open .nav{transform:translateY(-101%)}
 body.is-map-open .alt{opacity:0}
-body.is-map-open .wa-bar{transform:translateY(140%)}
 body.is-map-open .gl__back{opacity:0;pointer-events:none}
 .nav{transition:background .5s var(--ease),backdrop-filter .5s var(--ease),border-color .5s var(--ease),transform .55s var(--ease)}
 
@@ -1345,14 +1326,6 @@ html{scroll-behavior:smooth}
   <span data-i18n="hero.cta2">Parler sur WhatsApp</span>
 </a>
 
-<div class="wa-bar" id="waBar" hidden>
-  <div class="wa-bar__t">
-    <b><span class="dot-live"></span><span data-i18n="wa.titre">Devis en 2 h</span></b>
-    <span data-i18n="wa.sous">Envoyez une épingle GPS</span>
-  </div>
-  <a class="pill pill--solid" data-wa href="#contact">WhatsApp</a>
-</div>
-
 <main>
 
 <!-- ====================== 1 · HERO ====================== -->
@@ -1389,15 +1362,14 @@ html{scroll-behavior:smooth}
              qu'est-ce que j'envoie, qu'est-ce que je reçois, quand. -->
         <div class="hero__index" id="heroIndex">
           <div class="rule" style="--i:5"></div>
-          <div class="layer slide" style="--i:6"><span class="layer__n" data-i18n="hx.1n">Envoi</span><span class="layer__w" data-i18n="hx.1w">Une épingle GPS</span><span class="layer__d" data-i18n="hx.1d">+ 2 ou 3 photos</span></div>
-          <div class="layer slide" style="--i:7"><span class="layer__n" data-i18n="hx.2n">Délai</span><span class="layer__w num">48 h</span><span class="layer__d" data-i18n="hx.2d">Après validation</span></div>
-          <div class="layer slide" style="--i:8"><span class="layer__n" data-i18n="hx.3n">Formats</span><span class="layer__w num">16:9 · 9:16 · 1:1</span><span class="layer__d" data-i18n="hx.3d">Site · Story · Feed</span></div>
+          <div class="layer slide" style="--i:6"><span class="layer__n" data-i18n="hx.1n">Entrées</span><span class="layer__w" data-i18n="hx.1w">Coordonnées GPS</span><span class="layer__d" data-i18n="hx.1d">+ photos du plan d'architecte</span></div>
+          <div class="layer slide" style="--i:7"><span class="layer__n" data-i18n="hx.2n">Délai de livraison</span><span class="layer__w num" data-i18n="hx.2w">7 jours ouvrés</span><span class="layer__d" data-i18n="hx.2d">Après validation</span></div>
+          <div class="layer slide" style="--i:8"><span class="layer__n" data-i18n="hx.3n">Formats vidéo</span><span class="layer__w num">1:1 · 9:16 · 16:9</span><span class="layer__d" data-i18n="hx.3d">Site, réseaux, publicité</span></div>
           <div class="layer slide" style="--i:9"><span class="layer__n" data-i18n="hx.4n">Révision</span><span class="layer__w num" data-i18n="hx.4w">1 incluse</span><span class="layer__d" data-i18n="hx.4d">Sur le montage</span></div>
         </div>
       </div>
     </div>
 
-    <div class="hero__scroll"><span data-i18n="hero.scroll">Descendre</span><i></i></div>
   </div>
 </section>
 
@@ -1910,10 +1882,10 @@ en:{
  'hero.sur':'MAALEM — Cinematic real-estate films',
  'hero.t1':'We film','hero.t2':"what hasn't been",'hero.t3':'built&nbsp;yet.',
  'hero.lede':'We start from satellite and come down to your plot in one unbroken move: access routes, travel times, on-ground dimensions, then the massing at real scale among the buildings already there.',
- 'hero.cta1':'See the work','hero.cta2':'Talk on WhatsApp','hero.scroll':'Descend',
- 'hx.1n':'You send','hx.1w':'A GPS pin','hx.1d':'+ 2 or 3 photos',
- 'hx.2n':'Delivery','hx.2d':'After sign-off',
- 'hx.3n':'Formats','hx.3d':'Site · Story · Feed',
+ 'hero.cta1':'See the work','hero.cta2':'Talk on WhatsApp',
+ 'hx.1n':'Inputs','hx.1w':'GPS coordinates','hx.1d':'+ architectural plan photos',
+ 'hx.2n':'Delivery time','hx.2w':'7 working days','hx.2d':'After sign-off',
+ 'hx.3n':'Video formats','hx.3d':'Site, social, ads',
  'hx.4n':'Revision','hx.4w':'1 included','hx.4d':'On the edit',
  'man.sur':'The principle','man.t1':"The buyer's first question",'man.t2':'is where.',
  'man.corps':"Before price, they want to know how far the school is, how many minutes to the motorway, and what's behind the wall. That's hard to explain in a PDF. It takes eight seconds on a map.",
@@ -1959,10 +1931,10 @@ ar:{
  'hero.sur':'MAALEM معالم — استوديو الإخراج البصري للمشاريع العقارية الفاخرة',
  'hero.t1':'نحوّل المخططات الهندسية','hero.t2':'إلى أفلام سينمائية تبرز قيمة مشروعك','hero.t3':'حتى قبل اكتمال البناء.',
  'hero.lede':'من صور الأقمار الصناعية إلى أدق التفاصيل المعمارية: عرض سينمائي لتفاصيل المشروع مع تتبّع جغرافي ثلاثي الأبعاد (3D GIS)، يمنح المستثمر يقيناً بقيمة المشروع وموقعه الاستراتيجي.',
- 'hero.cta1':'شاهد أعمالنا','hero.cta2':'تواصل عبر واتساب','hero.scroll':'انزل',
- 'hx.1n':'ترسل','hx.1w':'موقع GPS','hx.1d':'+ صورتان أو ثلاث',
- 'hx.2n':'المدة','hx.2d':'بعد الموافقة',
- 'hx.3n':'الصيغ','hx.3d':'موقع · ستوري · منشور',
+ 'hero.cta1':'شاهد أعمالنا','hero.cta2':'تواصل عبر واتساب',
+ 'hx.1n':'المدخلات','hx.1w':'إحداثيات GPS','hx.1d':'+ صور المخطط المعماري',
+ 'hx.2n':'مدة التسليم','hx.2w':'7 أيام عمل','hx.2d':'بعد الموافقة',
+ 'hx.3n':'أحجام الفيديو','hx.3d':'ويبسايت، مواقع التواصل، إعلانات',
  'hx.4n':'مراجعة','hx.4w':'واحدة مجانية','hx.4d':'على المونتاج',
  'man.sur':'المبدأ','man.t1':'أوّل سؤال يطرحه المشتري:','man.t2':'أين؟',
  'man.corps':'قبل السعر، يريد أن يعرف كم تبعد المدرسة، وكم دقيقة إلى المحور السريع، وماذا يوجد خلف الجدار. هذا يصعب شرحه في ملف PDF. ويُرى في ثماني ثوانٍ على الخريطة.',
@@ -3252,7 +3224,6 @@ setStep(0);
 var nav = $('#nav');
 var altBox = $('#alt'), altVal = $('#altVal');
 var altDot = $('.alt__track i'), altFill = $('.alt__track b');
-var waBar = $('#waBar');
 var heroWrap = $('#accueil'), workSec = $('#travaux'), fmtSec = $('#format');
 var ticking = false, vh = window.innerHeight, peekOn = false;
 
@@ -3276,9 +3247,6 @@ function frameLoop(){
   altBox.classList.toggle('is-on', y > vh * 0.55);
   if(altDot){ altDot.style.setProperty('--y', (p * 213).toFixed(1) + 'px'); }
   if(altFill){ altFill.style.setProperty('--h', (p * 220).toFixed(1) + 'px'); }
-
-  /* barre WhatsApp mobile */
-  waBar.classList.toggle('is-on', y > vh * 0.9 && !wasOpen());
 
   /* hero — la vidéo se rapproche pendant que la section suivante recouvre */
   var hp = clamp(y / vh, 0, 1);
@@ -3337,7 +3305,6 @@ window.addEventListener('resize', function(){
 if(RM){
   pins.forEach(function(n){ n.classList.add('is-shown'); });
   setStep(0); drawBuild(0);
-  waBar.classList.add('is-on');
 } else {
   onScroll();
 }
