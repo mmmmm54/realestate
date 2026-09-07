@@ -122,7 +122,7 @@
 <link rel="apple-touch-icon" href="medias/og-image.jpg">
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700&display=swap">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,700&display=swap">
 <!-- Mono réservé aux micro-labels : c'est la langue des instruments de mesure,
      et ça sort le site de la capitale espacée dorée qu'on voit partout. -->
 <!-- Alexandria : le caractère du logo MAALEM, et une famille bilingue latin +
@@ -247,7 +247,7 @@ ul{list-style:none}
   letter-spacing:-.028em;
 }
 .h3{font-weight:400;font-size:clamp(1.2rem,3.4vw,1.7rem);line-height:1.18;letter-spacing:-.02em}
-.lede{font-size:clamp(1.08rem,3.7vw,1.34rem);line-height:1.6;color:var(--w-90);max-width:52ch}
+.lede{font-size:clamp(1rem,3.5vw,1.22rem);font-weight:300;line-height:1.62;color:var(--w-64);max-width:52ch}
 .body{font-size:clamp(.94rem,3.1vw,1rem);line-height:1.62;color:var(--w-64);max-width:56ch}
 /* Les micro-labels ne sont plus des capitales dorées espacées — le motif le
    plus reconnaissable des sites générés. Ils passent en mono, casse naturelle,
@@ -864,29 +864,34 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
 /* Flèches du rail. Posées sur les côtés, à hauteur des vignettes, elles ne
    recouvrent pas les affiches : le rail garde ses marges pour elles. Au
    tactile elles disparaissent — le doigt fait déjà glisser le rail. */
-.reels__nav{display:none}
-@media (hover:hover) and (min-width:900px){
-  .reels__nav{
-    display:flex;justify-content:space-between;align-items:center;
-    position:absolute;z-index:8;pointer-events:none;
-    left:14px;right:14px;bottom:calc(94px + env(safe-area-inset-bottom));
-    height:var(--h-reel,168px);
-  }
-  .reels__b{
-    pointer-events:auto;
-    width:42px;height:42px;border-radius:50%;
-    display:grid;place-items:center;
-    border:1px solid var(--glass-line);background:var(--glass-bg);
-    backdrop-filter:var(--glass-fx);-webkit-backdrop-filter:var(--glass-fx);
-    color:#fff;opacity:0;
-    transition:opacity .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease);
-  }
-  .stage:hover .reels__b{opacity:1}
+.reels__nav{
+  display:flex;justify-content:space-between;align-items:center;
+  position:absolute;z-index:8;pointer-events:none;
+  left:6px;right:6px;bottom:calc(94px + env(safe-area-inset-bottom));
+  height:168px;
+}
+.reels__b{
+  pointer-events:auto;
+  width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;
+  border:1px solid var(--glass-line);
+  background:rgba(18,18,20,.62);
+  backdrop-filter:var(--glass-fx);-webkit-backdrop-filter:var(--glass-fx);
+  color:#fff;opacity:1;
+  transition:opacity .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease);
+}
+.reels__b svg{width:16px;height:16px;display:block}
+.reels__b:active{background:rgba(28,28,30,.9)}
+/* Le lecteur plein cadre les masque avec le reste. */
+body.is-map-open .reels__nav{opacity:0;pointer-events:none}
+/* Là où il existe un survol, on les efface jusqu'à ce que la souris entre :
+   sur grand écran, deux pastilles permanentes sur les affiches sont de trop. */
+@media (hover:hover){
+  .reels__nav{left:14px;right:14px}
+  .reels__b{width:42px;height:42px;opacity:0;background:var(--glass-bg)}
+  .reels__b svg{width:17px;height:17px}
+  .stage:hover .reels__b,.reels__b:focus-visible{opacity:1}
   .reels__b:hover{border-color:var(--glass-line-hi);background:linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.09))}
-  .reels__b:focus-visible{opacity:1}
-  .reels__b svg{width:17px;height:17px;display:block}
-  /* Le lecteur plein cadre les masque avec le reste. */
-  body.is-map-open .reels__nav{opacity:0;pointer-events:none}
 }
 
 /* rail de reels — mobile */
@@ -1458,7 +1463,7 @@ html{scroll-behavior:smooth}
     <!-- Déplacement volontaire du rail. Il ne bouge plus tout seul au survol :
          ces deux boutons rendent le geste explicite. Masqués au tactile, où le
          glissement du doigt fait déjà le travail. -->
-    <div class="reels__nav" id="reelsNav" aria-hidden="true">
+    <div class="reels__nav" id="reelsNav">
       <button type="button" class="reels__b" data-sens="-1" aria-label="Projets précédents">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M15 6l-6 6 6 6"/></svg>
       </button>
@@ -3037,6 +3042,20 @@ function peekShow(i){
    gauche : au lieu de raisonner sur le signe de scrollLeft — négatif dans ce
    cas sur Chrome, positif ailleurs — on regarde simplement de quel côté se
    trouve la vignette suivante. Le calcul vaut alors dans les deux langues. */
+/* Le rail est en scroll-snap MANDATORY. Ce mode annule un défilement animé en
+   cours et ramène au point d'ancrage de départ : un scrollBy en behavior
+   'smooth' revenait à zéro, alors que le même appel en 'auto' passait. On
+   suspend donc l'ancrage le temps de l'animation, puis on le rétablit — le
+   navigateur cale alors la vignette la plus proche, ce qu'on voulait. */
+function railGlisse(ecart){
+  if(!ecart) return;
+  if(RM){ mapReels.scrollBy({ left: ecart, behavior: 'auto' }); return; }
+  mapReels.style.scrollSnapType = 'none';
+  mapReels.scrollBy({ left: ecart, behavior: 'smooth' });
+  clearTimeout(mapReels._resnap);
+  mapReels._resnap = setTimeout(function(){ mapReels.style.scrollSnapType = ''; }, 700);
+}
+
 (function(){
   var nav = $('#reelsNav');
   if(!nav) return;
@@ -3047,8 +3066,7 @@ function peekShow(i){
     var a = reels[0].getBoundingClientRect(), c = reels[1].getBoundingClientRect();
     var pas = Math.abs(c.left - a.left) * 2;          /* deux vignettes */
     var versLaSuite = c.left < a.left ? -1 : 1;       /* côté de l'index suivant */
-    mapReels.scrollBy({ left: sens * versLaSuite * pas,
-                        behavior: RM ? 'auto' : 'smooth' });
+    railGlisse(sens * versLaSuite * pas);
   });
 })();
 
@@ -3063,7 +3081,7 @@ function railTo(i){
   var r = el.getBoundingClientRect(), c = mapReels.getBoundingClientRect();
   var ecart = (r.left + r.width / 2) - (c.left + c.width / 2);
   if(Math.abs(ecart) < 1) return;
-  mapReels.scrollBy({ left: ecart, behavior: RM ? 'auto' : 'smooth' });
+  railGlisse(ecart);
 }
 function peekResume(){
   if(RM || document.body.classList.contains('is-map-open') || !stageInView()) return;
