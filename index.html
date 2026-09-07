@@ -323,13 +323,36 @@ ul{list-style:none}
   background:linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.09));
 }
 .link-arrow:hover .circ svg{transform:translateX(3px) rotate(-45deg)}
-/* Vert WhatsApp, réservé au lien qui ouvre WhatsApp. Le verre des autres
-   ronds reste inchangé : la couleur sert ici de panneau, pas de décor. */
-.link-arrow[data-wa] .circ{
-  background:#25D366;border-color:#25D366;color:#0B141A;
-  backdrop-filter:none;-webkit-backdrop-filter:none;
+/* --- BOUTON WHATSAPP PERMANENT ------------------------------------------
+    Il reste à l'écran pendant tout le défilement : c'est le seul geste que la
+    page demande vraiment, et il ne doit jamais être hors de portée.
+    Il se pose du côté OPPOSÉ à la jauge d'altitude — inset-inline-start suit
+    la langue, donc à gauche en latin, à droite en arabe, là où la jauge est
+    respectivement à droite et à gauche. Les deux ne se croisent jamais.
+    Entièrement vert : c'est la couleur de l'application qui va s'ouvrir. */
+.wa-flottant{
+  position:fixed;z-index:66;
+  inset-inline-start:18px;
+  bottom:calc(18px + env(safe-area-inset-bottom));
+  display:inline-flex;align-items:center;gap:11px;
+  padding:12px 20px 12px 14px;border-radius:1000px;
+  background:#25D366;color:#0B141A;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 10px 30px rgba(0,0,0,.42), 0 0 0 6px rgba(37,211,102,.12);
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  transition:background .35s var(--ease),transform .35s var(--ease),opacity .5s var(--ease);
 }
-.link-arrow[data-wa]:hover .circ{background:#1EBE5A;border-color:#1EBE5A}
+.wa-flottant:hover{background:#1EBE5A;transform:translateY(-2px)}
+.wa-flottant svg{width:20px;height:20px;flex:none;display:block;
+  fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* Le lecteur de projet prend tout l'écran : le bouton s'efface le temps du film. */
+body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
+/* Sous 560 px il ne reste que le pictogramme : le libellé mangerait le tiers
+   de la largeur. Le nom accessible reste porté par aria-label. */
+@media (max-width:559px){
+  .wa-flottant{padding:14px;gap:0}
+  .wa-flottant span{display:none}
+}
 
 /* --- 6. GRILLE / SECTIONS ----------------------------------------------- */
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
@@ -472,6 +495,7 @@ ul{list-style:none}
 
 /* --- 9. BARRE WHATSAPP MOBILE ------------------------------------------- */
 .wa-bar{
+  display:none;   /* remplacée par .wa-flottant, voir plus haut */
   position:fixed;z-index:65;left:12px;right:12px;
   bottom:calc(12px + env(safe-area-inset-bottom));
   display:flex;gap:10px;align-items:center;
@@ -1259,7 +1283,14 @@ html{scroll-behavior:smooth}
 </aside>
 
 <!-- ====================== BARRE WHATSAPP MOBILE ====================== -->
-<div class="wa-bar" id="waBar">
+<!-- Appel WhatsApp permanent. Il remplace la barre basse mobile, qui jouait
+     le même rôle sur un seul format d'écran. -->
+<a class="wa-flottant" data-wa href="#contact" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-whatsapp"/></svg>
+  <span data-i18n="hero.cta2">Parler sur WhatsApp</span>
+</a>
+
+<div class="wa-bar" id="waBar" hidden>
   <div class="wa-bar__t">
     <b><span class="dot-live"></span><span data-i18n="wa.titre">Devis en 2 h</span></b>
     <span data-i18n="wa.sous">Envoyez une épingle GPS</span>
@@ -1294,10 +1325,6 @@ html{scroll-behavior:smooth}
           <p class="lede fade" style="--i:5" data-i18n="hero.lede">On part du satellite et on descend jusqu'à votre parcelle sans coupure : accès, temps de trajet, dimensions au sol, puis le volume à l'échelle réelle au milieu des bâtiments qui existent déjà.</p>
           <div class="hero__cta fade" style="--i:6">
             <a class="pill" href="#travaux" data-i18n="hero.cta1">Voir les travaux</a>
-            <a class="link-arrow" data-wa href="#contact">
-              <span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              <span data-i18n="hero.cta2">Parler sur WhatsApp</span>
-            </a>
           </div>
         </div>
 
