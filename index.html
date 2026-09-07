@@ -222,9 +222,9 @@ ul{list-style:none}
 
 /* --- 3. TYPOGRAPHIE ----------------------------------------------------- */
 .display{
-  /* 300 plutôt que 400 : à cette taille, le 400 pesait trop et écrasait le
-     reste du bloc. La graisse est déjà chargée pour le texte courant. */
-  font-weight:300;
+  /* 400 : à 300 la ligne se délavait sur une vidéo claire. C'est la graisse
+     du logotype, et elle tient le fond sans peser. */
+  font-weight:400;
   font-size:clamp(2.5rem,10.2vw,7.5rem);
   line-height:.94;
   letter-spacing:-.035em;
@@ -247,7 +247,7 @@ ul{list-style:none}
   letter-spacing:-.028em;
 }
 .h3{font-weight:400;font-size:clamp(1.2rem,3.4vw,1.7rem);line-height:1.18;letter-spacing:-.02em}
-.lede{font-size:clamp(1rem,3.5vw,1.22rem);line-height:1.55;color:var(--w-64);max-width:52ch}
+.lede{font-size:clamp(1.08rem,3.7vw,1.34rem);line-height:1.6;color:var(--w-90);max-width:52ch}
 .body{font-size:clamp(.94rem,3.1vw,1rem);line-height:1.62;color:var(--w-64);max-width:56ch}
 /* Les micro-labels ne sont plus des capitales dorées espacées — le motif le
    plus reconnaissable des sites générés. Ils passent en mono, casse naturelle,
@@ -299,7 +299,7 @@ ul{list-style:none}
 .gold{color:var(--gold)}
 
 /* --- 4. RÉVÉLATIONS (masques) ------------------------------------------- */
-.mask{display:block;overflow:hidden;padding-top:.08em;margin-top:-.08em}
+.mask{display:block;overflow:hidden;padding-block:.08em .26em;margin-block:-.08em -.26em}
 .mask[hidden]{display:none}
 .mask > *{
   display:block;
@@ -486,7 +486,7 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
 /* Alexandria couvre l'arabe : la marque parle du même caractère dans les
    trois langues, ce qu'aucune paire de polices séparées ne permet. */
 :root.is-ar body{font-family:'Alexandria','Satoshi',system-ui,sans-serif}
-:root.is-ar .display,:root.is-ar .h2,:root.is-ar .h3{letter-spacing:0;line-height:1.14}
+:root.is-ar .display,:root.is-ar .h2,:root.is-ar .h3{letter-spacing:0;line-height:1.24}
 /* L'accroche arabe est une phrase complète, quatre fois plus longue que la
    française. Au corps du titre latin elle sortirait de la colonne : elle
    reçoit sa propre échelle, toujours mesurée sur le conteneur. */
