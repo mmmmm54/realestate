@@ -326,13 +326,16 @@ ul{list-style:none}
 /* --- BOUTON WHATSAPP PERMANENT ------------------------------------------
     Il reste à l'écran pendant tout le défilement : c'est le seul geste que la
     page demande vraiment, et il ne doit jamais être hors de portée.
-    Il se pose du côté OPPOSÉ à la jauge d'altitude — inset-inline-start suit
-    la langue, donc à gauche en latin, à droite en arabe, là où la jauge est
-    respectivement à droite et à gauche. Les deux ne se croisent jamais.
+    Il se pose du côté de la FIN de lecture — inset-inline-end suit la langue :
+    à droite en latin, à gauche en arabe, soit le coin vers lequel la main se
+    porte naturellement dans chaque sens.
+    Il partage ce côté avec la jauge d'altitude, sans jamais la croiser : la
+    jauge est centrée verticalement sur grand écran et logée en haut sur
+    téléphone, le bouton reste collé au bas.
     Entièrement vert : c'est la couleur de l'application qui va s'ouvrir. */
 .wa-flottant{
   position:fixed;z-index:66;
-  inset-inline-start:18px;
+  inset-inline-end:18px;
   bottom:calc(18px + env(safe-area-inset-bottom));
   display:inline-flex;align-items:center;gap:11px;
   padding:12px 20px 12px 14px;border-radius:1000px;
