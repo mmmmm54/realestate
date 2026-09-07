@@ -323,6 +323,13 @@ ul{list-style:none}
   background:linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.09));
 }
 .link-arrow:hover .circ svg{transform:translateX(3px) rotate(-45deg)}
+/* Vert WhatsApp, réservé au lien qui ouvre WhatsApp. Le verre des autres
+   ronds reste inchangé : la couleur sert ici de panneau, pas de décor. */
+.link-arrow[data-wa] .circ{
+  background:#25D366;border-color:#25D366;color:#0B141A;
+  backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+.link-arrow[data-wa]:hover .circ{background:#1EBE5A;border-color:#1EBE5A}
 
 /* --- 6. GRILLE / SECTIONS ----------------------------------------------- */
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
@@ -400,6 +407,10 @@ ul{list-style:none}
    trois langues, ce qu'aucune paire de polices séparées ne permet. */
 :root.is-ar body{font-family:'Alexandria','Satoshi',system-ui,sans-serif}
 :root.is-ar .display,:root.is-ar .h2,:root.is-ar .h3{letter-spacing:0;line-height:1.2}
+/* L'accroche arabe est une phrase complète, quatre fois plus longue que la
+   française. Au corps du titre latin elle sortirait de la colonne : elle
+   reçoit sa propre échelle, toujours mesurée sur le conteneur. */
+:root.is-ar .display{font-size:clamp(1.2rem,5.35cqw,2.8rem)}
 :root.is-ar .eyebrow,:root.is-ar .layer__n,:root.is-ar .layer__d,
 :root.is-ar .stat__l,:root.is-ar .step__t,:root.is-ar .chip,
 :root.is-ar .pill,:root.is-ar .lang button{letter-spacing:.04em}
@@ -1237,7 +1248,6 @@ html{scroll-behavior:smooth}
       <a href="#process" data-i18n="nav.process">Process</a>
     </nav>
     <div class="lang" id="lang" role="group" aria-label="Langue"></div>
-    <a class="pill pill--gold" data-wa href="#contact">WhatsApp</a>
   </div>
 </header>
 
@@ -1865,9 +1875,9 @@ en:{
 ar:{
  'nav.travaux':'أعمالنا','nav.format':'الصيغة','nav.process':'المراحل','nav.tarifs':'الأسعار',
  'alt.unite':'الارتفاع','wa.titre':'عرض سعر في ساعتين','wa.sous':'أرسل موقع GPS',
- 'hero.sur':'MAALEM معالم — أفلام عقارية سينمائية',
- 'hero.t1':'نُصوّر','hero.t2':'ما لم يُبنَ بعد','hero.t3':'',
- 'hero.lede':'نبدأ من القمر الصناعي وننزل إلى قطعتك دون قطع: المنافذ، أزمنة التنقّل، الأبعاد على الأرض، ثم المجسّم بمقياسه الحقيقي بين المباني القائمة حوله.',
+ 'hero.sur':'MAALEM معالم — استوديو الإخراج البصري للمشاريع العقارية الفاخرة',
+ 'hero.t1':'نحوّل المخططات الهندسية','hero.t2':'إلى أفلام سينمائية تبرز قيمة مشروعك','hero.t3':'حتى قبل اكتمال البناء.',
+ 'hero.lede':'من صور الأقمار الصناعية إلى أدق التفاصيل المعمارية: عرض سينمائي لتفاصيل المشروع مع تتبّع جغرافي ثلاثي الأبعاد (3D GIS)، يمنح المستثمر يقيناً بقيمة المشروع وموقعه الاستراتيجي.',
  'hero.cta1':'شاهد أعمالنا','hero.cta2':'تواصل عبر واتساب','hero.scroll':'انزل',
  'hx.1n':'ترسل','hx.1w':'موقع GPS','hx.1d':'+ صورتان أو ثلاث',
  'hx.2n':'المدة','hx.2d':'بعد الموافقة',
