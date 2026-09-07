@@ -222,7 +222,9 @@ ul{list-style:none}
 
 /* --- 3. TYPOGRAPHIE ----------------------------------------------------- */
 .display{
-  font-weight:400;
+  /* 300 plutôt que 400 : à cette taille, le 400 pesait trop et écrasait le
+     reste du bloc. La graisse est déjà chargée pour le texte courant. */
+  font-weight:300;
   font-size:clamp(2.5rem,10.2vw,7.5rem);
   line-height:.94;
   letter-spacing:-.035em;
@@ -235,7 +237,7 @@ ul{list-style:none}
    requêtes de conteneur, une valeur en cqw invaliderait toute la règle. */
 @supports (font-size:1cqw){
   .hero__left{container-type:inline-size}
-  .display{font-size:clamp(2.5rem,13cqw,7.5rem)}
+  .display{font-size:clamp(2.3rem,11.4cqw,6.4rem)}
 }
 .display--sm{font-size:clamp(2rem,7.4vw,4.6rem);letter-spacing:-.03em;line-height:1.0}
 .h2{
@@ -488,7 +490,7 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
 /* L'accroche arabe est une phrase complète, quatre fois plus longue que la
    française. Au corps du titre latin elle sortirait de la colonne : elle
    reçoit sa propre échelle, toujours mesurée sur le conteneur. */
-:root.is-ar .display{font-size:clamp(1.35rem,6.7cqw,3.4rem)}
+:root.is-ar .display{font-size:clamp(1.28rem,5.9cqw,3rem)}
 :root.is-ar .eyebrow,:root.is-ar .layer__n,:root.is-ar .layer__d,
 :root.is-ar .stat__l,:root.is-ar .step__t,:root.is-ar .chip,
 :root.is-ar .pill,:root.is-ar .lang button{letter-spacing:.04em}
@@ -500,7 +502,7 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
 [dir="rtl"] .rule,[dir="rtl"] .mask > *{transform-origin:right center}
 [dir="rtl"] .slide{transform:translateX(-58px)}
 [dir="rtl"] .is-in .slide{transform:none}
-[dir="rtl"] .link-arrow svg,[dir="rtl"] .gl__back-i svg{transform:scaleX(-1)}
+[dir="rtl"] .link-arrow svg,[dir="rtl"] .gl__back-i svg,[dir="rtl"] .reels__b svg{transform:scaleX(-1)}
 [dir="rtl"] .link-arrow:hover .circ svg{transform:scaleX(-1) translateX(3px) rotate(45deg)}
 [dir="rtl"] .reel__meta,[dir="rtl"] .stage__title{text-align:right}
 [dir="rtl"] .proof{text-align:right}
@@ -610,7 +612,7 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
      restante, la barre de navigation déduite pour ne pas passer dessous.
      Les deux colonnes gardent leur alignement bas l'une par rapport à
      l'autre : c'est ce qui pose le titre et l'index sur la même ligne. */
-  .hero{align-items:center;padding-top:var(--nav-h)}
+  .hero{align-items:center;padding-top:calc(var(--nav-h) + 12vh)}
   .hero__grid{flex-direction:row;align-items:flex-end;justify-content:space-between;gap:60px}
   .hero__left{flex:1 1 56%;max-width:760px}
   .hero__index{flex:0 1 40%;max-width:440px;padding-bottom:6px}
@@ -858,6 +860,34 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
 .stage__title .h2{max-width:none}
 .stage__title p{margin-top:12px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--w-44)}
 .stage.is-open .stage__title,.stage.is-deep .stage__title{opacity:0}
+
+/* Flèches du rail. Posées sur les côtés, à hauteur des vignettes, elles ne
+   recouvrent pas les affiches : le rail garde ses marges pour elles. Au
+   tactile elles disparaissent — le doigt fait déjà glisser le rail. */
+.reels__nav{display:none}
+@media (hover:hover) and (min-width:900px){
+  .reels__nav{
+    display:flex;justify-content:space-between;align-items:center;
+    position:absolute;z-index:8;pointer-events:none;
+    left:14px;right:14px;bottom:calc(94px + env(safe-area-inset-bottom));
+    height:var(--h-reel,168px);
+  }
+  .reels__b{
+    pointer-events:auto;
+    width:42px;height:42px;border-radius:50%;
+    display:grid;place-items:center;
+    border:1px solid var(--glass-line);background:var(--glass-bg);
+    backdrop-filter:var(--glass-fx);-webkit-backdrop-filter:var(--glass-fx);
+    color:#fff;opacity:0;
+    transition:opacity .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease);
+  }
+  .stage:hover .reels__b{opacity:1}
+  .reels__b:hover{border-color:var(--glass-line-hi);background:linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.09))}
+  .reels__b:focus-visible{opacity:1}
+  .reels__b svg{width:17px;height:17px;display:block}
+  /* Le lecteur plein cadre les masque avec le reste. */
+  body.is-map-open .reels__nav{opacity:0;pointer-events:none}
+}
 
 /* rail de reels — mobile */
 .reels{
@@ -1425,6 +1455,17 @@ html{scroll-behavior:smooth}
 
     <!-- rail de reels — mobile ET desktop : la vignette centrée lit en ligne -->
     <div class="reels" id="mapReels"></div>
+    <!-- Déplacement volontaire du rail. Il ne bouge plus tout seul au survol :
+         ces deux boutons rendent le geste explicite. Masqués au tactile, où le
+         glissement du doigt fait déjà le travail. -->
+    <div class="reels__nav" id="reelsNav" aria-hidden="true">
+      <button type="button" class="reels__b" data-sens="-1" aria-label="Projets précédents">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <button type="button" class="reels__b" data-sens="1" aria-label="Projets suivants">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </div>
 
     <!-- le cadre vidéo vit dans la carte -->
     <div class="frame" id="frame" role="dialog" aria-modal="true" aria-label="Projet" aria-hidden="true">
@@ -2565,7 +2606,7 @@ PROJETS.forEach(function(p, i){
     '<span class="pin__lbl"><b>' + txt(p.nom) + '</b><span>' + p.surface + '</span></span>' +
     '<span class="pin__hit" style="--d:' + (i*0.42).toFixed(2) + 's"></span>';
   pin.addEventListener('click', function(){ open(i); });
-  pin.addEventListener('mouseenter', function(){ highlight(i, true); });
+  pin.addEventListener('mouseenter', function(){ highlight(i, true, true); });
   pin.addEventListener('mouseleave', function(){ highlight(i, false); });
   mapPlane.appendChild(pin);
 });
@@ -2593,7 +2634,8 @@ PROJETS.forEach(function(p, i){
       : '<span class="reel__soon">' + t('ui.bientot') + '</span>') +
     '<span class="reel__meta"><b>' + txt(p.nom) + '</b><em>' + txt(p.ville) + '</em><span>' + p.surface + '</span></span>';
   b.addEventListener('click', function(){ open(i); });
-  b.addEventListener('mouseenter', function(){ if(DESK()) highlight(i, true); });
+  /* Pas de recentrage ici : la vignette est déjà sous le curseur. */
+  b.addEventListener('mouseenter', function(){ if(DESK()) highlight(i, true, false); });
   mapReels.appendChild(b);
 });
 $$('[data-terrain="reel"]', mapReels).forEach(buildTerrain);
@@ -2621,12 +2663,16 @@ function layoutPins(){
   });
 }
 
-function highlight(i, on){
+function highlight(i, on, recentrer){
   if(pins[i]) pins[i].classList.toggle('is-active', on);
   if(rows[i]) rows[i].classList.toggle('is-active', on);
   if(reels[i]) reels[i].classList.toggle('is-active', on);
-  /* survoler une épingle ou une ligne d'index recentre le rail sur ce projet */
-  if(on && DESK()){ railTo(i); peekShow(i); peekResume(); }
+  if(on && DESK()){
+    /* Le recentrage n'a lieu que si l'appelant le demande : depuis la vignette
+       elle-même, il la ferait glisser hors du curseur. */
+    if(recentrer) railTo(i);
+    peekShow(i); peekResume();
+  }
 }
 
 /* -- verrou de défilement -- */
@@ -2981,13 +3027,43 @@ function peekShow(i){
 }
 
 /* recentre le rail sur une vignette (survol d'épingle ou d'index sur desktop) */
+/* Les flèches déplacent le rail de deux vignettes.
+
+   Le pas est mesuré, pas deviné : on prend l'écart réel entre deux vignettes
+   voisines. Une largeur d'écran dépasserait la course totale du rail, qui est
+   courte, et le scroll-snap ramènerait au point de départ.
+
+   Le SENS est mesuré lui aussi. En arabe les vignettes se suivent de droite à
+   gauche : au lieu de raisonner sur le signe de scrollLeft — négatif dans ce
+   cas sur Chrome, positif ailleurs — on regarde simplement de quel côté se
+   trouve la vignette suivante. Le calcul vaut alors dans les deux langues. */
+(function(){
+  var nav = $('#reelsNav');
+  if(!nav) return;
+  nav.addEventListener('click', function(e){
+    var b = e.target.closest('.reels__b');
+    if(!b || reels.length < 2) return;
+    var sens = parseFloat(b.getAttribute('data-sens')) || 1;
+    var a = reels[0].getBoundingClientRect(), c = reels[1].getBoundingClientRect();
+    var pas = Math.abs(c.left - a.left) * 2;          /* deux vignettes */
+    var versLaSuite = c.left < a.left ? -1 : 1;       /* côté de l'index suivant */
+    mapReels.scrollBy({ left: sens * versLaSuite * pas,
+                        behavior: RM ? 'auto' : 'smooth' });
+  });
+})();
+
 function railTo(i){
   var el = reels[i];
   if(!el) return;
-  mapReels.scrollTo({
-    left: el.offsetLeft - (mapReels.clientWidth - el.offsetWidth) / 2,
-    behavior: RM ? 'auto' : 'smooth'
-  });
+  /* Calcul par positions visibles, et non par offsetLeft : en arabe le rail
+     défile de droite à gauche et scrollLeft y parcourt une plage négative.
+     L'ancienne formule produisait une valeur positive, aussitôt ramenée à 0 —
+     le rail ne bougeait pas du tout dans cette langue. Un écart mesuré à
+     l'écran, lui, vaut dans les deux sens. */
+  var r = el.getBoundingClientRect(), c = mapReels.getBoundingClientRect();
+  var ecart = (r.left + r.width / 2) - (c.left + c.width / 2);
+  if(Math.abs(ecart) < 1) return;
+  mapReels.scrollBy({ left: ecart, behavior: RM ? 'auto' : 'smooth' });
 }
 function peekResume(){
   if(RM || document.body.classList.contains('is-map-open') || !stageInView()) return;
