@@ -978,6 +978,20 @@ body.is-map-open .reels__nav{opacity:0;pointer-events:none}
   padding:7px 12px;border-radius:9px;background:rgba(12,12,14,.62);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--w-14);
 }
+.frame__head{display:flex;flex-direction:column;align-items:flex-start;gap:9px;
+  max-width:min(54ch,66%);min-width:0}
+/* La phrase du projet. Elle porte le même verre que le badge pour rester
+   lisible sur n'importe quelle image, et se retire sur les petits écrans où
+   elle recouvrirait le film. */
+.frame__desc{
+  margin:0;padding:9px 13px;border-radius:9px;
+  font-size:.76rem;font-weight:300;line-height:1.5;color:var(--w-90);
+  background:rgba(12,12,14,.62);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--w-14);
+}
+.frame__desc:empty{display:none}
+@media (max-width:719px){ .frame__head{max-width:78%} .frame__desc{display:none} }
 .frame__badge b{display:block;font-size:.72rem;font-weight:700}
 .frame__badge span{display:block;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:2px}
 .frame__tools{display:flex;gap:8px}
@@ -1454,8 +1468,8 @@ html{scroll-behavior:smooth}
 
     <div class="stage__title" data-reveal>
       <div class="fade" style="--i:0"><span class="eyebrow" data-n="02" data-i18n="map.sur">Travaux</span></div>
-      <h2 class="h2" style="margin-top:14px"><span class="mask" style="--i:1"><span data-i18n="map.t1">Chaque projet,</span></span><span class="mask" style="--i:2"><span data-i18n="map.t2">posé sur sa carte.</span></span></h2>
-      <p class="fade" style="--i:3" data-i18n="map.sous">Touchez une épingle pour descendre</p>
+      <h2 class="h2" style="margin-top:14px"><span class="mask" style="--i:1"><span data-i18n="map.t1">Des projets d'exception,</span></span><span class="mask" style="--i:2"><span data-i18n="map.t2">devenus des films qui vendent.</span></span></h2>
+      <p class="fade" style="--i:3" data-i18n="map.sous">Touchez un projet pour voir le film complet</p>
     </div>
 
     <!-- rail de reels — mobile ET desktop : la vignette centrée lit en ligne -->
@@ -1479,7 +1493,10 @@ html{scroll-behavior:smooth}
       <div class="frame__empty" id="frameEmpty" data-i18n="frame.vide">Film à venir — visuel de démonstration</div>
       <div class="frame__scrim"></div>
       <div class="frame__top">
-        <div class="frame__badge"><b id="frameName">—</b><span id="frameCity">—</span></div>
+        <div class="frame__head">
+          <div class="frame__badge"><b id="frameName">—</b><span id="frameCity">—</span></div>
+          <p class="frame__desc" id="frameDesc"></p>
+        </div>
         <div class="frame__tools">
           <button class="frame__btn" id="frameSound" data-on="0" aria-label="Activer le son">
             <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m17 9 4 6M21 9l-4 6"/></svg>
@@ -1841,6 +1858,7 @@ var PROJETS = [
   /* Relevé dans le film : filigranes « تيجان / TEJAN » et « الزاملية
      للاستثمار », repérage sur حي الروضة et شارع الأمير سعود الفيصل. */
   { id:'p4', nom:{ fr:'Tejan', en:'Tejan', ar:'تيجان' },
+    desc:{ fr:'Film publicitaire pour un projet d\'exception à Djeddah : il emporte la décision en montrant ce qui le distingue.', en:'An advertising film for a standout project in Jeddah, settling the decision by showing what sets it apart.', ar:'فيديو إعلاني لمشروع متميز في جدة لحسم قرار المستثمرين من خلال إبراز مميزات المشروع' },
     ville:{ fr:'Arabie saoudite', en:'Saudi Arabia', ar:'السعودية' },
     surface:'—', lots:'—', annee:'—',
     x:38, y:62, seed:47, villeId:'jeddah', lat:21.5760, lon:39.1580,
@@ -1849,24 +1867,28 @@ var PROJETS = [
   /* Relevé dans le film : logo « الشعرى / SIRIUS » du promoteur الوحدة
      العقارية, repérage sur شارع التحلية, طريق المدينة, كورنيش الحمراء. */
   { id:'p3', nom:{ fr:'Sirius', en:'Sirius', ar:'الشعرى' },
+    desc:{ fr:'Film publicitaire de vente directe pour un bien résidentiel à Djeddah.', en:'A direct-sales advertising film for a residential property in Jeddah.', ar:'فيديو إعلاني للبيع المباشر لعقار سكني في جدة' },
     ville:{ fr:'Arabie saoudite', en:'Saudi Arabia', ar:'السعودية' },
     surface:'—', lots:'—', annee:'—',
     x:74, y:47, seed:31, villeId:'jeddah', lat:21.5290, lon:39.1720,
     video:'', reel:'medias/p-khaleej-1.mp4',     poster:'medias/poster-p-khaleej-1.jpg' },
 
   { id:'p1', nom:{ fr:'Neo Square', en:'Neo Square', ar:'نيو سكوير' },
+    desc:{ fr:'Mise en volume du plan d\'architecte d\'un terrain résidentiel à Marrakech, pour attirer les investisseurs avant le début des travaux.', en:'The architectural plan of a residential plot in Marrakech brought to life, to draw investors before building starts.', ar:'تجسيد المخطط المعماري لأرض سكنية في مراكش لجذب المستثمرين قبل بدء البناء' },
     ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
     surface:'2 371 m²', lots:'48', annee:'2026',
     x:26, y:34, seed:11, geo:'p1', villeId:'marrakech', lat:31.637358, lon:-8.003442,
     video:'', reel:'medias/p-neosquare.mp4',     poster:'medias/poster-p-neosquare.jpg' },
 
   { id:'p9', nom:{ fr:'Fès', en:'Fes', ar:'فاس' },
+    desc:{ fr:'Film documentaire complet donnant corps au plan d\'architecte d\'un ensemble de villas de luxe à Fès, pour convaincre les investisseurs avant le premier coup de pioche.', en:'A full documentary film giving form to the architectural plans of a luxury villa complex in Fes, to convince investors before construction begins.', ar:'فيديو وثائقي متكامل لتجسيد المخطط الهندسي والمعماري لمجمع فيلات فاخرة في فاس، لإقناع المستثمرين حتى قبل بدء بناء المشروع' },
     ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
     surface:'—', lots:'—', annee:'—',
     x:52, y:18, seed:97, villeId:'fes', lat:34.050444, lon:-5.018917,
     video:'', reel:'medias/p-fes.mp4',           poster:'medias/poster-p-fes.jpg' },
 
   { id:'p2', nom:{ fr:'Maarif Apartments', en:'Maarif Apartments', ar:'شقق المعاريف' },
+    desc:{ fr:'Mise en avant de l\'emplacement stratégique d\'un bien résidentiel à Casablanca, pour accélérer les ventes.', en:'Highlighting the strategic location of a residential property in Casablanca, to speed up sales.', ar:'إبراز الموقع الاستراتيجي لعقار سكني في الدار البيضاء لتسريع عمليات البيع' },
     ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
     surface:'—', lots:'—', annee:'—',
     x:58, y:24, seed:23,
@@ -1875,6 +1897,7 @@ var PROJETS = [
   /* Le fichier s'appelait « CINEMATIC XPERIENCEHUB » mais c'est le carton
      NEO SQUARE qui clôt le film. Même projet que p1, registre lifestyle. */
   { id:'p5', nom:{ fr:'Neo Square — Lifestyle', en:'Neo Square — Lifestyle', ar:'نيو سكوير — أسلوب حياة' },
+    desc:{ fr:'L\'art de vivre d\'une résidence de luxe rendu visible avant même sa construction, pour attirer les investisseurs.', en:'The lifestyle of a luxury residence made visible before it is built, to attract investors.', ar:'تجسيد أسلوب الحياة في مشروع سكني فاخر حتى قبل بدء بنائه، لجذب المستثمرين' },
     ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
     surface:'—', lots:'—', annee:'—',
     x:16, y:74, seed:59,
@@ -1885,13 +1908,8 @@ var PROJETS = [
      noms sont des étiquettes de remplissage choisies pour ne recouper aucun
      promoteur existant. Remplacez-les dès qu'un vrai projet prend la place.
      ---------------------------------------------------------------------- */
-  { id:'p6', nom:{ fr:'Yasmine Court', en:'Yasmine Court', ar:'ياسمين كورت' },
-    ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
-    surface:'—', lots:'—', annee:'—',
-    x:66, y:78, seed:67,
-    video:'', reel:'medias/p-initial-scene.mp4', poster:'medias/poster-p-initial-scene.jpg' },
-
   { id:'p7', nom:{ fr:'Amber Tower', en:'Amber Tower', ar:'برج العنبر' },
+    desc:{ fr:'Film promotionnel pour les réseaux sociaux.', en:'A promotional film for social media.', ar:'فيديو ترويجي لمواقع التواصل الاجتماعي' },
     ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
     surface:'—', lots:'—', annee:'—',
     x:46, y:40, seed:73,
@@ -1900,6 +1918,7 @@ var PROJETS = [
   /* Celui-ci n'a pas besoin d'un faux nom : le film montre le filaire doré
      qui devient bâtiment, c'est-à-dire le procédé maison. */
   { id:'p8', nom:{ fr:'Signature 3D', en:'Signature 3D', ar:'توقيع ثلاثي الأبعاد' },
+    desc:{ fr:'Film promotionnel pour les réseaux sociaux.', en:'A promotional film for social media.', ar:'فيديو ترويجي لمواقع التواصل الاجتماعي' },
     ville:'MAALEM', surface:'—', lots:'—', annee:'—',
     x:34, y:52, seed:83,
     video:'', reel:'medias/p-terrain-b.mp4',     poster:'medias/poster-p-terrain-b.jpg' }
@@ -1941,7 +1960,7 @@ en:{
  'man.s1':'Delivery time','man.s1u':' days','man.s4u':' sizes','man.s2':'Geographic and architectural accuracy','man.s3':'Master resolution',
  'clients.titre':'Trusted by',
  'map.sur':'Work','map.retour':'Back to orbit',
- 'map.t1':'Every project,','map.t2':'on its own map.','map.sous':'Tap a pin to descend',
+ 'map.t1':'Standout projects,','map.t2':'turned into films that sell.','map.sous':'Tap any project to see the full film',
  'frame.vide':'Film coming — demonstration visual',
  'frame.surface':'Area','frame.lots':'Units','frame.annee':'Year',
  'hc.zoom':'8.0034° W · Zoom ×18','hc.drive.v':'8 min','hc.drive':'By car — A3',
@@ -1990,7 +2009,7 @@ ar:{
  'man.s1':'مدّة التسليم','man.s1u':' أيام','man.s4u':' مقاسات','man.s2':'الدقة الجغرافية والمعمارية','man.s3':'دقة النسخة الأصلية',
  'clients.titre':'يثقون بنا',
  'map.sur':'أعمالنا','map.retour':'العودة إلى المدار',
- 'map.t1':'كل مشروع','map.t2':'موضوع على خريطته.','map.sous':'اضغط على علامة للنزول',
+ 'map.t1':'مشاريع متميزة..','map.t2':'حولناها من مواقع على الخريطة إلى أفلام سينمائية تبيع.','map.sous':'اضغط على أي مشروع لمشاهدة الإخراج المتكامل',
  'frame.vide':'الفيلم قادم — صورة توضيحية',
  'frame.surface':'المساحة','frame.lots':'الوحدات','frame.annee':'السنة',
  'hc.zoom':'8.0034° غرباً · تكبير ×18','hc.drive.v':'8 دقائق','hc.drive':'بالسيارة — A3',
@@ -2170,6 +2189,17 @@ function majDynamique(){
     var pr = PROJETS[i]; if(!pr) return;
     var b = l.querySelector('b'); if(b) b.textContent = txt(pr.nom);
   });
+
+  /* Le lecteur ouvert : nom, pays et phrase y sont posés à l'ouverture du
+     projet, pas par la boucle data-i18n. Sans ce rappel, ils restent dans la
+     langue d'avant tant qu'on ne referme pas. */
+  if(current >= 0 && PROJETS[current]){
+    var pc = PROJETS[current];
+    var fn = $('#frameName'), fc = $('#frameCity'), fd = $('#frameDesc');
+    if(fn) fn.textContent = txt(pc.nom);
+    if(fc) fc.textContent = txt(pc.ville);
+    if(fd) fd.textContent = txt(pc.desc);
+  }
 }
 
 /* Liens WhatsApp -------------------------------------------------------- */
@@ -2712,6 +2742,7 @@ function open(i){
 
   $('#frameName').textContent = txt(p.nom);
   $('#frameCity').textContent = txt(p.ville);
+  $('#frameDesc').textContent = txt(p.desc);
   $('#frameSurf').textContent = p.surface;
   $('#frameLots').textContent = p.lots;
   $('#frameYear').textContent = p.annee;
