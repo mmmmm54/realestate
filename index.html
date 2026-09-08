@@ -1414,14 +1414,14 @@ html{scroll-behavior:smooth}
     <div class="fade" style="--i:0"><span class="eyebrow" data-n="01" data-i18n="man.sur">Le principe</span></div>
     <h2 class="h2" style="margin-top:16px">
       <span class="mask" style="--i:1"><span data-i18n="man.t1">La première question de l'acheteur :</span></span>
-      <span class="mask" style="--i:2"><span class="gold" data-i18n="man.t2">où&nbsp;?</span></span>
+      <span class="mask" style="--i:2"><span data-i18n="man.t2"><span class="gold">où&nbsp;?</span></span></span>
     </h2>
-    <p class="body fade" style="--i:4;margin-top:22px" data-i18n="man.corps">Avant le prix, il veut savoir à combien est l'école, combien de minutes jusqu'à l'axe rapide, et ce qu'il y a derrière le mur. C'est difficile à expliquer dans un PDF. Ça se voit en huit secondes sur une carte.</p>
+    <p class="body fade" style="--i:4;margin-top:22px" data-i18n="man.corps">Avant de parler prix, l'investisseur cherche la valeur du lieu : la distance aux destinations qui comptent, la facilité des accès, l'avenir du quartier. Ces détails se perdent dans un PDF figé ; sur une carte, ils se lisent en huit secondes.</p>
     <div class="manifesto__meta">
-      <div class="fade" style="--i:5"><div class="stat__n num" data-count="7" data-suffix-i18n="man.s1u" data-suffix=" jours">0</div><div class="stat__l" data-i18n="man.s1">Livraison moyenne</div></div>
-      <div class="fade" style="--i:6"><div class="stat__n num" data-count="120" data-prefix="+">0</div><div class="stat__l" data-i18n="man.s2">Parcelles traitées</div></div>
+      <div class="fade" style="--i:5"><div class="stat__n num" data-count="7" data-suffix-i18n="man.s1u" data-suffix=" jours">0</div><div class="stat__l" data-i18n="man.s1">Délai de livraison</div></div>
+      <div class="fade" style="--i:6"><div class="stat__n num" data-count="100" data-suffix="%">0</div><div class="stat__l" data-i18n="man.s2">Précision géographique et architecturale</div></div>
       <div class="fade" style="--i:7"><div class="stat__n num" data-count="4" data-suffix="K">0K</div><div class="stat__l" data-i18n="man.s3">Résolution master</div></div>
-      <div class="fade" style="--i:8"><div class="stat__n num" data-count="3" data-suffix=" cuts">0</div><div class="stat__l">16:9 · 9:16 · 1:1</div></div>
+      <div class="fade" style="--i:8"><div class="stat__n num" data-count="3" data-suffix-i18n="man.s4u" data-suffix=" formats">0</div><div class="stat__l">1:1 · 9:16 · 16:9</div></div>
     </div>
   </div>
 </section>
@@ -1923,7 +1923,7 @@ fr:{
  'f.envoi':'Envoi…','f.echec':'Envoi impossible — on bascule sur WhatsApp.',
  /* Suffixe du compteur : il n'a pas de source dans le DOM, contrairement
     au reste du français. Sans cette entrée, t() renvoie la clé brute. */
- 'man.s1u':' jours'
+ 'man.s1u':' jours','man.s4u':' formats'
 },
 en:{
  'nav.travaux':'Work','nav.format':'Format','nav.process':'Process','nav.tarifs':'Pricing',
@@ -1936,9 +1936,9 @@ en:{
  'hx.2n':'Delivery time','hx.2w':'7 working days','hx.2d':'After sign-off',
  'hx.3n':'Video formats','hx.3d':'Site, social, ads',
  'hx.4n':'Revision','hx.4w':'1 included','hx.4d':'On the edit',
- 'man.sur':'The principle','man.t1':"The buyer's first question",'man.t2':'is where.',
- 'man.corps':"Before price, they want to know how far the school is, how many minutes to the motorway, and what's behind the wall. That's hard to explain in a PDF. It takes eight seconds on a map.",
- 'man.s1':'Delivery time','man.s1u':' days','man.s2':'Plots handled','man.s3':'Master resolution',
+ 'man.sur':'The principle','man.t1':"The buyer's first question",'man.t2':'<span class="gold">is where.</span>',
+ 'man.corps':'Before talking price, the investor is looking for what the location is worth: distance to the places that matter, ease of access, where the neighbourhood is heading. Those details are lost inside a static PDF; on a map they read in eight seconds.',
+ 'man.s1':'Delivery time','man.s1u':' days','man.s4u':' sizes','man.s2':'Geographic and architectural accuracy','man.s3':'Master resolution',
  'clients.titre':'Trusted by',
  'map.sur':'Work','map.retour':'Back to orbit',
  'map.t1':'Every project,','map.t2':'on its own map.','map.sous':'Tap a pin to descend',
@@ -1985,9 +1985,9 @@ ar:{
  'hx.2n':'مدة التسليم','hx.2w':'7 أيام عمل','hx.2d':'بعد الموافقة',
  'hx.3n':'أحجام الفيديو','hx.3d':'ويبسايت، مواقع التواصل، إعلانات',
  'hx.4n':'مراجعة','hx.4w':'واحدة مجانية','hx.4d':'على المونتاج',
- 'man.sur':'المبدأ','man.t1':'أوّل سؤال يطرحه المشتري:','man.t2':'أين؟',
- 'man.corps':'قبل السعر، يريد أن يعرف كم تبعد المدرسة، وكم دقيقة إلى المحور السريع، وماذا يوجد خلف الجدار. هذا يصعب شرحه في ملف PDF. ويُرى في ثماني ثوانٍ على الخريطة.',
- 'man.s1':'مدّة التسليم','man.s1u':' أيام','man.s2':'قطعة أرض','man.s3':'دقة النسخة الأصلية',
+ 'man.sur':'المبدأ','man.t1':'أوّل سؤال يطرحه','man.t2':'المشتري: <span class="gold">أين؟</span>',
+ 'man.corps':'قبل مناقشة السعر، يبحث المستثمر عن قيمة الموقع: المسافة إلى الوجهات الحيوية، سهولة المداخل، والمستقبل الاستثماري للحي. هذه التفاصيل تفقد قيمتها داخل ملفات الـ PDF الثابتة، وتتحول إلى صفقة ناجحة خلال 8 ثوانٍ على الخريطة التفاعلية.',
+ 'man.s1':'مدّة التسليم','man.s1u':' أيام','man.s4u':' مقاسات','man.s2':'الدقة الجغرافية والمعمارية','man.s3':'دقة النسخة الأصلية',
  'clients.titre':'يثقون بنا',
  'map.sur':'أعمالنا','map.retour':'العودة إلى المدار',
  'map.t1':'كل مشروع','map.t2':'موضوع على خريطته.','map.sous':'اضغط على علامة للنزول',
