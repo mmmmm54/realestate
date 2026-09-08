@@ -577,7 +577,8 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
     linear-gradient(180deg,rgba(12,12,14,.72) 0%,rgba(12,12,14,.12) 34%,rgba(12,12,14,.55) 68%,rgba(12,12,14,.95) 100%),
     radial-gradient(120% 80% at 50% 40%,transparent 30%,rgba(12,12,14,.6) 100%);
 }
-.hero__in{position:relative;width:100%;padding-bottom:clamp(48px,10vw,72px);z-index:2}
+.hero__in{position:relative;width:100%;
+  padding-bottom:calc(clamp(48px,10vw,72px) + 76px);z-index:2}
 .hero__grid{display:flex;flex-direction:column;gap:clamp(24px,6vw,40px)}
 .hero__title{margin-block:14px 18px}
 .hero__cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
@@ -613,6 +614,7 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
      Les deux colonnes gardent leur alignement bas l'une par rapport à
      l'autre : c'est ce qui pose le titre et l'index sur la même ligne. */
   .hero{align-items:center;padding-top:calc(var(--nav-h) + 12vh)}
+  .hero__in{padding-bottom:clamp(48px,10vw,72px)}
   .hero__grid{flex-direction:row;align-items:flex-end;justify-content:space-between;gap:60px}
   .hero__left{flex:1 1 56%;max-width:760px}
   .hero__index{flex:0 1 40%;max-width:440px;padding-bottom:6px}
@@ -2909,11 +2911,20 @@ function glInit(){
          le curseur est réellement sur le globe (voir zoneZoom plus bas).
          Partout ailleurs, la page continue de défiler normalement. */
       scrollZoom:false,
-      /* Sur mobile, un glissement vertical ferait pivoter le globe au lieu de
-         faire défiler la page — même piège, en pire. Le tactile ne déplace
-         donc pas la carte ; les pastilles restent cliquables. */
-      dragPan:DESK(),
-      touchZoomRotate:false,
+      /* Le globe se manipule au doigt sans voler le défilement de la page :
+         un doigt fait défiler, deux doigts déplacent et zooment. C'est ce que
+         fait cooperativeGestures, avec son propre message d'aide au premier
+         essai à un doigt — d'où la traduction passée dans locale.
+         Uniquement sur tactile : sur ordinateur, ce mode exigerait ctrl +
+         molette alors que la zone centrale gère déjà le zoom au survol. */
+      cooperativeGestures: !DESK(),
+      locale: {
+        'TouchPanBlocker.Message': LANG === 'ar' ? 'حرّك الخريطة بإصبعين'
+                                 : LANG === 'en' ? 'Use two fingers to move the map'
+                                 : 'Déplacez la carte avec deux doigts'
+      },
+      dragPan:true,
+      touchZoomRotate:true,
       doubleClickZoom:false
     });
   } catch(e){ return glFallback(); }
