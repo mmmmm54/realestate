@@ -1275,6 +1275,44 @@ body.is-map-open .gl__back{opacity:0;pointer-events:none}
 /* le label du hero est posé sur la vidéo : selon le plan, le fond passe clair */
 .hero__left .eyebrow{text-shadow:0 1px 14px rgba(10,10,12,.75)}
 
+/* --- PASSE MOBILE ----------------------------------------------------------
+   Le téléphone est l'écran principal : les liens arrivent par WhatsApp. Ce
+   bloc ne redessine rien, il rend saisissable et lisible ce qui ne l'était
+   pas. Relevé fait sur un 390 x 844 : des commandes hautes de 15 à 38 px là
+   où le doigt en demande 44, et des textes descendus sous 10 px. */
+@media (max-width:899px){
+  /* Le sélecteur de langue est la commande la plus utilisée de la barre : le
+     site s'ouvre en arabe, un visiteur francophone doit l'atteindre du
+     premier coup. À 26 px de haut, il se ratait. */
+  .lang{padding:4px}
+  .lang button{min-height:40px;display:grid;place-items:center;padding:0 15px;font-size:.64rem}
+
+  /* Les épingles gardent leur point de 15 px — la carte deviendrait illisible
+     avec des pastilles de 44 — mais la zone sensible s'étend autour, en
+     transparence. L'épingle est centrée par translate : le rembourrage
+     grandit des deux côtés, le point ne se déplace pas. */
+  .pin{padding:13px}
+
+  /* Flèches du rail et marques sociales : 38 px, sous le seuil du pouce. */
+  .reels__b{width:44px;height:44px}
+  .foot__soc a{width:44px;height:44px}
+  .foot__soc svg{width:19px;height:19px}
+
+  /* Sur téléphone, la barre du haut masque les trois liens de section : le
+     pied de page est le seul endroit où ils subsistent. Hauts de 15 px, ils
+     n'y étaient que décoratifs. */
+  .foot__l{gap:2px 22px}
+  .foot__l a{display:inline-block;padding-block:12px;font-size:.68rem}
+
+  /* Relevés remontés au-dessus de 11 px là où la grille le permet. Le sommaire
+     du hero n'en fait pas partie : ses trois colonnes tiennent dans 342 px, et
+     un point de plus fait passer une ligne sur deux — la rangée dépareillée
+     coûte plus que les 0,3 px gagnés. La vignette, elle, porte le nom du
+     projet : il se lisait en 9,6 px. */
+  .reel__meta b{font-size:.7rem}
+  .stat__l,.step__t{font-size:.72rem}
+}
+
 /* --- Petits téléphones -----------------------------------------------------
    Sous 380 px, la troisième colonne du bloc hero force un retour à la ligne :
    la ligne passe de 38 à 65 px et tout le contenu déborde par le haut, sous la
