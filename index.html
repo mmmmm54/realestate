@@ -906,7 +906,7 @@ body.is-map-open .reels__nav{opacity:0;pointer-events:none}
 .reels::-webkit-scrollbar{display:none}
 .stage.is-open .reels{opacity:0;transform:translateY(30px);pointer-events:none}
 .reel{
-  position:relative;flex:none;width:100px;aspect-ratio:9/16;border-radius:13px;overflow:hidden;
+  position:relative;flex:none;width:126px;aspect-ratio:9/16;border-radius:13px;overflow:hidden;
   border:1px solid var(--w-14);scroll-snap-align:center;background:var(--ink-3);
   transition:border-color .4s var(--ease);
 }
@@ -919,7 +919,14 @@ body.is-map-open .reels__nav{opacity:0;pointer-events:none}
   background:linear-gradient(180deg,transparent,rgba(10,10,12,.72) 38%,rgba(10,10,12,.96))}
 .reel__meta b{display:block;font-size:.6rem;font-weight:700;line-height:1.2}
 .reel__meta em{display:none}   /* la ville n'apparaît qu'à partir du desktop */
-.reel__meta span{display:block;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-top:3px}
+/* La phrase du projet. Casse naturelle et pas d'interlettrage : ce n'est plus
+   un relevé chiffré mais une ligne de texte, elle se lit comme telle.
+   Deux lignes au maximum, avec points de suspension au-delà. */
+.reel__meta span{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+  font-size:.55rem;font-weight:300;letter-spacing:0;text-transform:none;
+  line-height:1.45;color:var(--w-64);margin-top:4px;
+}
 .reel__play{position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:50%;border:1px solid var(--w-24);display:grid;place-items:center;background:rgba(12,12,14,.5)}
 .reel__play svg{width:8px;height:8px}
 .reel__soon{
@@ -1866,6 +1873,13 @@ var PROJETS = [
 
   /* Relevé dans le film : logo « الشعرى / SIRIUS » du promoteur الوحدة
      العقارية, repérage sur شارع التحلية, طريق المدينة, كورنيش الحمراء. */
+  { id:'p9', nom:{ fr:'Fès', en:'Fes', ar:'فاس' },
+    desc:{ fr:'Film documentaire complet donnant corps au plan d\'architecte d\'un ensemble de villas de luxe à Fès, pour convaincre les investisseurs avant le premier coup de pioche.', en:'A full documentary film giving form to the architectural plans of a luxury villa complex in Fes, to convince investors before construction begins.', ar:'فيديو وثائقي متكامل لتجسيد المخطط الهندسي والمعماري لمجمع فيلات فاخرة في فاس، لإقناع المستثمرين حتى قبل بدء بناء المشروع' },
+    ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
+    surface:'—', lots:'—', annee:'—',
+    x:52, y:18, seed:97, villeId:'fes', lat:34.050444, lon:-5.018917,
+    video:'', reel:'medias/p-fes.mp4',           poster:'medias/poster-p-fes.jpg' },
+
   { id:'p3', nom:{ fr:'Sirius', en:'Sirius', ar:'الشعرى' },
     desc:{ fr:'Film publicitaire de vente directe pour un bien résidentiel à Djeddah.', en:'A direct-sales advertising film for a residential property in Jeddah.', ar:'فيديو إعلاني للبيع المباشر لعقار سكني في جدة' },
     ville:{ fr:'Arabie saoudite', en:'Saudi Arabia', ar:'السعودية' },
@@ -1879,13 +1893,6 @@ var PROJETS = [
     surface:'2 371 m²', lots:'48', annee:'2026',
     x:26, y:34, seed:11, geo:'p1', villeId:'marrakech', lat:31.637358, lon:-8.003442,
     video:'', reel:'medias/p-neosquare.mp4',     poster:'medias/poster-p-neosquare.jpg' },
-
-  { id:'p9', nom:{ fr:'Fès', en:'Fes', ar:'فاس' },
-    desc:{ fr:'Film documentaire complet donnant corps au plan d\'architecte d\'un ensemble de villas de luxe à Fès, pour convaincre les investisseurs avant le premier coup de pioche.', en:'A full documentary film giving form to the architectural plans of a luxury villa complex in Fes, to convince investors before construction begins.', ar:'فيديو وثائقي متكامل لتجسيد المخطط الهندسي والمعماري لمجمع فيلات فاخرة في فاس، لإقناع المستثمرين حتى قبل بدء بناء المشروع' },
-    ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
-    surface:'—', lots:'—', annee:'—',
-    x:52, y:18, seed:97, villeId:'fes', lat:34.050444, lon:-5.018917,
-    video:'', reel:'medias/p-fes.mp4',           poster:'medias/poster-p-fes.jpg' },
 
   { id:'p2', nom:{ fr:'Maarif Apartments', en:'Maarif Apartments', ar:'شقق المعاريف' },
     desc:{ fr:'Mise en avant de l\'emplacement stratégique d\'un bien résidentiel à Casablanca, pour accélérer les ventes.', en:'Highlighting the strategic location of a residential property in Casablanca, to speed up sales.', ar:'إبراز الموقع الاستراتيجي لعقار سكني في الدار البيضاء لتسريع عمليات البيع' },
@@ -2181,9 +2188,10 @@ function majDynamique(){
      data-i18n, donc la boucle générale ne les atteint pas. */
   $$('#mapReels .reel__meta').forEach(function(m, i){
     var pr = PROJETS[i]; if(!pr) return;
-    var b = m.querySelector('b'), e = m.querySelector('em');
+    var b = m.querySelector('b'), e = m.querySelector('em'), d = m.querySelector('span');
     if(b) b.textContent = txt(pr.nom);
     if(e) e.textContent = txt(pr.ville);
+    if(d) d.textContent = txt(pr.desc);
   });
   $$('.pin__lbl').forEach(function(l, i){
     var pr = PROJETS[i]; if(!pr) return;
@@ -2667,7 +2675,7 @@ PROJETS.forEach(function(p, i){
     ((p.reel || p.video)
       ? '<span class="reel__play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>'
       : '<span class="reel__soon">' + t('ui.bientot') + '</span>') +
-    '<span class="reel__meta"><b>' + txt(p.nom) + '</b><em>' + txt(p.ville) + '</em><span>' + p.surface + '</span></span>';
+    '<span class="reel__meta"><b>' + txt(p.nom) + '</b><em>' + txt(p.ville) + '</em><span>' + txt(p.desc) + '</span></span>';
   b.addEventListener('click', function(){ open(i); });
   /* Pas de recentrage ici : la vignette est déjà sous le curseur. */
   b.addEventListener('mouseenter', function(){ if(DESK()) highlight(i, true, false); });
