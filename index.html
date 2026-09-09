@@ -128,7 +128,7 @@
 <!-- Alexandria : le caractère du logo MAALEM, et une famille bilingue latin +
      arabe. Elle porte donc les labels dans les trois langues, à l'identique.
      Le mono ne sert plus qu'aux relevés machine : coordonnées, altitude, cotes. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;700&family=IBM+Plex+Mono:wght@400&display=swap">
 
 <style>
 /* ==========================================================================
@@ -165,7 +165,7 @@
 
   --font:'Satoshi','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
   --font-brand:'Alexandria',var(--font);   /* le caractère du logo */
-  --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --font-mono:'IBM Plex Mono','Alexandria',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --ease:cubic-bezier(.16,1,.3,1);
   --ease-io:cubic-bezier(.65,.05,.36,1);
 
@@ -247,7 +247,7 @@ ul{list-style:none}
   letter-spacing:-.028em;
 }
 .h3{font-weight:400;font-size:clamp(1.2rem,3.4vw,1.7rem);line-height:1.18;letter-spacing:-.02em}
-.lede{font-size:clamp(1rem,3.5vw,1.22rem);font-weight:300;line-height:1.62;color:var(--w-64);max-width:52ch}
+.lede{font-size:clamp(.9rem,2.7vw,1.04rem);font-weight:300;line-height:1.62;color:var(--w-64);max-width:52ch}
 .body{font-size:clamp(.94rem,3.1vw,1rem);line-height:1.62;color:var(--w-64);max-width:56ch}
 /* Les micro-labels ne sont plus des capitales dorées espacées — le motif le
    plus reconnaissable des sites générés. Ils passent en mono, casse naturelle,
@@ -293,6 +293,7 @@ ul{list-style:none}
   unicode-bidi:isolate;
 }
 [dir="rtl"] .stat__n,[dir="rtl"] .step__n{text-align:right}
+[dir="rtl"] .layer__w[data-i18n]{direction:rtl}
 [dir="rtl"] .plan__p{justify-content:flex-start;flex-direction:row}
 
 .num{font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.01em}
@@ -1272,8 +1273,9 @@ body.is-map-open .gl__back{opacity:0;pointer-events:none}
 .layer__n{font-size:.62rem;min-width:62px;color:var(--gold)}
 .layer__d{font-size:.6rem}
 .layer__w{white-space:nowrap}
-/* le label du hero est posé sur la vidéo : selon le plan, le fond passe clair */
-.hero__left .eyebrow{text-shadow:0 1px 14px rgba(10,10,12,.75)}
+/* le texte du hero est posé sur la vidéo : selon le plan, le fond passe clair */
+.hero__left .display{text-shadow:0 2px 26px rgba(10,10,12,.58)}
+.hero__left .lede{text-shadow:0 1px 14px rgba(10,10,12,.78)}
 
 /* --- PASSE MOBILE ----------------------------------------------------------
    Le téléphone est l'écran principal : les liens arrivent par WhatsApp. Ce
@@ -1440,7 +1442,6 @@ html{scroll-behavior:smooth}
     <div class="hero__in wrap">
       <div class="hero__grid">
         <div class="hero__left">
-          <div class="fade" style="--i:0"><span class="eyebrow eyebrow--gold" data-i18n="hero.sur">MAALEM — Signature cinématographique</span></div>
           <h1 class="display hero__title">
             <span class="mask" style="--i:1"><span data-i18n="hero.t1">Nous filmons</span></span>
             <span class="mask" style="--i:2"><span data-i18n="hero.t2">ce qui n'est pas</span></span>
@@ -1994,7 +1995,6 @@ fr:{
 en:{
  'nav.travaux':'Work','nav.format':'Format','nav.process':'Process','nav.tarifs':'Pricing',
  'alt.unite':'Altitude','wa.titre':'Quote in 2 h','wa.sous':'Send a GPS pin',
- 'hero.sur':'MAALEM — Cinematic real-estate films',
  'hero.t1':'We film','hero.t2':"what hasn't been",'hero.t3':'built&nbsp;yet.',
  'hero.lede':'We start from satellite and come down to your plot in one unbroken move: access routes, travel times, on-ground dimensions, then the massing at real scale among the buildings already there.',
  'hero.cta1':'See the work','hero.cta2':'Talk on WhatsApp',
@@ -2043,7 +2043,6 @@ en:{
 ar:{
  'nav.travaux':'أعمالنا','nav.format':'الصيغة','nav.process':'المراحل','nav.tarifs':'الأسعار',
  'alt.unite':'الارتفاع','wa.titre':'عرض سعر في ساعتين','wa.sous':'أرسل موقع GPS',
- 'hero.sur':'MAALEM معالم — استوديو الإخراج البصري للمشاريع العقارية الفاخرة',
  'hero.t1':'نبرز قيمة مشروعك','hero.t2':'للمستثمرين','hero.t3':'حتى قبل اكتمال البناء.',
  'hero.lede':'من صور الأقمار الصناعية إلى أدق التفاصيل المعمارية: عرض سينمائي لتفاصيل المشروع مع تتبّع جغرافي ثلاثي الأبعاد (3D GIS)، يمنح المستثمر يقيناً بقيمة المشروع وموقعه الاستراتيجي.',
  'hero.cta1':'شاهد أعمالنا','hero.cta2':'تواصل عبر واتساب',
@@ -2153,6 +2152,7 @@ function setLang(code){
   $$('[data-i18n-ph]').forEach(function(n){ n.setAttribute('placeholder', t(n.getAttribute('data-i18n-ph'))); });
 
   majDynamique();
+  if(typeof kachida === 'function') kachida();
   try { localStorage.setItem('xh-lang', L.code); } catch(e){}
   $$('#lang button').forEach(function(b){
     var on = b.getAttribute('data-code') === L.code;
@@ -3583,6 +3583,100 @@ $('#form').addEventListener('submit', function(e){
      l'arabe dès l'ouverture. */
   setLang(enregistre || 'ar');
 })();
+
+/* --- كشيدة : le titre du hero se justifie à l'arabe -------------------- */
+function lettreArabe(c){ return c >= 'ء' && c <= 'ي'; }
+
+function jonctions(texte){
+  /* Ces lettres ne se lient pas à la suivante : aucune kachida après elles. */
+  var NON_LIANTES = 'اأإآٱدذرزوؤءةى';
+  var pts = [];
+  for(var i = 1; i < texte.length; i++){
+    var a = texte.charAt(i - 1), b = texte.charAt(i);
+    if(!lettreArabe(a) || !lettreArabe(b)) continue;
+    if(NON_LIANTES.indexOf(a) >= 0) continue;
+    pts.push(i);
+  }
+  return pts;
+}
+
+/* n kachidas réparties sur les jonctions disponibles, insérées de la fin
+   vers le début pour que les indices restent valides. */
+function pose(texte, pts, n){
+  var TATWEEL = 'ـ';
+  var compte = {};
+  for(var k = 0; k < n; k++){
+    var p = pts[Math.floor(k * pts.length / n) % pts.length];
+    compte[p] = (compte[p] || 0) + 1;
+  }
+  var s = texte;
+  Object.keys(compte).map(Number).sort(function(a, b){ return b - a; })
+    .forEach(function(p){
+      s = s.slice(0, p) + new Array(compte[p] + 1).join(TATWEEL) + s.slice(p);
+    });
+  return s;
+}
+
+function etire(texte, cible, largeur){
+  var pts = jonctions(texte);
+  if(!pts.length) return texte;
+  /* Une ligne ne s'étire pas au-delà du double : au-delà, ce n'est plus une
+     justification mais une déformation. */
+  var plafond = pts.length * 12;
+  for(var n = 1; n <= plafond; n++){
+    var essai = pose(texte, pts, n);
+    if(largeur(essai) >= cible) return essai;
+  }
+  return pose(texte, pts, plafond);
+}
+
+function kachida(){
+  var titre = document.querySelector('.hero__title');
+  if(!titre) return;
+  var lignes = $$('.mask > [data-i18n]', titre).filter(function(l){
+    return l.textContent.trim();
+  });
+  if(lignes.length < 2) return;
+
+  /* On repart toujours du texte sans kachida : sinon les tatweel d'un appel
+     s'ajouteraient à ceux du précédent, à chaque redimensionnement. */
+  var nus = lignes.map(function(l){
+    var nu = l.textContent.replace(/ـ/g, '');
+    if(l.textContent !== nu) l.textContent = nu;
+    return nu;
+  });
+  if(LANG !== 'ar') return;
+
+  var c = getComputedStyle(lignes[0]);
+  var regle = document.createElement('span');
+  regle.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;top:-9999px;left:-9999px';
+  regle.style.fontFamily = c.fontFamily;
+  regle.style.fontSize = c.fontSize;
+  regle.style.fontWeight = c.fontWeight;
+  regle.style.letterSpacing = c.letterSpacing;
+  document.body.appendChild(regle);
+  var largeur = function(t){ regle.textContent = t; return regle.getBoundingClientRect().width; };
+
+  var nues = nus.map(largeur);
+  var cible = Math.max.apply(null, nues);
+  var colonne = titre.getBoundingClientRect().width;
+  if(colonne && cible > colonne) cible = colonne;
+
+  lignes.forEach(function(l, i){
+    if(cible - nues[i] < 2) return;
+    l.textContent = etire(nus[i], cible, largeur);
+  });
+  regle.remove();
+}
+
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(kachida);
+else kachida();
+
+var minuteurKachida;
+window.addEventListener('resize', function(){
+  clearTimeout(minuteurKachida);
+  minuteurKachida = setTimeout(kachida, 180);
+});
 
 /* Ancres : ne pas passer sous la nav fixe */
 $$('a[href^="#"]').forEach(function(a){
