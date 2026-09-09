@@ -293,7 +293,8 @@ ul{list-style:none}
   unicode-bidi:isolate;
 }
 [dir="rtl"] .stat__n,[dir="rtl"] .step__n{text-align:right}
-[dir="rtl"] .layer__w[data-i18n]{direction:rtl}
+[dir="rtl"] .stat__n[data-suffix-i18n]{direction:rtl}
+[dir="rtl"] .layer__w{direction:rtl}
 [dir="rtl"] .plan__p{justify-content:flex-start;flex-direction:row}
 
 .num{font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.01em}
@@ -860,6 +861,15 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
   text-align:start;
   transition:opacity .6s var(--ease);
 }
+.stage__title::before{
+  content:'';position:absolute;z-index:-1;pointer-events:none;
+  inset:-42% -22% -34% -22%;
+  background:radial-gradient(58% 54% at 50% 50%,
+    rgba(10,10,12,.92) 0%,rgba(10,10,12,.72) 42%,rgba(10,10,12,.34) 68%,transparent 100%);
+}
+.stage__title .h2,.stage__title .eyebrow,.stage__title p{
+  text-shadow:0 1px 18px rgba(10,10,12,.72);
+}
 .stage__title .h2{max-width:none}
 .stage__title p{margin-top:12px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--w-44)}
 .stage.is-open .stage__title,.stage.is-deep .stage__title{opacity:0}
@@ -988,20 +998,18 @@ body.is-map-open .reels__nav{opacity:0;pointer-events:none}
   padding:7px 12px;border-radius:9px;background:rgba(12,12,14,.62);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--w-14);
 }
-.frame__head{display:flex;flex-direction:column;align-items:flex-start;gap:9px;
-  max-width:min(54ch,66%);min-width:0}
-/* La phrase du projet. Elle porte le même verre que le badge pour rester
-   lisible sur n'importe quelle image, et se retire sur les petits écrans où
-   elle recouvrirait le film. */
+/* La phrase du projet, en bas du cadre. Elle porte le même verre que le
+   badge pour rester lisible sur n'importe quelle image. */
 .frame__desc{
-  margin:0;padding:9px 13px;border-radius:9px;
+  margin:0;padding:9px 13px;border-radius:9px;min-width:0;
+  max-width:min(54ch,72%);
   font-size:.76rem;font-weight:300;line-height:1.5;color:var(--w-90);
   background:rgba(12,12,14,.62);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border:1px solid var(--w-14);
 }
 .frame__desc:empty{display:none}
-@media (max-width:719px){ .frame__head{max-width:78%} .frame__desc{display:none} }
+@media (max-width:719px){ .frame__desc{max-width:none;font-size:.72rem} }
 .frame__badge b{display:block;font-size:.72rem;font-weight:700}
 .frame__badge span{display:block;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:2px}
 .frame__tools{display:flex;gap:8px}
@@ -1017,9 +1025,11 @@ body.is-map-open .reels__nav{opacity:0;pointer-events:none}
 .frame__btn[data-on="1"] .on{display:block}
 .frame__btn[data-on="1"] .off{display:none}
 .frame__foot{position:absolute;left:0;right:0;bottom:0;padding:14px;display:flex;align-items:flex-end;justify-content:space-between;gap:14px}
-.frame__facts{display:flex;gap:18px;flex-wrap:wrap}
-.fact b{display:block;font-size:.92rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
-.fact span{display:block;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--w-44);margin-top:5px}
+@media (max-width:719px){
+  .frame__foot{flex-direction:column;align-items:stretch;gap:10px}
+  /* les fleches gardent le bord qu'elles avaient dans la rangee */
+  .frame__nav{align-self:flex-end}
+}
 .frame__nav{display:flex;gap:8px}
 .frame__empty{
   position:absolute;inset:auto 0 46%;text-align:center;
@@ -1541,10 +1551,7 @@ html{scroll-behavior:smooth}
       <div class="frame__empty" id="frameEmpty" data-i18n="frame.vide">Film à venir — visuel de démonstration</div>
       <div class="frame__scrim"></div>
       <div class="frame__top">
-        <div class="frame__head">
-          <div class="frame__badge"><b id="frameName">—</b><span id="frameCity">—</span></div>
-          <p class="frame__desc" id="frameDesc"></p>
-        </div>
+        <div class="frame__badge"><b id="frameName">—</b><span id="frameCity">—</span></div>
         <div class="frame__tools">
           <button class="frame__btn" id="frameSound" data-on="0" aria-label="Activer le son">
             <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m17 9 4 6M21 9l-4 6"/></svg>
@@ -1556,11 +1563,7 @@ html{scroll-behavior:smooth}
         </div>
       </div>
       <div class="frame__foot">
-        <div class="frame__facts">
-          <div class="fact"><b id="frameSurf">—</b><span data-i18n="frame.surface">Surface</span></div>
-          <div class="fact"><b id="frameLots">—</b><span data-i18n="frame.lots">Lots</span></div>
-          <div class="fact"><b id="frameYear">—</b><span data-i18n="frame.annee">Année</span></div>
-        </div>
+        <p class="frame__desc" id="frameDesc"></p>
         <div class="frame__nav">
           <button class="frame__btn" id="framePrev" aria-label="Projet précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M15 6l-6 6 6 6"/></svg></button>
           <button class="frame__btn" id="frameNext" aria-label="Projet suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 6l6 6-6 6"/></svg></button>
@@ -2009,7 +2012,6 @@ en:{
  'map.sur':'Work','map.retour':'Back to orbit',
  'map.t1':'Standout projects,','map.t2':'turned into films that sell.','map.sous':'Tap any project to see the full film',
  'frame.vide':'Film coming — demonstration visual',
- 'frame.surface':'Area','frame.lots':'Units','frame.annee':'Year',
  'hc.zoom':'8.0034° W · Zoom ×18','hc.drive.v':'8 min','hc.drive':'By car — A3',
  'hc.walk.v':'4 min','hc.walk':'On foot — Tram T2','hc.area':'Plot area',
  'hc.poi1':'School · 300 m','hc.poi2':'Shops · 450 m','hc.poi3':'Beach · 1.2 km','hc.poi4':'A3 road · 900 m',
@@ -2057,7 +2059,6 @@ ar:{
  'map.sur':'أعمالنا','map.retour':'العودة إلى المدار',
  'map.t1':'مشاريع متميزة..','map.t2':'حولناها من مواقع على الخريطة إلى أفلام سينمائية تبيع.','map.sous':'اضغط على أي مشروع لمشاهدة الإخراج المتكامل',
  'frame.vide':'الفيلم قادم — صورة توضيحية',
- 'frame.surface':'المساحة','frame.lots':'الوحدات','frame.annee':'السنة',
  'hc.zoom':'8.0034° غرباً · تكبير ×18','hc.drive.v':'8 دقائق','hc.drive':'بالسيارة — A3',
  'hc.walk.v':'4 دقائق','hc.walk':'مشياً — ترامواي T2','hc.area':'مساحة القطعة',
  'hc.poi1':'مدرسة · 300 م','hc.poi2':'محلات · 450 م','hc.poi3':'الشاطئ · 1,2 كم','hc.poi4':'طريق A3 · 900 م',
@@ -2791,9 +2792,6 @@ function open(i){
   $('#frameName').textContent = txt(p.nom);
   $('#frameCity').textContent = txt(p.ville);
   $('#frameDesc').textContent = txt(p.desc);
-  $('#frameSurf').textContent = p.surface;
-  $('#frameLots').textContent = p.lots;
-  $('#frameYear').textContent = p.annee;
 
   /* le lecteur est vertical aux deux tailles : on privilégie le cut 9:16 */
   var src = p.reel || p.video;
