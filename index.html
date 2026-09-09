@@ -200,7 +200,7 @@ body{
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  overflow-x:hidden;
+  overflow-x:clip;
   font-variant-numeric:tabular-nums;
   font-feature-settings:'tnum' 1,'ss01' 1;
 }
@@ -295,6 +295,9 @@ ul{list-style:none}
 [dir="rtl"] .stat__n,[dir="rtl"] .step__n{text-align:right}
 [dir="rtl"] .stat__n[data-suffix-i18n]{direction:rtl}
 [dir="rtl"] .layer__w{direction:rtl}
+[dir="rtl"] .frame__nav svg,
+[dir="rtl"] .reels__b svg,
+[dir="rtl"] .gl__back-i svg{transform:scaleX(-1)}
 [dir="rtl"] .plan__p{justify-content:flex-start;flex-direction:row}
 
 .num{font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.01em}
@@ -871,7 +874,7 @@ body.is-map-open .wa-flottant{opacity:0;pointer-events:none}
   text-shadow:0 1px 18px rgba(10,10,12,.72);
 }
 .stage__title .h2{max-width:none}
-.stage__title p{margin-top:12px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--w-44)}
+.stage__title p{margin-top:22px;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--w-44)}
 .stage.is-open .stage__title,.stage.is-deep .stage__title{opacity:0}
 
 /* Flèches du rail. Posées sur les côtés, à hauteur des vignettes, elles ne
@@ -1526,8 +1529,8 @@ html{scroll-behavior:smooth}
 
     <div class="stage__title" data-reveal>
       <div class="fade" style="--i:0"><span class="eyebrow" data-n="02" data-i18n="map.sur">Travaux</span></div>
-      <h2 class="h2" style="margin-top:14px"><span class="mask" style="--i:1"><span data-i18n="map.t1">Des projets d'exception,</span></span><span class="mask" style="--i:2"><span data-i18n="map.t2">devenus des films qui vendent.</span></span></h2>
-      <p class="fade" style="--i:3" data-i18n="map.sous">Touchez un projet pour voir le film complet</p>
+      <h2 class="h2" style="margin-top:14px"><span class="mask" style="--i:1"><span data-i18n="map.t1">Des projets d'exception,</span></span><span class="mask" style="--i:2"><span data-i18n="map.t2">devenus des films</span></span><span class="mask" style="--i:3"><span data-i18n="map.t3">qui vendent.</span></span></h2>
+      <p class="fade" style="--i:4" data-i18n="map.sous">Touchez un projet pour voir le film complet</p>
     </div>
 
     <!-- rail de reels — mobile ET desktop : la vignette centrée lit en ligne -->
@@ -1648,27 +1651,27 @@ html{scroll-behavior:smooth}
   <div class="wrap" data-reveal>
     <div class="section-head">
       <div class="fade"><span class="eyebrow" data-n="04" data-i18n="pr.sur">Process</span></div>
-      <h2 class="h2"><span class="mask" style="--i:1"><span data-i18n="pr.t1">Épingle, parcelle,</span></span><span class="mask" style="--i:2"><span data-i18n="pr.t2">rendu, film.</span></span></h2>
+      <h2 class="h2"><span class="mask" style="--i:1"><span data-i18n="pr.t1">Des coordonnées</span></span><span class="mask" style="--i:2"><span data-i18n="pr.t2">au film.</span></span></h2>
     </div>
     <div class="steps">
       <div class="step fade" style="--i:3">
         <span class="step__n num">01</span>
-        <div class="step__b"><h3 data-i18n="pr.1t">Épingle</h3><p data-i18n="pr.1p">Vous envoyez une position GPS et vos photos de terrain sur WhatsApp. Rien d'autre n'est requis pour démarrer.</p></div>
+        <div class="step__b"><h3 data-i18n="pr.1t">L'envoi du lieu</h3><p data-i18n="pr.1p">Vous envoyez les coordonnées du lieu et les photos du plan sur WhatsApp, et le travail démarre aussitôt, sans formalités.</p></div>
         <span class="step__t" data-i18n="pr.1d">Jour 0 — 10 min</span>
       </div>
       <div class="step fade" style="--i:4">
         <span class="step__n num">02</span>
-        <div class="step__b"><h3 data-i18n="pr.2t">Parcelle</h3><p data-i18n="pr.2p">Nous relevons les limites, les accès, les temps de trajet et les points d'intérêt. Vous validez le métré et le scénario.</p></div>
+        <div class="step__b"><h3 data-i18n="pr.2t">Le calage géométrique</h3><p data-i18n="pr.2p">Nous fixons les dimensions du terrain, les axes de circulation et les temps d'accès, pour la première validation du scénario.</p></div>
         <span class="step__t" data-i18n="pr.2d">Jour 1</span>
       </div>
       <div class="step fade" style="--i:5">
         <span class="step__n num">03</span>
-        <div class="step__b"><h3 data-i18n="pr.3t">Rendu</h3><p data-i18n="pr.3p">Modélisation du volume à l'échelle, calage sur le terrain, habillage graphique aux couleurs de votre marque.</p></div>
+        <div class="step__b"><h3 data-i18n="pr.3t">La mise en volume</h3><p data-i18n="pr.3p">Le bâtiment modélisé en trois dimensions, posé sur l'imagerie satellite, et votre identité visuelle réglée dessus.</p></div>
         <span class="step__t" data-i18n="pr.3d">Jour 1 — 2</span>
       </div>
       <div class="step fade" style="--i:6">
         <span class="step__n num">04</span>
-        <div class="step__b"><h3 data-i18n="pr.4t">Film</h3><p data-i18n="pr.4p">Montage, étalonnage, sound design. Livraison en trois formats : 16:9 pour le site, 9:16 pour les stories, 1:1 pour le feed.</p></div>
+        <div class="step__b"><h3 data-i18n="pr.4t">Le film</h3><p data-i18n="pr.4p">Votre version finale livrée, en design sonore professionnel et dans tous les formats demandés : 16:9 pour les présentations et le site, 9:16 pour les réseaux.</p></div>
         <span class="step__t" data-i18n="pr.4d">Livraison — 7 jours ouvrés</span>
       </div>
     </div>
@@ -1707,8 +1710,8 @@ html{scroll-behavior:smooth}
         <div class="wa-card">
           <span class="eyebrow eyebrow--gold"><span class="dot-live"></span><span data-i18n="ct.dispo">Réponse sous 2 h — 9 h à 20 h</span></span>
           <h3 data-i18n="ct.wt">WhatsApp, d'abord.</h3>
-          <p data-i18n="ct.wp">Partagez la position GPS du terrain et deux ou trois photos. Vous recevez un devis et un scénario dans la foulée.</p>
-          <a class="pill pill--solid" data-wa href="#contact" data-i18n="ct.wcta">Ouvrir WhatsApp</a>
+          <p data-i18n="ct.wp">Partagez le lieu de votre projet et le plan préliminaire : vous recevez le scénario visuel et le devis sous deux heures.</p>
+          <a class="pill pill--solid" data-wa href="#contact" data-i18n="ct.wcta">Démarrer la conversation WhatsApp</a>
         </div>
         <div class="alt-contact">
           <a href="mailto:contact@maalem.online"><b>contact@maalem.online</b><span data-i18n="ct.mail">E-mail</span></a>
@@ -2010,7 +2013,7 @@ en:{
  'man.s1':'Delivery time','man.s1u':' days','man.s4u':' sizes','man.s2':'Geographic and architectural accuracy','man.s3':'Master resolution',
  'clients.titre':'Trusted by',
  'map.sur':'Work','map.retour':'Back to orbit',
- 'map.t1':'Standout projects,','map.t2':'turned into films that sell.','map.sous':'Tap any project to see the full film',
+ 'map.t1':'Standout projects,','map.t2':'turned into films','map.t3':'that sell.','map.sous':'Tap any project to see the full film',
  'frame.vide':'Film coming — demonstration visual',
  'hc.zoom':'8.0034° W · Zoom ×18','hc.drive.v':'8 min','hc.drive':'By car — A3',
  'hc.walk.v':'4 min','hc.walk':'On foot — Tram T2','hc.area':'Plot area',
@@ -2022,15 +2025,15 @@ en:{
  'demo.3t':'Ground dimensions','demo.3p':'Measurements sit on the real ground: 62.4 m of frontage, 38.0 m deep, 2,371 m² total, drawn on the plot boundary as it rotates.',
  'demo.4t':'Points of interest','demo.4p':'Schools, shops, coastline, main roads: each category has its colour and its distance. The neighbourhood reads in three seconds.',
  'demo.5t':'3D extrusion','demo.5p':'The massing rises from the plot at real scale: G+6, 48 units, among the buildings that already stand around it.',
- 'pr.sur':'Process','pr.t1':'Pin, plot,','pr.t2':'render, film.',
- 'pr.1t':'Pin','pr.1p':'You send a GPS position and your site photos on WhatsApp. Nothing else is needed to start.','pr.1d':'Day 0 — 10 min',
- 'pr.2t':'Plot','pr.2p':'We survey the boundaries, the access, the travel times and the points of interest. You approve the measurements and the storyboard.','pr.2d':'Day 1',
- 'pr.3t':'Render','pr.3p':'The volume is modelled at true scale, aligned to the terrain, and dressed in your brand colours.','pr.3d':'Day 1 — 2',
- 'pr.4t':'Film','pr.4p':'Edit, grade, sound design. Delivered in three formats: 16:9 for the site, 9:16 for stories, 1:1 for the feed.','pr.4d':'Delivery — 7 working days',
+ 'pr.sur':'Process','pr.t1':'From coordinates','pr.t2':'to the film.',
+ 'pr.1t':'Sending the location','pr.1p':'You send the coordinates of the location and photos of the plan on WhatsApp, and work starts straight away, with no paperwork.','pr.1d':'Day 0 — 10 min',
+ 'pr.2t':'Geometric match','pr.2p':'We establish the dimensions of the land, the road axes and the access times, for first approval of the script.','pr.2d':'Day 1',
+ 'pr.3t':'The build','pr.3p':'The building modelled in three dimensions, set on satellite imagery, with your visual identity tuned onto it.','pr.3d':'Day 1 — 2',
+ 'pr.4t':'The film','pr.4p':'Your final cut delivered, with professional sound design and in every size you need: 16:9 for presentations and the site, 9:16 for social.','pr.4d':'Delivery — 7 working days',
  'ct.sur':'Contact','ct.t1':'Send a GPS pin.','ct.t2':'Quote and scenario the same day.',
  'ct.dispo':'Reply within 2 h — 9 am to 8 pm','ct.wt':'WhatsApp, first.',
- 'ct.wp':'Share the GPS position of the land and two or three photos. You get a quote and a storyboard straight away.',
- 'ct.wcta':'Open WhatsApp','ct.mail':'E-mail','ct.tel':'Phone',
+ 'ct.wp':'Share your project location and the preliminary plan, and you get the visual script and the quote within two hours.',
+ 'ct.wcta':'Start a WhatsApp chat','ct.mail':'E-mail','ct.tel':'Phone',
  'ct.villeStudio':'Casablanca — Morocco','ct.studio':'Studio',
  'f.nom':'Name / Company','f.nom.ph':'Al Bahia Group','f.mail':'E-mail','f.mail.ph':'you@company.ma',
  'f.format':'Scope','f.opt1':'One plot','f.opt2':'Several plots','f.opt4':'Not sure yet',
@@ -2057,7 +2060,7 @@ ar:{
  'man.s1':'مدّة التسليم','man.s1u':' أيام','man.s4u':' مقاسات','man.s2':'الدقة الجغرافية والمعمارية','man.s3':'دقة النسخة الأصلية',
  'clients.titre':'يثقون بنا',
  'map.sur':'أعمالنا','map.retour':'العودة إلى المدار',
- 'map.t1':'مشاريع متميزة..','map.t2':'حولناها من مواقع على الخريطة إلى أفلام سينمائية تبيع.','map.sous':'اضغط على أي مشروع لمشاهدة الإخراج المتكامل',
+ 'map.t1':'مشاريع متميزة.. حولناها','map.t2':'من مواقع على الخريطة','map.t3':'إلى أفلام سينمائية تبيع.','map.sous':'اضغط على أي مشروع لمشاهدة الإخراج المتكامل',
  'frame.vide':'الفيلم قادم — صورة توضيحية',
  'hc.zoom':'8.0034° غرباً · تكبير ×18','hc.drive.v':'8 دقائق','hc.drive':'بالسيارة — A3',
  'hc.walk.v':'4 دقائق','hc.walk':'مشياً — ترامواي T2','hc.area':'مساحة القطعة',
@@ -2069,15 +2072,15 @@ ar:{
  'demo.3t':'الأبعاد على الأرض','demo.3p':'تُركّب القياسات على الأرض الحقيقية: 62,4 م على الواجهة، 38,0 م في العمق، 2 371 م² إجمالاً — مرسومة على حدود القطعة أثناء دورانها.',
  'demo.4t':'نقاط الاهتمام','demo.4p':'مدارس، محلات، ساحل، محاور طرقية: لكل فئة لونها ومسافتها. يُقرأ الجوار في ثلاث ثوانٍ.',
  'demo.5t':'الاستخراج ثلاثي الأبعاد','demo.5p':'يرتفع المجسّم من القطعة بمقياسه الحقيقي: أرضي+6، 48 وحدة، بين المباني القائمة فعلاً من حوله.',
- 'pr.sur':'المراحل','pr.t1':'علامة، قطعة،','pr.t2':'تجسيد، فيلم.',
- 'pr.1t':'العلامة','pr.1p':'ترسل موقع GPS وصور الأرض عبر واتساب. لا شيء آخر مطلوب للانطلاق.','pr.1d':'اليوم 0 — 10 دقائق',
- 'pr.2t':'القطعة','pr.2p':'نرفع الحدود والمنافذ وأزمنة التنقّل ونقاط الاهتمام. تصادق على القياسات والسيناريو.','pr.2d':'اليوم 1',
- 'pr.3t':'التجسيد','pr.3p':'نمذجة المجسّم بمقياسه الحقيقي، ضبطه على الأرض، وإخراج بصري بألوان علامتك.','pr.3d':'اليوم 1 — 2',
- 'pr.4t':'الفيلم','pr.4p':'مونتاج، معالجة لونية، تصميم صوتي. تسليم بثلاث صيغ: 16:9 للموقع، 9:16 للستوري، 1:1 للمنشور.','pr.4d':'التسليم — 7 أيام عمل',
+ 'pr.sur':'المراحل','pr.t1':'من الإحداثيات','pr.t2':'إلى الفيلم السينمائي..',
+ 'pr.1t':'إرسال الموقع','pr.1p':'ترسل إحداثيات الموقع وصور المخطط عبر واتساب، وننطلق في العمل فوراً دون إجراءات معقدة.','pr.1d':'اليوم 0 — 10 دقائق',
+ 'pr.2t':'المطابقة الهندسية','pr.2p':'نحدد أبعاد الأرض، محاور الطرق، وأزمنة الوصول للاعتماد الأولي للسيناريو.','pr.2d':'اليوم 1',
+ 'pr.3t':'التجسيد','pr.3p':'تصميم مبنى ثلاثي الأبعاد ومطابقته على صور الأقمار الصناعية وضبط الهوية البصرية.','pr.3d':'اليوم 1 — 2',
+ 'pr.4t':'الفيلم','pr.4p':'تسليم نسختك النهائية بتصميم صوتي احترافي وبكافة المقاسات المطلوبة (16:9 للعروض والمواقع، و9:16 للمنصات الاجتماعية).','pr.4d':'التسليم — 7 أيام عمل',
  'ct.sur':'اتصال','ct.t1':'أرسل إحداثيات القطعة.','ct.t2':'نعود إليك بالسيناريو والعرض.',
  'ct.dispo':'ردّ خلال ساعتين — من 9 ص إلى 8 م','ct.wt':'واتساب، أوّلاً.',
- 'ct.wp':'شارك موقع الأرض على GPS وصورتين أو ثلاثاً. تتوصّل بعرض سعر وسيناريو في الحين.',
- 'ct.wcta':'افتح واتساب','ct.mail':'البريد الإلكتروني','ct.tel':'الهاتف',
+ 'ct.wp':'شاركنا موقع مشروعك والمخطط الأولي، وسنوافيك بالسيناريو البصري وعرض السعر خلال ساعتين.',
+ 'ct.wcta':'ابدأ محادثة واتساب الآن','ct.mail':'البريد الإلكتروني','ct.tel':'الهاتف',
  'ct.villeStudio':'الدار البيضاء — المغرب','ct.studio':'الاستوديو',
  'f.nom':'الاسم / الشركة','f.nom.ph':'مجموعة الباهية','f.mail':'البريد الإلكتروني','f.mail.ph':'you@company.ma',
  'f.format':'حجم المشروع','f.opt1':'قطعة واحدة','f.opt2':'عدّة قطع','f.opt4':'لم أقرّر بعد',
@@ -3629,8 +3632,14 @@ function etire(texte, cible, largeur){
 }
 
 function kachida(){
-  var titre = document.querySelector('.hero__title');
-  if(!titre) return;
+  /* setLang tourne avant cette section : une var hissee vaudrait undefined. */
+  ['.hero__title', '.stage__title .h2'].forEach(function(sel){
+    var t = document.querySelector(sel);
+    if(t) kachidaBloc(t);
+  });
+}
+
+function kachidaBloc(titre){
   var lignes = $$('.mask > [data-i18n]', titre).filter(function(l){
     return l.textContent.trim();
   });
