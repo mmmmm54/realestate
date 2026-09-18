@@ -977,8 +977,8 @@ body.is-map-open .reels__nav{opacity:0;pointer-events:none}
 
   /* L'index texte ferait doublon avec les vignettes, qui portent déjà
      nom, ville et surface. La carte garde son espace. */
-  .stage__title{left:var(--pad);right:auto;text-align:left;top:38%;bottom:auto;transform:translateY(-50%);max-width:44ch}
-  .stage__title .h2{max-width:16ch}
+  .stage__title{left:var(--pad);right:auto;text-align:left;top:38%;bottom:auto;transform:translateY(-50%);max-width:34rem}
+  .stage__title .h2{max-width:none;font-size:clamp(2rem,3.25vw,3rem)}
 }
 
 /* cadre vidéo — la vidéo vit DANS la carte */
@@ -1882,7 +1882,11 @@ var VILLES = [
      deux projets sont posées au centre de leur quartier — الروضة et
      الأندلس, relevés dans les films — et non sur la parcelle exacte,
      faute des coordonnées. Précision d'environ un kilomètre. */
-  { id:'jeddah',    nom:'جدة',       lat:21.5433,  lon:39.1728,  zoom:12.4 }
+  { id:'jeddah',    nom:'جدة',       lat:21.5433,  lon:39.1728,  zoom:12.4 },
+  /* Shahhat (Cyrène), Libye : Manara Qurina. Le film situe le projet « au
+     cœur de la ville » sans donner la parcelle ; l'épingle est au centre de
+     Shahhat, à un ou deux kilomètres près, comme celles de Djeddah. */
+  { id:'shahhat',   nom:'شحات',      lat:32.8281,  lon:21.8622,  zoom:13.2 }
 ];
 
 /* ---------------------------------------------------------------------------
@@ -1993,14 +1997,14 @@ var PROJETS = [
     video:'', reel:'medias/p-khaleej-1.mp4',     poster:'medias/poster-p-khaleej-1.jpg' },
 
   /* Film « Manara » : carton final « مخطط منارة قورينا ». Lotissement
-     résidentiel en Libye — trajets vers « قاعة قورينا », lots de 350 et
-     900 m², villas extrudées, puis drone sur le chantier. Coordonnées à
-     recevoir. */
+     résidentiel « في قلب مدينة شحات » — trajets vers « قاعة قورينا », lots
+     de 350 et 900 m², villas extrudées, puis drone sur le chantier.
+     Épingle au centre de Shahhat, faute de la parcelle exacte. */
   { id:'p10', nom:{ fr:'Manara Qurina', en:'Manara Qurina', ar:'منارة قورينا' },
     desc:{ fr:'Le plan de Manara Qurina, en Libye, mis en volume : les lots et leurs surfaces, les villas en trois dimensions, et l\'avancée du chantier sur place.', en:'The Manara Qurina plan in Libya brought to life: the plots and their sizes, the villas in three dimensions, and progress on site.', ar:'تجسيد مخطط منارة قورينا في ليبيا: القطع السكنية ومساحاتها، والفيلات بالأبعاد الثلاثية، وتقدّم الأشغال في الموقع' },
     ville:{ fr:'Libye', en:'Libya', ar:'ليبيا' },
     surface:'—', lots:'—', annee:'—',
-    x:66, y:70, seed:41,
+    x:66, y:70, seed:41, villeId:'shahhat', lat:32.8281, lon:21.8622,
     video:'', reel:'medias/p-manara.mp4',        poster:'medias/poster-p-manara.jpg' },
 
   { id:'p1', nom:{ fr:'Neo Square', en:'Neo Square', ar:'نيو سكوير' },
@@ -2173,6 +2177,9 @@ var $  = function(s,c){ return (c||document).querySelector(s); };
 var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
 var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var DESK = function(){ return window.innerWidth >= 900; };
+/* Doigt ou souris : c'est l'outil qui décide des gestes de la carte, pas la
+   largeur de la fenêtre. */
+var TACTILE = window.matchMedia('(pointer: coarse)').matches;
 var clamp = function(v,a,b){ return v<a?a:(v>b?b:v); };
 var NBSP = ' ';
 
@@ -3018,14 +3025,14 @@ function glInit(){
       /* Désactivé au départ : la molette n'est rendue à la carte que lorsque
          le curseur est réellement sur le globe (voir zoneZoom plus bas).
          Partout ailleurs, la page continue de défiler normalement. */
-      scrollZoom:false,
+      scrollZoom:true,
       /* Le globe se manipule au doigt sans voler le défilement de la page :
          un doigt fait défiler, deux doigts déplacent et zooment. C'est ce que
          fait cooperativeGestures, avec son propre message d'aide au premier
          essai à un doigt — d'où la traduction passée dans locale.
          Uniquement sur tactile : sur ordinateur, ce mode exigerait ctrl +
          molette alors que la zone centrale gère déjà le zoom au survol. */
-      cooperativeGestures: !DESK(),
+      cooperativeGestures: TACTILE,
       locale: {
         'TouchPanBlocker.Message': LANG === 'ar' ? 'حرّك الخريطة بإصبعين'
                                  : LANG === 'en' ? 'Use two fingers to move the map'
@@ -3068,26 +3075,30 @@ function zoneZoom(){
   var gl = $('#gl');
   if(!gl || !GL.map) return;
 
-  function centreOptique(){
-    var r = gl.getBoundingClientRect(), p = glPadding();
-    return { x:r.left + r.width / 2,
-             y:r.top + p.top + (r.height - p.top - p.bottom) / 2,
-             rayon:Math.min(r.width, r.height - p.bottom) * 0.42 };
+  /* Le globe, tel qu'il est à l'écran à cet instant. Au zoom z, la
+     circonférence du monde fait 512·2^z pixels : le rayon du disque s'en
+     déduit. Une fois zoomé, la carte déborde du cadre ; le cercle actif est
+     alors plafonné pour laisser une marge où la molette fait défiler la page. */
+  function surLeGlobe(x, y){
+    var r = gl.getBoundingClientRect();
+    var c = GL.map.project(GL.map.getCenter());
+    var rayon = Math.min(512 * Math.pow(2, GL.map.getZoom()) / (2 * Math.PI),
+                         0.42 * Math.min(r.width, r.height));
+    return Math.hypot(x - (r.left + c.x), y - (r.top + c.y)) < rayon;
   }
 
-  function evalue(e){
-    if(!DESK()) return;                 /* tactile : jamais de capture */
-    var c = centreOptique();
-    var dedans = Math.hypot(e.clientX - c.x, e.clientY - c.y) < c.rayon;
-    gl.classList.toggle('peut-zoomer', dedans);
-    if(dedans) GL.map.scrollZoom.enable();
-    else       GL.map.scrollZoom.disable();
-  }
+  /* Phase de capture : on tranche avant que l'événement n'atteigne Mapbox.
+     Hors du globe il s'arrête ici, n'est jamais annulé, et la page défile. */
+  gl.addEventListener('wheel', function(e){
+    if(!surLeGlobe(e.clientX, e.clientY)) e.stopPropagation();
+  }, { capture:true, passive:true });
 
-  gl.addEventListener('mousemove', evalue, { passive:true });
+  /* Le curseur loupe signale la zone ; il ne décide de rien. */
+  gl.addEventListener('mousemove', function(e){
+    gl.classList.toggle('peut-zoomer', surLeGlobe(e.clientX, e.clientY));
+  }, { passive:true });
   gl.addEventListener('mouseleave', function(){
     gl.classList.remove('peut-zoomer');
-    GL.map.scrollZoom.disable();
   }, { passive:true });
 }
 
@@ -3781,7 +3792,7 @@ function kachidaBloc(titre){
   var nues = nus.map(largeur);
   var cible = Math.max.apply(null, nues);
   var colonne = titre.getBoundingClientRect().width;
-  if(colonne && cible > colonne) cible = colonne;
+  if(colonne && cible > colonne - 2) return regle.remove();
 
   lignes.forEach(function(l, i){
     if(cible - nues[i] < 2) return;
