@@ -67,7 +67,8 @@
       "address": { "@type": "PostalAddress", "addressLocality": "Casablanca", "addressCountry": "MA" },
       "areaServed": [
         { "@type": "Country", "name": "Maroc" },
-        { "@type": "Country", "name": "Arabie saoudite" }
+        { "@type": "Country", "name": "Arabie saoudite" },
+        { "@type": "Country", "name": "Libye" }
       ],
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
@@ -90,7 +91,7 @@
       "name": "Film 3D de projet immobilier",
       "provider": { "@id": "https://maalem.online/#studio" },
       "serviceType": "Film immobilier 3D à partir d'un point GPS",
-      "areaServed": ["MA","SA"],
+      "areaServed": ["MA","SA","LY"],
       "description": "Repérage satellite, accès et temps de trajet, cotes au sol, points d'intérêt et volume à l'échelle réelle. Livré en 16:9, 9:16 et 1:1."
     }
   ]
@@ -1346,6 +1347,45 @@ body.is-map-open .gl__back{opacity:0;pointer-events:none}
   .hero__in{padding-bottom:38px}
 }
 
+/* --- CHOIX DE LA LANGUE ------------------------------------------------- */
+.choix{position:fixed;inset:0;z-index:95;display:flex;align-items:flex-end;justify-content:center}
+.choix[hidden]{display:none}
+.choix__fond{position:absolute;inset:0;background:rgba(12,12,14,.56);
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.choix__carte{
+  position:relative;width:100%;max-width:440px;
+  padding:26px 22px calc(22px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;
+  background:var(--ink-2);border:1px solid var(--w-14);border-bottom:0;
+  border-radius:22px 22px 0 0;box-shadow:0 -18px 60px rgba(0,0,0,.5);
+}
+.choix__marque svg{display:block;height:40px;width:auto;fill:var(--gold)}
+.choix__titre{margin:0;display:flex;flex-direction:column;gap:3px}
+.choix__titre span{font-size:.84rem;font-weight:300;line-height:1.45;color:var(--w-64)}
+.choix__titre span[lang="ar"]{font-family:'Alexandria',var(--font)}
+.choix__liste{width:100%;display:flex;flex-direction:column;gap:10px}
+.choix__liste button{
+  min-height:52px;border-radius:1000px;
+  border:1px solid var(--glass-line);background:var(--glass-bg);
+  font-size:1rem;font-weight:700;color:var(--white);
+  transition:background .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease);
+}
+.choix__liste button[lang="ar"]{font-family:'Alexandria',var(--font)}
+.choix__liste button:hover{border-color:var(--gold-md)}
+/* la langue du navigateur est proposée en premier choix, en or */
+.choix__liste button.is-suggere{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.choix.is-ouvert .choix__fond{animation:choixFond .4s ease both}
+.choix.is-ouvert .choix__carte{animation:choixMonte .55s var(--ease) both}
+@keyframes choixFond{from{opacity:0}to{opacity:1}}
+@keyframes choixMonte{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+html.is-choix{overflow:hidden}
+/* le bouton WhatsApp ferait concurrence au choix : il attend son tour */
+html.is-choix .wa-flottant{opacity:0;pointer-events:none}
+@media (min-width:720px){
+  .choix{align-items:center}
+  .choix__carte{border-radius:22px;border-bottom:1px solid var(--w-14);padding:34px 30px 30px}
+}
+
 /* --- 18. MOUVEMENT RÉDUIT ----------------------------------------------- */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
@@ -1405,6 +1445,24 @@ html{scroll-behavior:smooth}
     <path d="m131.38,82.78h23.79c-.05-.95-.09-1.7-.15-2.72h-20.93v-13.27c-1.05.06-1.86.1-2.71.14v15.85Z"/>
   </symbol>
 </svg>
+
+<!-- ====================== CHOIX DE LA LANGUE ====================== -->
+<div class="choix" id="choix" role="dialog" aria-modal="true" aria-labelledby="choixTitre" hidden>
+  <div class="choix__fond" data-choix-fermer></div>
+  <div class="choix__carte">
+    <span class="choix__marque" aria-hidden="true"><svg viewBox="0 0 242.13 83.03"><use href="#wm"/></svg></span>
+    <p class="choix__titre" id="choixTitre">
+      <span lang="ar" dir="rtl">اختر لغتك</span>
+      <span lang="fr">Choisissez votre langue</span>
+      <span lang="en">Choose your language</span>
+    </p>
+    <div class="choix__liste">
+      <button type="button" data-code="ar" lang="ar" dir="rtl">العربية</button>
+      <button type="button" data-code="fr" lang="fr">Français</button>
+      <button type="button" data-code="en" lang="en">English</button>
+    </div>
+  </div>
+</div>
 
 <!-- ====================== NAV ====================== -->
 <header class="nav" id="nav">
@@ -1934,6 +1992,17 @@ var PROJETS = [
     x:74, y:47, seed:31, villeId:'jeddah', lat:21.5290, lon:39.1720,
     video:'', reel:'medias/p-khaleej-1.mp4',     poster:'medias/poster-p-khaleej-1.jpg' },
 
+  /* Film « Manara » : carton final « مخطط منارة قورينا ». Lotissement
+     résidentiel en Libye — trajets vers « قاعة قورينا », lots de 350 et
+     900 m², villas extrudées, puis drone sur le chantier. Coordonnées à
+     recevoir. */
+  { id:'p10', nom:{ fr:'Manara Qurina', en:'Manara Qurina', ar:'منارة قورينا' },
+    desc:{ fr:'Le plan de Manara Qurina, en Libye, mis en volume : les lots et leurs surfaces, les villas en trois dimensions, et l\'avancée du chantier sur place.', en:'The Manara Qurina plan in Libya brought to life: the plots and their sizes, the villas in three dimensions, and progress on site.', ar:'تجسيد مخطط منارة قورينا في ليبيا: القطع السكنية ومساحاتها، والفيلات بالأبعاد الثلاثية، وتقدّم الأشغال في الموقع' },
+    ville:{ fr:'Libye', en:'Libya', ar:'ليبيا' },
+    surface:'—', lots:'—', annee:'—',
+    x:66, y:70, seed:41,
+    video:'', reel:'medias/p-manara.mp4',        poster:'medias/poster-p-manara.jpg' },
+
   { id:'p1', nom:{ fr:'Neo Square', en:'Neo Square', ar:'نيو سكوير' },
     desc:{ fr:'Mise en volume du plan d\'architecte d\'un terrain résidentiel à Marrakech, pour attirer les investisseurs avant le début des travaux.', en:'The architectural plan of a residential plot in Marrakech brought to life, to draw investors before building starts.', ar:'تجسيد المخطط المعماري لأرض سكنية في مراكش لجذب المستثمرين قبل بدء البناء' },
     ville:{ fr:'Maroc', en:'Morocco', ar:'المغرب' },
@@ -2133,7 +2202,7 @@ function t(k){
 /* La police arabe est désormais chargée dans le <head> : le nom معالم fait
    partie de la marque et s'affiche quelle que soit la langue choisie. */
 
-function setLang(code){
+function setLang(code, provisoire){
   var L = LANGUES.filter(function(l){ return l.code === code; })[0];
   if(!L) return;
   LANG = L.code;
@@ -2157,7 +2226,7 @@ function setLang(code){
 
   majDynamique();
   if(typeof kachida === 'function') kachida();
-  try { localStorage.setItem('xh-lang', L.code); } catch(e){}
+  if(!provisoire){ try { localStorage.setItem('xh-lang', L.code); } catch(e){} }
   $$('#lang button').forEach(function(b){
     var on = b.getAttribute('data-code') === L.code;
     b.classList.toggle('is-on', on);
@@ -3582,8 +3651,53 @@ $('#form').addEventListener('submit', function(e){
      Maroc. Le français reste la source dans le DOM — c'est lui que servent
      les moteurs et le partage — mais un visiteur sans préférence lit
      l'arabe dès l'ouverture. */
-  setLang(enregistre || 'ar');
+  setLang(enregistre || 'ar', !enregistre);
+  /* Première visite : on demande. Les visites suivantes reprennent le choix. */
+  if(!enregistre) ouvrirChoix();
 })();
+
+/* --- Le panneau de choix de la langue ---------------------------------- */
+function ouvrirChoix(){
+  var c = $('#choix');
+  if(!c) return;
+  /* La langue du navigateur est mise en avant ; à défaut, l'arabe. */
+  var nav = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+  var suggere = nav.indexOf('fr') === 0 ? 'fr' : nav.indexOf('en') === 0 ? 'en' : 'ar';
+  $$('[data-code]', c).forEach(function(b){
+    b.classList.toggle('is-suggere', b.getAttribute('data-code') === suggere);
+    b.addEventListener('click', function(){ choisirLangue(b.getAttribute('data-code')); });
+  });
+  /* Toucher le fond revient à garder la langue affichée — et à la retenir,
+     pour ne pas reposer la question à chaque page. */
+  $('[data-choix-fermer]', c).addEventListener('click', function(){ choisirLangue(LANG); });
+  c.hidden = false;
+  c.classList.add('is-ouvert');
+  document.documentElement.classList.add('is-choix');
+  var focus = $('.is-suggere', c) || $('[data-code]', c);
+  if(focus) focus.focus({ preventScroll:true });
+  document.addEventListener('keydown', clavierChoix);
+}
+
+function choisirLangue(code){
+  setLang(code);
+  var c = $('#choix');
+  if(!c || c.hidden) return;
+  c.hidden = true;
+  c.classList.remove('is-ouvert');
+  document.documentElement.classList.remove('is-choix');
+  document.removeEventListener('keydown', clavierChoix);
+}
+
+/* Échap garde la langue affichée ; Tab tourne entre les trois boutons. */
+function clavierChoix(e){
+  if(e.key === 'Escape'){ choisirLangue(LANG); return; }
+  if(e.key !== 'Tab') return;
+  var bs = $$('#choix [data-code]');
+  var i = bs.indexOf(document.activeElement);
+  e.preventDefault();
+  var n = e.shiftKey ? (i <= 0 ? bs.length - 1 : i - 1) : (i >= bs.length - 1 ? 0 : i + 1);
+  bs[n].focus();
+}
 
 /* --- كشيدة : le titre du hero se justifie à l'arabe -------------------- */
 function lettreArabe(c){ return c >= 'ء' && c <= 'ي'; }
